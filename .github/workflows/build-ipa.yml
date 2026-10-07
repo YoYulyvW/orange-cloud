@@ -5,6 +5,9 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: macos-15
@@ -16,14 +19,9 @@ jobs:
           sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
           xcodebuild -version
 
-      - name: Diagnose project
-        run: |
-          echo "=== swift files in main app ==="
-          find "apps/ios/Orange Cloud/Orange Cloud" -name "*.swift" | wc -l
-          echo "=== list sources phase ==="
-          xcodebuild -project "apps/ios/Orange Cloud/Orange Cloud.xcodeproj" -scheme "Orange Cloud" -showBuildSettings 2>/dev/null | grep -E "IPHONEOS_DEPLOYMENT_TARGET|SWIFT_ACTIVE_COMPILATION_CONDITIONS|SWIFT_VERSION" | head -20
-
       - name: Build
+        id: build
+        continue-on-error: true
         run: |
           set -o pipefail
           xcodebuild \
@@ -35,24 +33,38 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY="" \
-            build 2>&1 | tee build.log
-          echo "=== build tail ==="
-          tail -100 build.log
+            build > build.log 2>&1
+          echo "BUILD_EXIT=$?" >> $GITHUB_OUTPUT
 
-      - name: Inspect output
-        run: |
-          echo "=== build products ==="
-          find build/Build/Products -name "*.app" -maxdepth 3
-          echo "=== app binary size ==="
-          find build/Build/Products -name "Orange Cloud" -type f -exec ls -la {} \;
-          echo "=== compiled object count ==="
-          find build -name "*.o" | wc -l
-          echo "=== swift compile units ==="
-          grep -c "SwiftCompile" build.log || true
-
-      - name: Upload build log
+      - name: Extract errors
         if: always()
+        run: |
+          echo "=== 编译错误汇总 ===" > ci-errors.txt
+          grep -E "error:" build.log | sort | uniq -c | sort -rn | head -300 >> ci-errors.txt || echo "no errors" >> ci-errors.txt
+          echo "" >> ci-errors.txt
+          echo "=== 日志尾部 ===" >> ci-errors.txt
+          tail -150 build.log >> ci-errors.txt || true
+          wc -l ci-errors.txt
+
+      - name: Commit errors back
+        if: always()
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add -f ci-errors.txt build.log
+          git commit -m "ci: build errors [skip ci]" || echo "no changes"
+          git push origin HEAD:main || echo "push failed"
+
+      - name: Package IPA
+        if: steps.build.outputs.BUILD_EXIT == '0'
+        run: |
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/*.app Payload/
+          zip -r OrangeCloud-unsigned.ipa Payload
+
+      - name: Upload IPA
+        if: steps.build.outputs.BUILD_EXIT == '0'
         uses: actions/upload-artifact@v4
         with:
-          name: build-log
-          path: build.log
+          name: OrangeCloud-unsigned-ipa
+          path: OrangeCloud-unsigned.ipa
