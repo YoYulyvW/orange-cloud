@@ -169,7 +169,7 @@ struct CacheRuleEditorView: View {
             }
             .interactiveDismissDisabled(viewModel.isSaving)
             // 草稿一改，上次的「校验通过」就不再代表当前内容
-            .onChange(of: draftSignature) { viewModel.validationPassed = false }
+            .ocOnChange(of: draftSignature) { viewModel.validationPassed = false }
             .onDisappear {
                 viewModel.error = nil
                 viewModel.validationPassed = false

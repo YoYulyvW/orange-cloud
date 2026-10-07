@@ -109,7 +109,7 @@ struct R2ObjectListView: View {
             }
         }
         .task { await viewModel.load() }
-        .onChange(of: photoItem) {
+        .ocOnChange(of: photoItem) {
             guard let item = photoItem else { return }
             photoItem = nil
             guard canWrite else { showDenied = true; return }

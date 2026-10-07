@@ -77,7 +77,7 @@ struct SecurityInsightsView: View {
         .refreshable { await viewModel.load() }
         .ocSensoryFeedback(.success, trigger: viewModel.didStartScan)
         .ocSensoryFeedback(.success, trigger: viewModel.didDismiss)
-        .onChange(of: viewModel.didStartScan) { showScanStarted = true }
+        .ocOnChange(of: viewModel.didStartScan) { showScanStarted = true }
         .alert("已发起扫描，结果稍后更新", isPresented: $showScanStarted) {
             Button("好", role: .cancel) {}
         } message: {

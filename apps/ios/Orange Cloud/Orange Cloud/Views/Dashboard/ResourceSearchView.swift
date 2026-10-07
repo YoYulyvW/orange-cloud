@@ -10,7 +10,7 @@
 //  因此搜索走 sheet + 普通 TextField。
 //
 //  **跳转不在 sheet 内 push**：选中只回调给概览页，由它先关 sheet、再由**栈根**的
-//  `.navigationDestination(item:)` 承接（值式路由）。sheet 内 eager NavigationLink
+//  `.ocNavigationDestination(item:)` 承接（值式路由）。sheet 内 eager NavigationLink
 //  指向「内部还要再导航」的目的页在 iOS 17 会卡死（见 DashboardView 注释）。
 //
 

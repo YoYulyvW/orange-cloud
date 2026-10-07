@@ -129,7 +129,7 @@ struct PurgeCacheSheet: View {
             .navigationTitle("按目标清理缓存")
             .navigationBarTitleDisplayMode(.inline)
             // 切换粒度时清空已输入内容，避免把 URL 当成标签误提交
-            .onChange(of: mode) { text = "" }
+            .ocOnChange(of: mode) { text = "" }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("取消") { dismiss() }

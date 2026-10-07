@@ -197,7 +197,7 @@ private struct HyperdriveDetailSheet: View {
             } message: {
                 Text("删除后引用该配置的 Worker 将无法连接，不可撤销。")
             }
-            .onChange(of: viewModel.configs.contains { $0.id == configId }) { _, stillThere in
+            .ocOnChange(of: viewModel.configs.contains { $0.id == configId }) { _, stillThere in
                 if !stillThere { dismiss() }
             }
         }
@@ -409,7 +409,7 @@ private struct HyperdriveConnectionSheet: View {
                     Picker("数据库类型", selection: $scheme) {
                         ForEach(HyperdriveScheme.allCases) { Text($0.label).tag($0) }
                     }
-                    .onChange(of: scheme) { _, new in
+                    .ocOnChange(of: scheme) { _, new in
                         if portText == "5432" || portText == "3306" { portText = String(new.defaultPort) }
                     }
                     TextField("主机", text: $host)
@@ -490,7 +490,7 @@ private struct HyperdriveCreateView: View {
                     Picker("数据库类型", selection: $scheme) {
                         ForEach(HyperdriveScheme.allCases) { Text($0.label).tag($0) }
                     }
-                    .onChange(of: scheme) { _, new in portText = String(new.defaultPort) }
+                    .ocOnChange(of: scheme) { _, new in portText = String(new.defaultPort) }
                 }
                 Section("源数据库连接") {
                     TextField("主机", text: $host)

@@ -612,7 +612,7 @@ private struct WorkerBindResourceSheet: View {
                             ForEach(availableKinds) { Text($0.label).tag($0) }
                         }
                         .pickerStyle(.segmented)
-                        .onChange(of: kind) { _, _ in
+                        .ocOnChange(of: kind) { _, _ in
                             selectedId = ""
                             if !nameEditedManually { name = "" }
                         }
@@ -641,7 +641,7 @@ private struct WorkerBindResourceSheet: View {
                         .font(.callout.monospaced())
                         .textInputAutocapitalization(.characters)
                         .autocorrectionDisabled()
-                        .onChange(of: name) { _, _ in nameEditedManually = true }
+                        .ocOnChange(of: name) { _, _ in nameEditedManually = true }
                 } header: {
                     Text("绑定变量名")
                 } footer: {
@@ -676,7 +676,7 @@ private struct WorkerBindResourceSheet: View {
                 kind = availableKinds.first ?? .kv
                 await viewModel.loadResources(canReadD1: canReadD1, canReadKV: canReadKV, canReadR2: canReadR2)
             }
-            .onChange(of: selectedId) { _, newValue in
+            .ocOnChange(of: selectedId) { _, newValue in
                 // 未手动改过名字时，用所选资源名推导一个合法默认绑定名
                 guard !nameEditedManually, !newValue.isEmpty,
                       let picked = options.first(where: { $0.id == newValue }) else { return }

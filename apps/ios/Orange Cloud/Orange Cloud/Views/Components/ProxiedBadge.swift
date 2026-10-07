@@ -12,7 +12,7 @@ struct ProxiedBadge: View {
     var body: some View {
         Image(systemName: proxied ? "cloud.fill" : "cloud")
             .foregroundStyle(proxied ? Color.ocOrange : Color.secondary)
-            .contentTransition(.symbolEffect(.replace))
+            .ocSymbolReplaceTransition()
             .accessibilityLabel(proxied ? String(localized: "已代理") : String(localized: "仅 DNS"))
     }
 }

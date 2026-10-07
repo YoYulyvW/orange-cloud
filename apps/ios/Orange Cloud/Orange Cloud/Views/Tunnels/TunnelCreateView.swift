@@ -66,7 +66,7 @@ struct TunnelCreateView: View {
                     .disabled(!canSave)
                 }
             }
-            .navigationDestination(item: $created) { tunnel in
+            .ocNavigationDestination(item: $created) { tunnel in
                 TunnelConnectView(tunnel: tunnel, accountId: accountId, session: session) {
                     dismiss()
                 }

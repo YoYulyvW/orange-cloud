@@ -46,7 +46,7 @@ struct ZoneTrafficMapCard: View {
             // 地理数据仅 Pro 拉取，免费层只展示锁定预告
             if entitlements.isPro { await viewModel.loadCountries() }
         }
-        .onChange(of: viewModel.selectedRange) {
+        .ocOnChange(of: viewModel.selectedRange) {
             if entitlements.isPro { Task { await viewModel.loadCountries() } }
         }
     }

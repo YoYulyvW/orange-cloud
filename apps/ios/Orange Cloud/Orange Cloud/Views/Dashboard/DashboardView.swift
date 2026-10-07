@@ -33,7 +33,7 @@ struct DashboardView: View {
 
     private let session: SessionStore
 
-    /// 命令搜索 / 告警中心选中的资源目的地：栈根用 `.navigationDestination(item:)` 承接。
+    /// 命令搜索 / 告警中心选中的资源目的地：栈根用 `.ocNavigationDestination(item:)` 承接。
     /// 用 item 版而非 NavigationPath：本工程没有一处 `NavigationStack(path:)`，
     /// 而 item 版同样能程序化 push（TunnelCreateView 已在用），改动面与风险都最小。
     @State private var resourceRoute: DashboardResourceRoute?
@@ -91,7 +91,7 @@ struct DashboardView: View {
                 }
                 // 命令搜索 / 告警中心 / 跨类型置顶的跳转（Worker 详情、R2 对象、D1 控制台、
                 // KV 键列表内部都还要继续 push）同样只挂栈根，值式
-                .navigationDestination(item: $resourceRoute) { route in
+                .ocNavigationDestination(item: $resourceRoute) { route in
                     resourceDestination(route)
                 }
                 // 域名详情子树（规则 hub / 负载均衡 / Snippets / Bulk Redirects）从本栈
@@ -100,7 +100,7 @@ struct DashboardView: View {
                 .id(session.selectedAccount?.id)
         }
         // 账号切换后旧账号的资源目的地不应留在栈上
-        .onChange(of: session.selectedAccount?.id) {
+        .ocOnChange(of: session.selectedAccount?.id) {
             resourceRoute = nil
         }
     }
@@ -413,13 +413,13 @@ private struct DashboardHomeView: View {
                 hasZoneData: !cachedZones.isEmpty
             )
         }
-        .onChange(of: accountPrefs.billingCycleDay) {
+        .ocOnChange(of: accountPrefs.billingCycleDay) {
             Task { await loadUsage(force: true) }
         }
-        .onChange(of: dayBoundaryRaw) {
+        .ocOnChange(of: dayBoundaryRaw) {
             Task { await loadUsage(force: true) }
         }
-        .onChange(of: auth.sessionsNeedingReauth) { old, new in
+        .ocOnChange(of: auth.sessionsNeedingReauth) { old, new in
             // 重新授权成功（当前身份的「需重授权」标记被摘除）→ 立刻重拉全部数据
             if let sid = auth.currentSessionId, old.contains(sid), !new.contains(sid) {
                 Task { await refreshAll() }
@@ -748,7 +748,7 @@ private struct DashboardHomeView: View {
                     ),
                     in: Circle()
                 )
-                .symbolEffect(.bounce, value: session.selectedAccount?.id)
+                .ocBounceEffect(value: session.selectedAccount?.id)
         }
 #if !OC_DISABLE_TIPKIT
         .safePopoverTip(accountSwitchTip, enabled: !usesInlineTip)

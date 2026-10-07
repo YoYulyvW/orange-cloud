@@ -107,7 +107,7 @@ struct GatewayRuleEditorView: View {
             }
             .interactiveDismissDisabled(viewModel.isSaving)
             .onAppear(perform: prefill)
-            .onChange(of: type) { _, newType in
+            .ocOnChange(of: type) { _, newType in
                 // 切换类型后，若当前动作不在新类型动作集中，回落到首个合法动作
                 if !newType.actions.contains(where: { $0.value == action }) {
                     action = newType.actions.first?.value ?? newType.defaultAction

@@ -67,7 +67,7 @@ struct TunnelConnectView: View {
                             .font(.subheadline.weight(.medium))
                             .foregroundStyle(Color.ocOrangeText)
                     }
-                    .contentTransition(.symbolEffect(.replace))
+                    .ocSymbolReplaceTransition()
                 } else if viewModel.isLoadingToken {
                     HStack(spacing: 8) {
                         ProgressView()

@@ -217,7 +217,7 @@ private struct QueueDetailSheet: View {
                 Text("删除后该队列及其未消费消息将被移除，不可撤销。")
             }
             // 队列被删（列表里没了）时自动收起
-            .onChange(of: viewModel.queues.contains { $0.queueId == queueId }) { _, stillThere in
+            .ocOnChange(of: viewModel.queues.contains { $0.queueId == queueId }) { _, stillThere in
                 if !stillThere { dismiss() }
             }
         }

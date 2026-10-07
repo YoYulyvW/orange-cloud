@@ -114,7 +114,7 @@ private struct TranslationSessionModifier: ViewModifier {
                 guard let request else { return }
                 await translate(request, with: session)
             }
-            .onChange(of: request, initial: true) { _, new in
+            .ocOnChange(of: request, initial: true) { _, new in
                 guard let new else {
                     configuration = nil
                     return

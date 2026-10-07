@@ -2,8 +2,7 @@
 //  iOS16Compat.swift
 //  Orange Cloud
 //
-//  iOS 16.4 移植兼容层：把 iOS 17+ 专属的 SwiftUI 组件用 #available 降级，
-//  iOS 17+ 走原生（外观一致），iOS 16 用等价自绘实现。
+//  iOS 16.4 移植兼容层：把 iOS 17+ 专属的 SwiftUI 组件用 #available 降级。
 //
 
 import SwiftUI
@@ -92,4 +91,77 @@ extension View {
 enum OCSensoryFeedback {
     case success
     case impactLight
+}
+
+// MARK: - symbolEffect / contentTransition（iOS 17+）
+
+extension View {
+    /// contentTransition(.symbolEffect(.replace)) 的兼容封装
+    @ViewBuilder
+    func ocSymbolReplaceTransition() -> some View {
+        if #available(iOS 17.0, *) {
+            self.contentTransition(.symbolEffect(.replace))
+        } else {
+            self
+        }
+    }
+
+    /// symbolEffect(.bounce, value:) 的兼容封装
+    @ViewBuilder
+    func ocBounceEffect<V: Equatable>(value: V) -> some View {
+        if #available(iOS 17.0, *) {
+            self.symbolEffect(.bounce, value: value)
+        } else {
+            self
+        }
+    }
+}
+
+// MARK: - navigationDestination(item:)（iOS 17+）
+
+extension View {
+    /// navigationDestination(item:) 的兼容封装：iOS 16 用 isPresented+destination 拆分。
+    @ViewBuilder
+    func ocNavigationDestination<Item: Hashable, D: View>(
+        item: Binding<Item?>,
+        @ViewBuilder destination: @escaping (Item) -> D
+    ) -> some View {
+        if #available(iOS 17.0, *) {
+            self.navigationDestination(item: item, destination: destination)
+        } else {
+            self.navigationDestination(isPresented: Binding(
+                get: { item.wrappedValue != nil },
+                set: { if !$0 { item.wrappedValue = nil } }
+            )) {
+                if let value = item.wrappedValue {
+                    destination(value)
+                }
+            }
+        }
+    }
+}
+
+
+// MARK: - onChange（iOS 17 新语法 -> iOS 16）
+
+extension View {
+    /// 零参数闭包版本
+    @ViewBuilder
+    func ocOnChange<V: Equatable>(of value: V, initial: Bool = false, _ action: @escaping () -> Void) -> some View {
+        if #available(iOS 17.0, *) {
+            self.onChange(of: value, initial: initial) { action() }
+        } else {
+            self.onChange(of: value) { _ in action() }
+        }
+    }
+
+    /// 双参数闭包版本（iOS 16 拿不到旧值，旧值位传新值）
+    @ViewBuilder
+    func ocOnChange<V: Equatable>(of value: V, initial: Bool = false, _ action: @escaping (V, V) -> Void) -> some View {
+        if #available(iOS 17.0, *) {
+            self.onChange(of: value, initial: initial, action)
+        } else {
+            self.onChange(of: value) { newValue in action(newValue, newValue) }
+        }
+    }
 }

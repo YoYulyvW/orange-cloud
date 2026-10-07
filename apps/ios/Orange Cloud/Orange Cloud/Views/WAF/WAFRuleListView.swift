@@ -314,7 +314,7 @@ private struct WAFRuleFormView: View {
             }
             .interactiveDismissDisabled(viewModel.isSaving)
             // 草稿一改，上次的「校验通过」就不再代表当前内容
-            .onChange(of: draftSignature) { viewModel.validationPassed = false }
+            .ocOnChange(of: draftSignature) { viewModel.validationPassed = false }
             .onDisappear {
                 viewModel.error = nil
                 viewModel.generationError = nil
@@ -356,7 +356,7 @@ private struct WAFRuleFormView: View {
                     }
                 }
                 .padding(.vertical, 2)
-                .onChange(of: row.fieldKey) { _, newKey in
+                .ocOnChange(of: row.fieldKey) { _, newKey in
                     // 换字段后若当前运算符不适用，回落到首个可用运算符
                     let ops = availableOps(for: newKey)
                     if !ops.contains(row.op) { row.op = ops.first ?? .eq }

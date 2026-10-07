@@ -63,7 +63,7 @@ struct ZoneAnalyticsSection: View {
         .sheet(isPresented: $summaryPaywallPresented) {
             PaywallView(feature: .aiInsights)
         }
-        .onChange(of: viewModel.selectedRange) {
+        .ocOnChange(of: viewModel.selectedRange) {
             selectedDate = nil
             viewModel.clearInsight()
             Task { await viewModel.load() }

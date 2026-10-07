@@ -81,7 +81,7 @@ struct Orange_CloudApp: App {
         // 这里必须现取：App.init 的 warmUp 自检可能已把坏掉的容器换掉（见 CacheContainer），
         // 提前存成属性会让 @Query 绑在旧容器上。
         .modelContainer(CacheContainer.shared)
-        .onChange(of: scenePhase) {
+        .ocOnChange(of: scenePhase) {
             AppLog.app.info("scenePhase -> \(String(describing: scenePhase))")
             if scenePhase == .background {
                 BackgroundRefresh.schedule()

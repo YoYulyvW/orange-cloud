@@ -155,7 +155,7 @@ struct SettingsView: View {
                 } footer: {
                     Text("语言默认跟随系统，更改后需重新打开 App 生效。开启「减少动画」后，页面切换与界面变化将省去过渡动画，操作更跟手。")
                 }
-                .onChange(of: languageRaw) {
+                .ocOnChange(of: languageRaw) {
                     (AppLanguage(rawValue: languageRaw) ?? .system).apply()
                 }
                 .glassRow()
@@ -436,7 +436,7 @@ private struct AddAccountSheet: View {
                 }
         }
         // 登录成功 → currentSessionId 切到新身份 → 关闭弹层
-        .onChange(of: auth.currentSessionId) {
+        .ocOnChange(of: auth.currentSessionId) {
             dismiss()
         }
         .interactiveDismissDisabled(auth.isLoading)
@@ -503,7 +503,7 @@ private struct NotificationSettingsSection: View {
                  ? String(localized: "通过系统后台刷新检测变化后发送本地通知。时机由 iOS 调度，可能有数分钟至数小时延迟。")
                  : String(localized: "开启后在 Zone 状态变化或 Workers 出错时收到提醒。"))
         }
-        .onChange(of: notificationsEnabled) {
+        .ocOnChange(of: notificationsEnabled) {
             guard notificationsEnabled else { return }
             Task {
                 isRequesting = true

@@ -25,7 +25,7 @@ struct MainTabView: View {
                 consumePendingRoute()
                 await session.ensureAccounts()
             }
-            .onChange(of: router.pendingModule) {
+            .ocOnChange(of: router.pendingModule) {
                 consumePendingRoute()
             }
     }

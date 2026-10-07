@@ -51,7 +51,7 @@ struct ZoneListView: View {
                 ZoneListContent(session: session, isSplit: true, selectedZone: $selectedZone, zoomNamespace: zoomNamespace)
                     .id(session.selectedAccount?.id)
                     // 选中态住在外壳，账号切换时手动清空，否则 detail 栏残留旧账号的域名
-                    .onChange(of: session.selectedAccount?.id) {
+                    .ocOnChange(of: session.selectedAccount?.id) {
                         selectedZone = nil
                     }
             } detail: {

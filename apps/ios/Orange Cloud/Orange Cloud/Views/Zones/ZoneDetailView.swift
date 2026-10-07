@@ -563,7 +563,7 @@ struct ZoneDetailView: View {
                     }
                     SafeCache.perform("pin 状态保存") { try modelContext.save() }
                 }
-                .contentTransition(.symbolEffect(.replace))
+                .ocSymbolReplaceTransition()
             }
         }
         .ocSensoryFeedback(.impactLight, trigger: zone.pinned)
@@ -671,10 +671,10 @@ struct ZoneDetailView: View {
                 }
             }
         }
-        .onChange(of: actionsViewModel.didPurge) {
+        .ocOnChange(of: actionsViewModel.didPurge) {
             showPurgeDone = true
         }
-        .onChange(of: actionsViewModel.didInvalidate) {
+        .ocOnChange(of: actionsViewModel.didInvalidate) {
             showInvalidateDone = true
         }
         .alert("权限不足", isPresented: $showActionDenied) {

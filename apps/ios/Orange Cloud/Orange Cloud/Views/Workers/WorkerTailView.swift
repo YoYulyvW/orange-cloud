@@ -62,7 +62,7 @@ struct WorkerTailView: View {
         .onDisappear {
             Task { await viewModel.stop() }
         }
-        .onChange(of: scenePhase) { _, phase in
+        .ocOnChange(of: scenePhase) { _, phase in
             // tail 连接进后台必断：置灰 Live Activity，回前台再复活重连
             switch phase {
             case .background: viewModel.enterBackground()
@@ -201,11 +201,11 @@ struct WorkerTailView: View {
                 logContent
             }
             .background { SkyBackground() }
-            .onChange(of: viewModel.lines.count) {
+            .ocOnChange(of: viewModel.lines.count) {
                 scrollToBottom(proxy)
             }
             // 恢复时补一次滚动：暂停期间新行已入 buffer，但 count 不再变化时不会触发上面那条
-            .onChange(of: viewModel.isPaused) {
+            .ocOnChange(of: viewModel.isPaused) {
                 scrollToBottom(proxy)
             }
         }

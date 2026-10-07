@@ -244,7 +244,7 @@ private struct AddZoneResultView: View {
                         .font(.subheadline.weight(.medium))
                         .foregroundStyle(Color.ocOrangeText)
                 }
-                .contentTransition(.symbolEffect(.replace))
+                .ocSymbolReplaceTransition()
             }
         }
         .ocSensoryFeedback(.success, trigger: copied)
