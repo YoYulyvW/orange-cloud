@@ -142,6 +142,7 @@ extension View {
 }
 
 
+
 // MARK: - onChange（iOS 17 新语法 -> iOS 16）
 
 extension View {
@@ -162,6 +163,20 @@ extension View {
             self.onChange(of: value, initial: initial, action)
         } else {
             self.onChange(of: value) { newValue in action(newValue, newValue) }
+        }
+    }
+}
+
+// MARK: - Chart 交互（iOS 17+）
+
+extension View {
+    /// chartXSelection(value:) 的兼容封装：iOS 16 不支持图表点选，原样返回。
+    @ViewBuilder
+    func ocChartXSelection<V: Hashable>(value: Binding<V?>) -> some View {
+        if #available(iOS 17.0, *) {
+            self.chartXSelection(value: value)
+        } else {
+            self
         }
     }
 }

@@ -90,27 +90,42 @@ struct ZoneTrafficMapCard: View {
         }
     }
 
+    @ViewBuilder
     private var map: some View {
-        Map(position: $camera, interactionModes: [.pan, .zoom]) {
-            ForEach(bubbles) { bubble in
-                // 标题留空避免 200+ 国家名在图上堆叠；无障碍标签挂在圆点本身
-                Annotation("", coordinate: bubble.coordinate) {
-                    Circle()
-                        .fill(bubble.color.opacity(0.55))
-                        .overlay(Circle().strokeBorder(bubble.color, lineWidth: 1.5))
-                        .frame(width: bubble.diameter, height: bubble.diameter)
-                        .accessibilityLabel(bubble.country.displayName)
-                        .accessibilityValue(Text("\(bubble.country.requests) 次请求"))
+        if #available(iOS 17.0, *) {
+            Map(position: $camera, interactionModes: [.pan, .zoom]) {
+                ForEach(bubbles) { bubble in
+                    // 标题留空避免 200+ 国家名在图上堆叠；无障碍标签挂在圆点本身
+                    Annotation("", coordinate: bubble.coordinate) {
+                        Circle()
+                            .fill(bubble.color.opacity(0.55))
+                            .overlay(Circle().strokeBorder(bubble.color, lineWidth: 1.5))
+                            .frame(width: bubble.diameter, height: bubble.diameter)
+                            .accessibilityLabel(bubble.country.displayName)
+                            .accessibilityValue(Text("\(bubble.country.requests) 次请求"))
+                    }
+                }
+            }
+            .mapStyle(.standard(elevation: .flat, pointsOfInterest: .excludingAll))
+            .frame(height: 240)
+            .clipShape(RoundedRectangle(cornerRadius: 14))
+            .overlay(
+                RoundedRectangle(cornerRadius: 14)
+                    .strokeBorder(Color(.separator).opacity(0.4), lineWidth: 0.5)
+            )
+        } else {
+            // iOS 16：SwiftUI Map 新 API 不可用，退化为占位（图例/数据仍完整展示）
+            mapPlaceholder {
+                VStack(spacing: 6) {
+                    Image(systemName: "globe.americas")
+                        .font(.title2)
+                        .foregroundStyle(.tertiary)
+                    Text("地图需要 iOS 17 及以上")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
                 }
             }
         }
-        .mapStyle(.standard(elevation: .flat, pointsOfInterest: .excludingAll))
-        .frame(height: 240)
-        .clipShape(RoundedRectangle(cornerRadius: 14))
-        .overlay(
-            RoundedRectangle(cornerRadius: 14)
-                .strokeBorder(Color(.separator).opacity(0.4), lineWidth: 0.5)
-        )
     }
 
     /// 地图下方 Top 5 国家/地区列表（请求量降序，威胁高亮红点）

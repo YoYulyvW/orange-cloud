@@ -352,7 +352,7 @@ struct ZoneAnalyticsSection: View {
                     }
             }
         }
-        .chartXSelection(value: $selectedDate)
+        .ocChartXSelection(value: $selectedDate)
         .chartYAxis {
             AxisMarks(position: .trailing, values: .automatic(desiredCount: 4)) { value in
                 AxisGridLine(stroke: StrokeStyle(lineWidth: 0.5, dash: [3, 3]))
