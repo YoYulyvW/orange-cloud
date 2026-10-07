@@ -241,7 +241,9 @@ private struct ZoneListContent: View {
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                     .padding(.horizontal, 4)
-                TipView(ZoneRefreshTip())
+#if !OC_DISABLE_TIPKIT
+                if #available(iOS 17.0, *) { TipView(ZoneRefreshTip()) }
+#endif
                 ForEach(filteredZones) { zone in
                     NavigationLink(value: zone) {
                         ZoneCard(zone: zone, accountName: session.selectedAccount?.name ?? "")

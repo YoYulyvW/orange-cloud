@@ -2,33 +2,31 @@
 //  AnalyticsIntelligence.swift
 //  Orange Cloud
 //
-//  设备端模型（Foundation Models，iOS 26+）把一段流量分析数据读成大白话：
-//   一句话要点（"本周请求 +32%，主要来自日本"）+ 2–4 条亮点/异常提示。
-//  只读、零风险：把确定性聚合好的数字喂给模型，明确要求「只用给定数字、不得编造」，
-//  模型只负责措辞与挑重点（大幅涨跌、威胁集中、命中率偏低、来源集中等）。
-//
-//  全部离线、免费、不出设备。基线 iOS 17：FoundationModels 调用走 #available(iOS 26) 守卫。
+//  设备端模型（Foundation Models，iOS 26+）把一段流量分析数据读成大白话。
+//  iOS 16.4 移植：FoundationModels 仅在 iOS 26 SDK 存在，用 canImport 隔离。
 //
 
 import Foundation
+#if canImport(FoundationModels)
 import FoundationModels
+#endif
 
-// MARK: - 对外纯数据类型（不依赖 FoundationModels，iOS 17 也可引用）
+// MARK: - 对外纯数据类型
 
-/// 喂给模型的确定性事实集——全部由 ViewModel 的聚合值拼成，模型不接触原始数据。
+/// 喂给模型的确定性事实集
 nonisolated struct TrafficSummaryInput: Sendable {
-    let periodLabel:     String        // 本地化时间范围（"过去 24 小时"），供模型回读
+    let periodLabel:     String
     let totalRequests:   Int
-    let requestsTrend:   Double?        // 环比百分比；nil 表示无前一周期可比
+    let requestsTrend:   Double?
     let totalBytes:      Int
     let bytesTrend:      Double?
     let totalThreats:    Int
     let threatsTrend:    Double?
     let totalUniques:    Int
     let uniquesTrend:    Double?
-    let cacheHitRate:    Double?        // 0–100
-    let cacheHitTrendPt: Double?        // 百分点差
-    let topCountries:    [TopCountry]   // 请求量降序，已截断
+    let cacheHitRate:    Double?
+    let cacheHitTrendPt: Double?
+    let topCountries:    [TopCountry]
 
     nonisolated struct TopCountry: Sendable {
         let name:     String
@@ -36,7 +34,6 @@ nonisolated struct TrafficSummaryInput: Sendable {
         let threats:  Int
     }
 
-    /// 拼成一段结构化、稳定的事实清单（英文标签 + 具体数字），供模型据此措辞。
     var factSheet: String {
         var lines: [String] = []
         lines.append("Time window: \(periodLabel)")
@@ -71,21 +68,20 @@ nonisolated struct TrafficSummaryInput: Sendable {
     }
 }
 
-/// 模型产出的要点摘要（已剥离 FoundationModels 类型，iOS 17 也可持有）。
+/// 模型产出的要点摘要
 nonisolated struct TrafficInsight: Sendable {
-    let summary:    String     // 一句话要点
-    let highlights: [String]   // 2–4 条亮点/异常
+    let summary:    String
+    let highlights: [String]
 }
 
 // MARK: - 门面
 
 nonisolated enum AnalyticsAssistant {
 
-    /// 设备端模型此刻是否真的可用——AI 入口的唯一判据，详见 `OnDeviceAI.isReady`。
     static var isReady: Bool { OnDeviceAI.isReady }
 
-    /// 把一段流量数据读成一句话要点 + 几条亮点。只读、零风险。
     static func summarize(_ input: TrafficSummaryInput, locale: Locale = .current) async throws -> TrafficInsight {
+        #if canImport(FoundationModels)
         guard #available(iOS 26.0, *) else { throw OnDeviceAIError.unsupported }
         let language = locale.localizedString(forIdentifier: locale.identifier) ?? locale.identifier
         let session = LanguageModelSession(instructions: """
@@ -116,11 +112,15 @@ nonisolated enum AnalyticsAssistant {
             .filter { !$0.isEmpty }
         guard !summary.isEmpty || !highlights.isEmpty else { throw OnDeviceAIError.emptyResult }
         return TrafficInsight(summary: summary, highlights: highlights)
+        #else
+        throw OnDeviceAIError.unsupported
+        #endif
     }
 }
 
 // MARK: - 结构化产出（@Generable，iOS 26+）
 
+#if canImport(FoundationModels)
 @available(iOS 26.0, *)
 @Generable
 nonisolated struct TrafficInsightAI {
@@ -130,3 +130,4 @@ nonisolated struct TrafficInsightAI {
     @Guide(description: "2 to 4 very short highlight bullets, each a brief phrase in the user's language. Omit any that are not notable.")
     var highlights: [String]
 }
+#endif

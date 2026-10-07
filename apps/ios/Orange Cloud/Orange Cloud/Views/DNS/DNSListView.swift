@@ -135,9 +135,13 @@ struct DNSListView: View {
     private var recordList: some View {
         List {
             if canWrite {
-                TipView(DNSSwipeTip())
-                    .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets())
+#if !OC_DISABLE_TIPKIT
+                if #available(iOS 17.0, *) {
+                    TipView(DNSSwipeTip())
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets())
+                }
+#endif
             }
             ForEach(filteredRecords) { record in
                 DNSRecordRow(record: record)

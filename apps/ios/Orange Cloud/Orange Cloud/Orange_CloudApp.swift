@@ -50,7 +50,9 @@ struct Orange_CloudApp: App {
         // 须在 CrashReporter.install() 之后，让 Sentry 链式保留我们的崩溃 handler。
         _ = TelemetryStore.shared
         Self.reapOrphanTailActivities()
-        try? Tips.configure()
+#if !OC_DISABLE_TIPKIT
+        if #available(iOS 17.0, *) { try? Tips.configure() }
+#endif
         AppLog.logLaunch(
             loggedIn: manager.isLoggedIn,
             sessionCount: manager.sessions.count

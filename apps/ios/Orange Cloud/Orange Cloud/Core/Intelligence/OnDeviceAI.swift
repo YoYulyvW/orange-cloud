@@ -2,34 +2,30 @@
 //  OnDeviceAI.swift
 //  Orange Cloud
 //
-//  设备端模型（Foundation Models，iOS 26+）的共享门面：可用性判据 + 生成错误归一。
-//  WAF / 分析摘要 / DNS 生成等各处 AI 能力共用，避免重复同一套 #available 守卫与错误映射。
-//
-//  全部离线、免费、不出设备，与本 App「不用贴 API Token」的隐私定位一致。
-//  基线 iOS 17：所有 FoundationModels API 走 #available(iOS 26) 守卫，老设备整套 AI 入口静默隐藏。
+//  设备端模型（Foundation Models，iOS 26+）的共享门面。
+//  iOS 16.4 移植：FoundationModels 仅在 iOS 26 SDK 存在，用 canImport 隔离，老 SDK 整体降级。
 //
 
 import Foundation
+#if canImport(FoundationModels)
 import FoundationModels
+#endif
 
 // MARK: - 共享门面
 
 nonisolated enum OnDeviceAI {
 
     /// 设备端模型此刻是否真的可用——所有 AI 入口的唯一判据。
-    ///
-    /// Foundation Models 用的就是 Apple 智能的端侧模型，因此它**继承 Apple 智能的地区限制**：
-    /// 在中国大陆（Apple 智能暂未开放）等受限地区，即便是 iOS 26 的兼容机型，`isAvailable`
-    /// 也会返回 false。所以这里不靠 `#available(iOS 26)`、更不手动判地区/语言，而是直接以框架的
-    /// `SystemLanguageModel.isAvailable` 为准——它已把「系统版本 / 机型 / 地区 / 用户开关 /
-    /// 模型下载状态」全部收进去。不可用时整套 AI 入口静默隐藏，手敲入口始终保留。
     static var isReady: Bool {
+        #if canImport(FoundationModels)
         if #available(iOS 26.0, *) {
             return SystemLanguageModel.default.isAvailable
         }
+        #endif
         return false
     }
 
+    #if canImport(FoundationModels)
     /// 把框架的生成错误翻成给用户看的本地化文案。
     @available(iOS 26.0, *)
     static func friendlyMessage(for error: LanguageModelSession.GenerationError) -> String {
@@ -46,6 +42,7 @@ nonisolated enum OnDeviceAI {
             return String(localized: "没能生成结果，换个说法再试试。")
         }
     }
+    #endif
 }
 
 // MARK: - 共享错误

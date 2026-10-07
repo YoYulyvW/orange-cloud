@@ -208,7 +208,9 @@ private struct DashboardHomeView: View {
         )
     }
 
+#if !OC_DISABLE_TIPKIT
     private let accountSwitchTip = AccountSwitchTip()
+#endif
 
     /// 用量宫格点开的服务明细（sheet）
     @State private var usageDetail: UsageService?
@@ -311,9 +313,11 @@ private struct DashboardHomeView: View {
             VStack(alignment: .leading, spacing: 20) {
                 daybreakHeader
                     .islandReveal(0)
-                if usesInlineTip {
+#if !OC_DISABLE_TIPKIT
+                if usesInlineTip, #available(iOS 17.0, *) {
                     TipView(accountSwitchTip)
                 }
+#endif
                 if let sid = auth.currentSessionId, auth.sessionsNeedingReauth.contains(sid) {
                     // token 缺 refresh token（无从续期）：给「重新授权」引导而非泛化的刷新失败——
                     // 一键重授权对同一身份原地换新令牌，成功后自动摘标并重拉数据
@@ -378,7 +382,11 @@ private struct DashboardHomeView: View {
             )
         }
         .task(id: session.accounts.count) {
-            AccountSwitchTip.hasMultipleAccounts = session.accounts.count > 1 || auth.sessions.count > 1
+#if !OC_DISABLE_TIPKIT
+            if #available(iOS 17.0, *) {
+                AccountSwitchTip.hasMultipleAccounts = session.accounts.count > 1 || auth.sessions.count > 1
+            }
+#endif
         }
         .task(id: displayZones.map(\.id)) {
             await loadTraffic()
@@ -741,7 +749,9 @@ private struct DashboardHomeView: View {
                 )
                 .symbolEffect(.bounce, value: session.selectedAccount?.id)
         }
+#if !OC_DISABLE_TIPKIT
         .safePopoverTip(accountSwitchTip, enabled: !usesInlineTip)
+#endif
         .accessibilityLabel("切换账号")
         .accessibilityValue(session.selectedAccount?.name ?? "")
     }

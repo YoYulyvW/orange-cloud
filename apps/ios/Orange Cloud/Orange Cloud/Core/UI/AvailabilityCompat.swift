@@ -15,10 +15,12 @@ extension ProcessInfo {
     /// 这一窄段的 TipKit 把 popover 锚定到导航栏 bar button 时，会在
     /// `-[UINavigationBar layoutSubviews]` 阶段抛未捕获异常导致崩溃，Apple 自 17.1 起修复。
     /// 仅用于对这段版本做最小化 UI 降级，勿扩大到 17.1+。
+#if !OC_DISABLE_TIPKIT
     nonisolated static var isBuggyTipKitNavBar: Bool {
         let v = processInfo.operatingSystemVersion
         return v.majorVersion == 17 && v.minorVersion == 0
     }
+#endif
 }
 
 extension View {
@@ -28,6 +30,7 @@ extension View {
     ///
     /// `enabled` 供调用方按画布再关一道：宽画布（regular）顶部有 Tab 胶囊，锚在工具栏按钮上的
     /// popover 会横着盖住它，那种场合改用页内 `TipView`，见 DashboardView 的 accountSwitchTip。
+#if !OC_DISABLE_TIPKIT
     @ViewBuilder
     func safePopoverTip<T: Tip>(_ tip: T, enabled: Bool = true) -> some View {
         if !enabled || ProcessInfo.isBuggyTipKitNavBar {
@@ -36,6 +39,12 @@ extension View {
             popoverTip(tip)
         }
     }
+#else
+    @ViewBuilder
+    func safePopoverTip<T>(_ tip: T, enabled: Bool = true) -> some View {
+        self
+    }
+#endif
 }
 
 // MARK: - 统一动效信号

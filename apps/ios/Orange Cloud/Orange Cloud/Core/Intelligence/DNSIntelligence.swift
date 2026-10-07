@@ -2,21 +2,17 @@
 //  DNSIntelligence.swift
 //  Orange Cloud
 //
-//  设备端模型（Foundation Models，iOS 26+）把一句大白话变成一条 DNS 记录草稿：
-//   "给 blog 加个指向 1.2.3.4 的 A 记录" → 结构化草稿（类型/名称/值/代理 为白名单/受控字段）
-//   → 由 Swift 确定性渲染成 `CreateDNSRecord`，再填入表单，提交前由人核对。
-//  模型只挑字段、不拼协议串，从根上杜绝非法记录类型与字段越界。
-//
-//  全部离线、免费、不出设备。基线 iOS 17：FoundationModels 调用走 #available(iOS 26) 守卫，
-//  老设备保留手填表单。
+//  设备端模型（Foundation Models，iOS 26+）把一句大白话变成一条 DNS 记录草稿。
+//  iOS 16.4 移植：FoundationModels 仅在 iOS 26 SDK 存在，用 canImport 隔离。
 //
 
 import Foundation
+#if canImport(FoundationModels)
 import FoundationModels
+#endif
 
-// MARK: - 对外纯数据类型（不依赖 FoundationModels，iOS 17 也可引用）
+// MARK: - 对外纯数据类型
 
-/// 渲染完成的记录草稿：record 已可直接提交，summary 是给用户核对的自然语言回读。
 nonisolated struct GeneratedDNSRecord: Sendable {
     let record:  CreateDNSRecord
     let summary: String
@@ -26,11 +22,10 @@ nonisolated struct GeneratedDNSRecord: Sendable {
 
 nonisolated enum DNSAssistant {
 
-    /// 设备端模型此刻是否真的可用——AI 入口的唯一判据，详见 `OnDeviceAI.isReady`。
     static var isReady: Bool { OnDeviceAI.isReady }
 
-    /// 自然语言 → 结构化草稿 → 确定性渲染成 CreateDNSRecord。永不直接吐协议字段串。
     static func generateRecord(from naturalLanguage: String, locale: Locale = .current) async throws -> GeneratedDNSRecord {
+        #if canImport(FoundationModels)
         guard #available(iOS 26.0, *) else { throw OnDeviceAIError.unsupported }
         let language = locale.localizedString(forIdentifier: locale.identifier) ?? locale.identifier
         let session = LanguageModelSession(instructions: """
@@ -57,12 +52,15 @@ nonisolated enum DNSAssistant {
         }
         guard let result = draft.render() else { throw OnDeviceAIError.emptyResult }
         return result
+        #else
+        throw OnDeviceAIError.unsupported
+        #endif
     }
 }
 
 // MARK: - 结构化草稿（@Generable，iOS 26+）
 
-/// 记录类型——白名单，与表单的 recordTypes 对齐。模型选不出不存在的类型。
+#if canImport(FoundationModels)
 @available(iOS 26.0, *)
 @Generable
 nonisolated enum DNSTypeDraft {
@@ -84,7 +82,6 @@ nonisolated enum DNSTypeDraft {
         }
     }
 
-    /// 仅 A/AAAA/CNAME 支持 Cloudflare 代理
     nonisolated var supportsProxy: Bool {
         switch self {
         case .a, .aaaa, .cname: true
@@ -116,7 +113,6 @@ nonisolated struct DNSRecordDraftAI {
     @Guide(description: "One short sentence, in the user's language, describing the record being created.")
     var summary: String
 
-    /// 确定性渲染：代理仅对支持类型生效，TTL 取自动，优先级只给 MX。
     nonisolated func render() -> GeneratedDNSRecord? {
         let trimmedContent = content.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedContent.isEmpty else { return nil }
@@ -126,7 +122,7 @@ nonisolated struct DNSRecordDraftAI {
             name:     trimmedName.isEmpty ? "@" : trimmedName,
             content:  trimmedContent,
             proxied:  type.supportsProxy && proxied,
-            ttl:      1,                                    // 自动 TTL（代理开启时本就强制自动）
+            ttl:      1,
             priority: type.isMX ? max(0, min(priority, 65535)) : nil,
             comment:  nil
         )
@@ -136,3 +132,4 @@ nonisolated struct DNSRecordDraftAI {
         )
     }
 }
+#endif

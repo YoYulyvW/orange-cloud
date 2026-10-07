@@ -47,7 +47,9 @@ struct WorkerTailView: View {
                 ) {
                     viewModel.togglePause()
                 }
+#if !OC_DISABLE_TIPKIT
                 .safePopoverTip(TailPauseTip())
+#endif
                 Button("清屏", systemImage: "xmark.bin") {
                     viewModel.clear()
                 }

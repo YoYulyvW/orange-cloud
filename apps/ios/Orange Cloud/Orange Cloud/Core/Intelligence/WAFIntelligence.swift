@@ -2,21 +2,18 @@
 //  WAFIntelligence.swift
 //  Orange Cloud
 //
-//  设备端模型（Foundation Models，iOS 26+）辅助 WAF 自定义规则：
-//   1. 自然语言 → 结构化草稿（@Generable，字段/运算符为白名单枚举）→ 由 Swift
-//      确定性渲染成 Cloudflare Rules 表达式，从根上杜绝幻觉字段与语法错误。
-//   2. 反向：把现有表达式翻译成大白话，零风险只读。
-//
-//  全部离线、免费、不出设备，与本 App「不用贴 API Token」的隐私定位一致。
-//  基线 iOS 17：所有 FoundationModels API 走 #available(iOS 26) 守卫，老设备保留手敲入口。
+//  设备端模型（Foundation Models，iOS 26+）辅助 WAF 自定义规则。
+//  iOS 16.4 移植：FoundationModels 仅在 iOS 26 SDK 存在，整块 AI 逻辑用 canImport 隔离。
 //
 
 import Foundation
+#if canImport(FoundationModels)
 import FoundationModels
+#endif
 
-// MARK: - 对外纯数据类型（不依赖 FoundationModels，iOS 17 也可引用）
+// MARK: - 对外纯数据类型（不依赖 FoundationModels）
 
-/// 渲染完成的规则草稿：表达式已拼好，动作复用既有枚举，summary 是给用户核对的自然语言回读。
+/// 渲染完成的规则草稿
 nonisolated struct GeneratedWAFRule: Sendable {
     let expression: String
     let action: WAFRuleAction
@@ -37,15 +34,15 @@ nonisolated enum WAFAssistantError: LocalizedError {
     }
 }
 
-// MARK: - 门面（非门控；FoundationModels 调用都包在 #available 内部）
+// MARK: - 门面（非门控；FoundationModels 调用都包在 canImport 内）
 
 nonisolated enum WAFAssistant {
 
-    /// 设备端模型此刻是否真的可用——AI 入口的唯一判据，详见 `OnDeviceAI.isReady`。
+    /// 设备端模型此刻是否真的可用
     static var isReady: Bool { OnDeviceAI.isReady }
 
-    /// 自然语言 → 结构化草稿 → 确定性渲染成表达式。永不直接吐表达式字符串。
     static func generateRule(from naturalLanguage: String, locale: Locale = .current) async throws -> GeneratedWAFRule {
+        #if canImport(FoundationModels)
         guard #available(iOS 26.0, *) else { throw WAFAssistantError.unsupported }
         let language = locale.localizedString(forIdentifier: locale.identifier) ?? locale.identifier
         let session = LanguageModelSession(instructions: """
@@ -72,10 +69,13 @@ nonisolated enum WAFAssistant {
         let rule = draft.render()
         guard !rule.expression.isEmpty else { throw WAFAssistantError.emptyResult }
         return rule
+        #else
+        throw WAFAssistantError.unsupported
+        #endif
     }
 
-    /// 反向：把现有表达式翻译成大白话（只读，零风险）。
     static func explainRule(expression: String, action: String?, locale: Locale = .current) async throws -> String {
+        #if canImport(FoundationModels)
         guard #available(iOS 26.0, *) else { throw WAFAssistantError.unsupported }
         let trimmed = expression.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { throw WAFAssistantError.emptyResult }
@@ -98,27 +98,81 @@ nonisolated enum WAFAssistant {
         let cleaned = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !cleaned.isEmpty else { throw WAFAssistantError.emptyResult }
         return cleaned
+        #else
+        throw WAFAssistantError.unsupported
+        #endif
+    }
+}
+
+// MARK: - 值类型与字面量渲染（非门控）
+
+nonisolated enum WAFValueKind {
+    case string, number, ip
+
+    nonisolated func literal(for raw: String) -> String {
+        switch self {
+        case .string: "\(WAFValueKind.escape(raw))"
+        case .number: WAFValueKind.numeric(raw)
+        case .ip:     raw
+        }
+    }
+
+    private nonisolated static func escape(_ s: String) -> String {
+        s.replacingOccurrences(of: "\\", with: "\\\\")
+            .replacingOccurrences(of: "\"", with: "\\\"")
+    }
+
+    private nonisolated static func numeric(_ s: String) -> String {
+        let filtered = s.filter { $0.isNumber || $0 == "-" || $0 == "." }
+        return filtered.isEmpty ? "0" : filtered
+    }
+}
+
+// MARK: - 提交前结构 lint
+
+nonisolated enum WAFExpressionLint {
+    nonisolated static func problem(in expression: String) -> String? {
+        let trimmed = expression.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return String(localized: "表达式不能为空") }
+
+        var inString = false
+        var escaped = false
+        var depth = 0
+        for ch in trimmed {
+            if escaped { escaped = false; continue }
+            if ch == "\\" { escaped = true; continue }
+            if ch == "\"" { inString.toggle(); continue }
+            if inString { continue }
+            if ch == "(" { depth += 1 }
+            if ch == ")" {
+                depth -= 1
+                if depth < 0 { return String(localized: "括号不匹配") }
+            }
+        }
+        if inString { return String(localized: "引号不匹配") }
+        if depth != 0 { return String(localized: "括号不匹配") }
+        return nil
     }
 }
 
 // MARK: - 结构化草稿（@Generable，iOS 26+）
 
-/// 可匹配的请求字段——白名单。模型只能从这些里选，选不出不存在的字段。
+#if canImport(FoundationModels)
 @available(iOS 26.0, *)
 @Generable
 nonisolated enum WAFFieldDraft {
-    case clientIP          // ip.src
-    case country           // ip.geoip.country
-    case asNumber          // ip.geoip.asnum
-    case hostname          // http.host
-    case uriPath           // http.request.uri.path
-    case fullURI           // http.request.uri
-    case queryString       // http.request.uri.query
-    case httpMethod        // http.request.method
-    case userAgent         // http.user_agent
-    case referer           // http.referer
-    case threatScore       // cf.threat_score
-    case botScore          // cf.bot_management.score
+    case clientIP
+    case country
+    case asNumber
+    case hostname
+    case uriPath
+    case fullURI
+    case queryString
+    case httpMethod
+    case userAgent
+    case referer
+    case threatScore
+    case botScore
 
     nonisolated var cfToken: String {
         switch self {
@@ -145,7 +199,6 @@ nonisolated enum WAFFieldDraft {
         }
     }
 
-    /// 把模型选的运算符纠正到该字段类型合法的范围，避免产出 CF 必拒的语法。
     nonisolated func normalized(_ comparator: WAFComparatorDraft) -> WAFComparatorDraft {
         switch valueKind {
         case .string:
@@ -164,17 +217,16 @@ nonisolated enum WAFFieldDraft {
     }
 }
 
-/// 比较方式——白名单。
 @available(iOS 26.0, *)
 @Generable
 nonisolated enum WAFComparatorDraft {
-    case equals        // eq
-    case notEquals     // ne
-    case contains      // contains（字符串）
-    case matchesRegex  // matches（字符串正则）
-    case greaterThan   // gt（数值）
-    case lessThan      // lt（数值）
-    case isOneOf       // in {…}
+    case equals
+    case notEquals
+    case contains
+    case matchesRegex
+    case greaterThan
+    case lessThan
+    case isOneOf
 
     nonisolated var cfToken: String {
         switch self {
@@ -192,11 +244,10 @@ nonisolated enum WAFComparatorDraft {
 @available(iOS 26.0, *)
 @Generable
 nonisolated enum WAFLogicDraft {
-    case all   // and
-    case any   // or
+    case all
+    case any
 }
 
-/// 动作——白名单，映射到既有 WAFRuleAction。
 @available(iOS 26.0, *)
 @Generable
 nonisolated enum WAFActionDraft {
@@ -227,7 +278,6 @@ nonisolated struct WAFConditionDraft {
     @Guide(description: "The value to compare against. Country uses an ISO 3166-1 alpha-2 code (CN, US). IP uses dotted form. For 'is one of', separate items with commas.")
     var value: String
 
-    /// 确定性渲染成一段表达式（字符串自动加引号转义、数值/IP 裸写、in 拼成列表）。
     nonisolated var renderedExpression: String? {
         let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return nil }
@@ -282,56 +332,4 @@ nonisolated struct WAFRuleDraftAI {
         )
     }
 }
-
-// MARK: - 值类型与字面量渲染（非门控）
-
-nonisolated enum WAFValueKind {
-    case string, number, ip
-
-    /// 把原始值渲染成 CF 表达式字面量：字符串加引号转义，数值/IP 裸写。
-    nonisolated func literal(for raw: String) -> String {
-        switch self {
-        case .string: "\"\(WAFValueKind.escape(raw))\""
-        case .number: WAFValueKind.numeric(raw)
-        case .ip:     raw
-        }
-    }
-
-    private nonisolated static func escape(_ s: String) -> String {
-        s.replacingOccurrences(of: "\\", with: "\\\\")
-            .replacingOccurrences(of: "\"", with: "\\\"")
-    }
-
-    private nonisolated static func numeric(_ s: String) -> String {
-        let filtered = s.filter { $0.isNumber || $0 == "-" || $0 == "." }
-        return filtered.isEmpty ? "0" : filtered
-    }
-}
-
-// MARK: - 提交前结构 lint（确定性渲染之外的兜底，手敲表达式同样受益）
-
-nonisolated enum WAFExpressionLint {
-    /// 返回结构问题的本地化描述；结构看起来没问题时返回 nil。保守起见只查明显错误。
-    nonisolated static func problem(in expression: String) -> String? {
-        let trimmed = expression.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty else { return String(localized: "表达式不能为空") }
-
-        var inString = false
-        var escaped = false
-        var depth = 0
-        for ch in trimmed {
-            if escaped { escaped = false; continue }
-            if ch == "\\" { escaped = true; continue }
-            if ch == "\"" { inString.toggle(); continue }
-            if inString { continue }
-            if ch == "(" { depth += 1 }
-            if ch == ")" {
-                depth -= 1
-                if depth < 0 { return String(localized: "括号不匹配") }
-            }
-        }
-        if inString { return String(localized: "引号不匹配") }
-        if depth != 0 { return String(localized: "括号不匹配") }
-        return nil
-    }
-}
+#endif

@@ -6,10 +6,12 @@
 //  Tips.configure() 在 App 入口调用。
 //
 
+#if !OC_DISABLE_TIPKIT
 import Foundation
 import TipKit
 
 /// Zone 列表：下拉刷新
+@available(iOS 17.0, *)
 nonisolated struct ZoneRefreshTip: Tip {
     var title: Text {
         Text("下拉刷新")
@@ -23,6 +25,7 @@ nonisolated struct ZoneRefreshTip: Tip {
 }
 
 /// DNS 列表：滑动操作
+@available(iOS 17.0, *)
 nonisolated struct DNSSwipeTip: Tip {
     var title: Text {
         Text("滑动管理记录")
@@ -36,6 +39,7 @@ nonisolated struct DNSSwipeTip: Tip {
 }
 
 /// 实时日志：暂停
+@available(iOS 17.0, *)
 nonisolated struct TailPauseTip: Tip {
     var title: Text {
         Text("日志滚动太快？")
@@ -49,6 +53,7 @@ nonisolated struct TailPauseTip: Tip {
 }
 
 /// Dashboard：账号切换
+@available(iOS 17.0, *)
 nonisolated struct AccountSwitchTip: Tip {
     var title: Text {
         Text("多账号切换")
@@ -67,3 +72,4 @@ nonisolated struct AccountSwitchTip: Tip {
         #Rule(Self.$hasMultipleAccounts) { $0 == true }
     }
 }
+#endif
