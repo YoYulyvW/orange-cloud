@@ -7,7 +7,6 @@
 
 import Foundation
 import AppIntents
-import SwiftData
 
 nonisolated struct ZoneEntity: AppEntity, Identifiable {
 

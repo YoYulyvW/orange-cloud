@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftData
 import Perception
 import TipKit
 import WidgetKit
@@ -224,11 +223,11 @@ private struct DashboardHomeView: View {
         _resourceRoute = resourceRoute
         let accountId = session.selectedAccount?.id ?? ""
         _cachedZones = Query(
-            filter: #Predicate<CachedZone> { $0.accountId == accountId },
+            filter: { $0.accountId == accountId },
             sort: \CachedZone.name
         )
         _cachedWorkers = Query(
-            filter: #Predicate<CachedWorkerScript> { $0.accountId == accountId }
+            filter: { $0.accountId == accountId }
         )
         _viewModel = State(initialValue: DashboardViewModel(
             analyticsService: session.analyticsService,

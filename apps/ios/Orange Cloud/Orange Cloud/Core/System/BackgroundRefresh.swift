@@ -8,7 +8,6 @@
 
 import Foundation
 import BackgroundTasks
-import SwiftData
 
 @MainActor
 enum BackgroundRefresh {

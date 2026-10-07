@@ -9,7 +9,6 @@
 //
 
 import SwiftUI
-import SwiftData
 import UIKit
 
 struct AddZoneView: View {

@@ -8,7 +8,6 @@
 
 import SwiftUI
 import Perception
-import SwiftData
 
 struct ZoneDetailView: View {
 
@@ -40,7 +39,7 @@ struct ZoneDetailView: View {
         self.zone = zone
         self.session = session
         let zoneId = zone.id
-        _records = Query(filter: #Predicate<CachedDNSRecord> { $0.zoneId == zoneId })
+        _records = Query(filter: { $0.zoneId == zoneId })
         _analyticsViewModel = State(initialValue: ZoneAnalyticsViewModel(
             analyticsService: session.analyticsService, zoneId: zoneId
         ))

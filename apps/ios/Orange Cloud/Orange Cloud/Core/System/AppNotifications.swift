@@ -8,7 +8,6 @@
 
 import Foundation
 import UserNotifications
-import SwiftData
 
 @MainActor
 enum AppNotifications {

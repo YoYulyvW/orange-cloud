@@ -7,7 +7,6 @@
 
 import Foundation
 import Perception
-import SwiftData
 
 @Perceptible
 @MainActor
@@ -112,7 +111,7 @@ final class DNSListViewModel {
             try await dnsService.deleteRecord(zoneId: zoneId, recordId: recordId)
             SafeCache.perform("DNS 缓存删除") {
                 let descriptor = FetchDescriptor<CachedDNSRecord>(
-                    predicate: #Predicate { $0.id == recordId }
+                    predicate: { $0.id == recordId }
                 )
                 for cached in try context.fetch(descriptor) {
                     context.delete(cached)
@@ -130,7 +129,7 @@ final class DNSListViewModel {
         let zoneId = self.zoneId
         SafeCache.perform("DNS 缓存同步") {
             let descriptor = FetchDescriptor<CachedDNSRecord>(
-                predicate: #Predicate { $0.zoneId == zoneId }
+                predicate: { $0.zoneId == zoneId }
             )
             let existing = try context.fetch(descriptor)
             let fetchedIDs = Set(records.map(\.id))
@@ -160,7 +159,7 @@ final class DNSListViewModel {
         let recordId = record.id
         SafeCache.perform("DNS 缓存 upsert") {
             let descriptor = FetchDescriptor<CachedDNSRecord>(
-                predicate: #Predicate { $0.id == recordId }
+                predicate: { $0.id == recordId }
             )
             if let cached = try context.fetch(descriptor).first {
                 cached.update(from: record)

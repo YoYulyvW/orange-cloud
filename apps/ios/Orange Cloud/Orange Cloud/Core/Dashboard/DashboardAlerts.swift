@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftData
 
 /// 一条告警。`route` 为空表示无处可跳（如「还没有部署 Worker」）。
 struct DashboardAlert: Identifiable, Hashable {

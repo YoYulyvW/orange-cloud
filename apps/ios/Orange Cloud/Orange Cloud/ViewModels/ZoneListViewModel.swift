@@ -7,7 +7,6 @@
 
 import Foundation
 import Perception
-import SwiftData
 
 @Perceptible
 @MainActor

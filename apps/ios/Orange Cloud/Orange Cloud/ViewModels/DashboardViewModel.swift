@@ -7,7 +7,6 @@
 
 import Foundation
 import Perception
-import SwiftData
 import WidgetKit
 
 @Perceptible
@@ -250,7 +249,7 @@ final class DashboardViewModel {
                 // 分域名回写缓存：域名详情页首屏直显记录数（不再默认 0 条等进列表刷新）
                 SafeCache.perform("dnsRecordCount 回写") {
                     let rows = try context.fetch(
-                        FetchDescriptor<CachedZone>(predicate: #Predicate { $0.accountId == accountId })
+                        FetchDescriptor<CachedZone>(predicate: { $0.accountId == accountId })
                     )
                     let byId = Dictionary(rows.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
                     for (zoneId, count) in counts {

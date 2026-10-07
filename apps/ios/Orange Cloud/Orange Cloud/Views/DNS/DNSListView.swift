@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Perception
-import SwiftData
 import TipKit
 
 struct DNSListView: View {
@@ -29,7 +28,7 @@ struct DNSListView: View {
         self.zoneId = zoneId
         self.zoneName = zoneName
         _records = Query(
-            filter: #Predicate<CachedDNSRecord> { $0.zoneId == zoneId },
+            filter: { $0.zoneId == zoneId },
             sort: [SortDescriptor(\CachedDNSRecord.type), SortDescriptor(\CachedDNSRecord.name)]
         )
         _viewModel = State(initialValue: DNSListViewModel(dnsService: session.dnsService, zoneId: zoneId, zoneName: zoneName))

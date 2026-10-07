@@ -8,7 +8,6 @@
 
 import SwiftUI
 import Perception
-import SwiftData
 
 struct WorkerListView: View {
 
@@ -35,7 +34,7 @@ struct WorkerListView: View {
         // 父视图用 .id(selectedAccount) 在切换账号时重建本视图，让谓词跟着更新。
         let accountId = session.selectedAccount?.id ?? ""
         _cachedScripts = Query(
-            filter: #Predicate<CachedWorkerScript> { $0.accountId == accountId },
+            filter: { $0.accountId == accountId },
             sort: \CachedWorkerScript.id
         )
         _viewModel = State(initialValue: WorkerListViewModel(workerService: session.workerService))

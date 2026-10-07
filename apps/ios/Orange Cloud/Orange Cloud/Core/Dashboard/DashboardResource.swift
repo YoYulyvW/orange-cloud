@@ -11,7 +11,6 @@
 //
 
 import Foundation
-import SwiftData
 
 /// 概览页可直接 push 的资源目的地（栈根 navdest 承接）。
 /// 载荷是 SwiftData 模型 / 值模型，故本枚举跟随工程默认 MainActor 隔离，不标 nonisolated。

@@ -9,7 +9,6 @@
 
 import SwiftUI
 import Perception
-import SwiftData
 import TipKit
 
 /// 域名 Tab 外壳：导航容器（Stack / Split）常驻，账号切换只重建容器内内容。
@@ -103,7 +102,7 @@ private struct ZoneListContent: View {
     init(session: SessionStore, isSplit: Bool, selectedZone: Binding<CachedZone?>, zoomNamespace: Namespace.ID) {
         let accountId = session.selectedAccount?.id ?? ""
         _cachedZones = Query(
-            filter: #Predicate<CachedZone> { $0.accountId == accountId },
+            filter: { $0.accountId == accountId },
             sort: \CachedZone.name
         )
         _viewModel = State(initialValue: ZoneListViewModel(zoneService: session.zoneService))

@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Perception
-import SwiftData
 
 struct ContentView: View {
 
