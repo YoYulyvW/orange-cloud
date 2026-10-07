@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 import SwiftData
 
 struct WorkerListView: View {
@@ -61,7 +62,7 @@ struct WorkerListView: View {
                 } else if cachedScripts.isEmpty {
                     emptyState
                 } else if filteredScripts.isEmpty {
-                    ContentUnavailableView.search(text: searchText)
+                    OCContentUnavailableView.search(text: searchText)
                 } else {
                     scriptList
                 }
@@ -104,8 +105,8 @@ struct WorkerListView: View {
             .sheet(item: $deleteTarget) { script in
                 WorkerDeleteConfirmView(script: script, viewModel: viewModel, accountId: script.accountId)
             }
-            .sensoryFeedback(.success, trigger: uploadViewModel.didUpload)
-            .sensoryFeedback(.success, trigger: viewModel.didDelete)
+            .ocSensoryFeedback(.success, trigger: uploadViewModel.didUpload)
+            .ocSensoryFeedback(.success, trigger: viewModel.didDelete)
             .task {
                 await refresh()
             }
@@ -182,7 +183,7 @@ struct WorkerListView: View {
     }
 
     private var emptyState: some View {
-        ContentUnavailableView {
+        OCContentUnavailableView {
             Label("没有 Workers", systemImage: "bolt.slash")
         } description: {
             Text("在 Cloudflare Dashboard 部署你的第一个 Worker")

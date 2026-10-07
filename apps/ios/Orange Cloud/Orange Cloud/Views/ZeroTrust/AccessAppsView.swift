@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct AccessAppsView: View {
 
@@ -80,7 +81,7 @@ struct AccessAppsView: View {
         if vm.isLoading && !vm.loaded {
             ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity)
         } else if vm.apps.isEmpty {
-            ContentUnavailableView {
+            OCContentUnavailableView {
                 Label("没有 Access 应用", systemImage: "lock.shield")
             } description: {
                 Text(vm.error ?? String(localized: "该账号下还没有受 Access 保护的应用。"))
@@ -117,7 +118,7 @@ struct AccessAppsView: View {
             }
             .daybreakList()
             .refreshable { await vm.load() }
-            .sensoryFeedback(.success, trigger: vm.didChange)
+            .ocSensoryFeedback(.success, trigger: vm.didChange)
         }
     }
 

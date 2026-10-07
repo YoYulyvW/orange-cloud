@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 /// 有 scope 则正常导航，无 scope 则显示锁图标并弹出说明。
 struct PermissionGatedNavigationLink<Destination: View>: View {

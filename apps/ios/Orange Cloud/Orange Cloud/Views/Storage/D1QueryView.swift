@@ -9,6 +9,7 @@
 //
 
 import SwiftUI
+import Perception
 import CoreTransferable
 import UniformTypeIdentifiers
 
@@ -104,7 +105,7 @@ struct D1QueryView: View {
                 .disabled(viewModel.isRunning)
             }
         }
-        .sensoryFeedback(.success, trigger: viewModel.didRun)
+        .ocSensoryFeedback(.success, trigger: viewModel.didRun)
         .confirmationDialog("查询未带 LIMIT", isPresented: $showLimitReminder, titleVisibility: .visible) {
             Button("仍要执行") {
                 Task { await runSQL() }

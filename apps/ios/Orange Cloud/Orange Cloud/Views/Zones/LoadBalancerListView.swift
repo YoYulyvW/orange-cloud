@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct LoadBalancerListView: View {
 
@@ -48,7 +49,7 @@ struct LoadBalancerListView: View {
         }
         .task { await viewModel.load() }
         .refreshable { await viewModel.load() }
-        .sensoryFeedback(.success, trigger: viewModel.didMutate)
+        .ocSensoryFeedback(.success, trigger: viewModel.didMutate)
         .sheet(item: $editorTarget) { target in
             LoadBalancerEditorView(existing: target.lb, viewModel: viewModel)
         }

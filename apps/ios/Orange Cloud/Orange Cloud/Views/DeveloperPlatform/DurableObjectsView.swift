@@ -38,7 +38,7 @@ struct DurableObjectsView: View {
         if vm.isLoading && !vm.loaded {
             ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity)
         } else if vm.namespaces.isEmpty {
-            ContentUnavailableView {
+            OCContentUnavailableView {
                 Label("没有 Durable Objects", systemImage: "cube.transparent")
             } description: {
                 Text(vm.error ?? String(localized: "该账号下还没有 Durable Object 命名空间。命名空间由 Worker 迁移声明。"))
@@ -125,7 +125,7 @@ private struct DurableObjectInstancesSheet: View {
         if vm.isLoading && !vm.loaded {
             ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity)
         } else if vm.instances.isEmpty {
-            ContentUnavailableView {
+            OCContentUnavailableView {
                 Label("没有对象", systemImage: "cube")
             } description: {
                 Text(vm.error ?? String(localized: "该命名空间下还没有对象实例。对象在首次被访问时自动创建。"))

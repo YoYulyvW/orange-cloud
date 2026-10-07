@@ -8,6 +8,7 @@
 //
 
 import SwiftUI
+import Perception
 import Charts
 
 struct ZoneAnalyticsSection: View {
@@ -34,7 +35,7 @@ struct ZoneAnalyticsSection: View {
             } else if viewModel.points.isEmpty {
                 // 失败时不再误报「暂无数据」，由上方红色提示说明
                 if viewModel.error == nil {
-                    ContentUnavailableView {
+                    OCContentUnavailableView {
                         Label("暂无数据", systemImage: "chart.xyaxis.line")
                     } description: {
                         Text("所选时间范围内没有流量数据")

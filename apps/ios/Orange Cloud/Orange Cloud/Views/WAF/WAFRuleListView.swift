@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct WAFRuleListView: View {
 
@@ -41,7 +42,7 @@ struct WAFRuleListView: View {
             if viewModel.isLoading && !viewModel.loaded {
                 SkeletonList(rows: 6, icon: .none, trailing: true)
             } else if viewModel.rules.isEmpty {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label("没有自定义规则", systemImage: "shield")
                 } description: {
                     Text(canWrite
@@ -56,7 +57,7 @@ struct WAFRuleListView: View {
                     }
                 }
             } else if filteredRules.isEmpty {
-                ContentUnavailableView.search(text: searchText)
+                OCContentUnavailableView.search(text: searchText)
             } else {
                 List {
                     Section {

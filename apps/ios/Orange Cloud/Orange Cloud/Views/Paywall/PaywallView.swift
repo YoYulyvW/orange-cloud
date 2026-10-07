@@ -9,6 +9,7 @@
 //
 
 import SwiftUI
+import Perception
 import StoreKit
 
 struct PaywallView: View {
@@ -68,7 +69,7 @@ struct PaywallView: View {
         } message: {
             Text(entitlements.purchaseError ?? "")
         }
-        .sensoryFeedback(.success, trigger: entitlements.isPro)
+        .ocSensoryFeedback(.success, trigger: entitlements.isPro)
     }
 
     // MARK: - 头部

@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 import PhotosUI
 import UniformTypeIdentifiers
 import QuickLook
@@ -46,7 +47,7 @@ struct R2ObjectListView: View {
             if viewModel.isContentEmpty && viewModel.isLoading {
                 SkeletonList(rows: 9, trailing: true)
             } else if viewModel.isContentEmpty && viewModel.currentPrefix.isEmpty {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label("空存储桶", systemImage: "archivebox")
                 } description: {
                     Text(canWrite ? String(localized: "点击右上角上传第一个文件") : String(localized: "这个存储桶里还没有对象"))
@@ -157,8 +158,8 @@ struct R2ObjectListView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-        .sensoryFeedback(.success, trigger: viewModel.didUpload)
-        .sensoryFeedback(.success, trigger: viewModel.didTransfer)
+        .ocSensoryFeedback(.success, trigger: viewModel.didUpload)
+        .ocSensoryFeedback(.success, trigger: viewModel.didTransfer)
         .sheet(item: $transferTarget) { request in
             R2TransferSheet(object: request.object, mode: request.mode) { destinationKey in
                 Task {

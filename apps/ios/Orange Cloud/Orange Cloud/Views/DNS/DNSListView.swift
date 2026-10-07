@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Perception
 import SwiftData
 import TipKit
 
@@ -59,7 +60,7 @@ struct DNSListView: View {
             if records.isEmpty && viewModel.isLoading {
                 SkeletonList(rows: 10, icon: .rounded(width: 52, height: 24), trailing: true)
             } else if records.isEmpty {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label("没有 DNS 记录", systemImage: "network.slash")
                 } description: {
                     Text(canWrite ? String(localized: "点击右上角 + 添加第一条记录") : String(localized: "当前授权仅限读取，无法添加记录"))
@@ -72,7 +73,7 @@ struct DNSListView: View {
                     }
                 }
             } else if filteredRecords.isEmpty {
-                ContentUnavailableView.search(text: searchText)
+                OCContentUnavailableView.search(text: searchText)
             } else {
                 recordList
             }
@@ -110,7 +111,7 @@ struct DNSListView: View {
         .task {
             await viewModel.refresh(context: modelContext)
         }
-        .sensoryFeedback(.success, trigger: viewModel.didSave)
+        .ocSensoryFeedback(.success, trigger: viewModel.didSave)
         // 权限不足提示
         .alert("权限不足", isPresented: .init(
             get: { deniedScope != nil },

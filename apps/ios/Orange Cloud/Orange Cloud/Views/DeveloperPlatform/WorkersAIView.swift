@@ -8,6 +8,7 @@
 //
 
 import SwiftUI
+import Perception
 #if canImport(UIKit)
 import UIKit
 #endif
@@ -44,7 +45,7 @@ struct WorkersAIView: View {
         if vm.isLoading && !vm.loaded {
             ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity)
         } else if vm.models.isEmpty {
-            ContentUnavailableView {
+            OCContentUnavailableView {
                 Label("没有可用模型", systemImage: "brain")
             } description: {
                 Text(vm.error ?? String(localized: "未能取到 Workers AI 模型目录。"))
@@ -52,7 +53,7 @@ struct WorkersAIView: View {
         } else {
             let groups = filteredGroups(vm)
             if groups.isEmpty {
-                ContentUnavailableView.search(text: searchText)
+                OCContentUnavailableView.search(text: searchText)
             } else {
                 List {
                     ForEach(groups, id: \.task) { group in

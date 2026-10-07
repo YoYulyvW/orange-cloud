@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct R2BucketSettingsView: View {
 
@@ -122,7 +123,7 @@ struct R2BucketSettingsView: View {
             } message: {
                 Text(viewModel.error ?? "")
             }
-            .sensoryFeedback(.success, trigger: viewModel.didChange)
+            .ocSensoryFeedback(.success, trigger: viewModel.didChange)
         }
     }
 

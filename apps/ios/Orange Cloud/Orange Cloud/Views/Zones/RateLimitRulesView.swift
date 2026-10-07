@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct RateLimitRulesView: View {
 
@@ -46,7 +47,7 @@ struct RateLimitRulesView: View {
         if vm.isLoading && !vm.loaded {
             ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity)
         } else if vm.rules.isEmpty {
-            ContentUnavailableView {
+            OCContentUnavailableView {
                 Label("还没有限速规则", systemImage: "gauge.with.dots.needle.bottom.50percent")
             } description: {
                 Text(vm.error ?? String(localized: "限速规则可在单位时间内限制来自同一访客的请求次数。"))

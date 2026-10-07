@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct RegistrarView: View {
 
@@ -68,7 +69,7 @@ struct RegistrarView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task { await viewModel.load() }
         .refreshable { await viewModel.load() }
-        .sensoryFeedback(.success, trigger: viewModel.didMutate)
+        .ocSensoryFeedback(.success, trigger: viewModel.didMutate)
         .sheet(isPresented: $showSearch) {
             DomainSearchView(session: session)
         }

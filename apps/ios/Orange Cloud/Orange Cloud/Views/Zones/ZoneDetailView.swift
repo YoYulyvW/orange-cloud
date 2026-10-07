@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 import SwiftData
 
 struct ZoneDetailView: View {
@@ -565,9 +566,9 @@ struct ZoneDetailView: View {
                 .contentTransition(.symbolEffect(.replace))
             }
         }
-        .sensoryFeedback(.impact(weight: .light), trigger: zone.pinned)
-        .sensoryFeedback(.success, trigger: actionsViewModel.didPurge)
-        .sensoryFeedback(.success, trigger: actionsViewModel.didInvalidate)
+        .ocSensoryFeedback(.impactLight, trigger: zone.pinned)
+        .ocSensoryFeedback(.success, trigger: actionsViewModel.didPurge)
+        .ocSensoryFeedback(.success, trigger: actionsViewModel.didInvalidate)
         .task {
             if canReadSettings {
                 await actionsViewModel.loadSettings()

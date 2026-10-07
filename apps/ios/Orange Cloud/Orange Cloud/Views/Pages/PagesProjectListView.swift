@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct PagesProjectListView: View {
 
@@ -42,7 +43,7 @@ struct PagesProjectListView: View {
             if viewModel.isLoading && !viewModel.loaded {
                 SkeletonList(rows: 6, trailing: true)
             } else if viewModel.projects.isEmpty {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label("没有 Pages 项目", systemImage: "doc.richtext")
                 } description: {
                     Text(canWrite ? String(localized: "点击右上角 + 创建项目，或在此查看部署、重试 / 回滚与构建配置。") : String(localized: "在 Cloudflare Dashboard 创建 Pages 项目后，在此查看部署、重试 / 回滚与构建配置。"))
@@ -55,7 +56,7 @@ struct PagesProjectListView: View {
                     }
                 }
             } else if filtered.isEmpty {
-                ContentUnavailableView.search(text: searchText)
+                OCContentUnavailableView.search(text: searchText)
             } else {
                 List {
                     Section {
@@ -94,7 +95,7 @@ struct PagesProjectListView: View {
         .sheet(isPresented: $showCreate) {
             PagesCreateView(viewModel: viewModel, accountId: session.selectedAccount?.id ?? "")
         }
-        .sensoryFeedback(.success, trigger: viewModel.didCreate)
+        .ocSensoryFeedback(.success, trigger: viewModel.didCreate)
         .task { await load() }
         .alert("权限不足", isPresented: $writeDenied) {
             Button("好", role: .cancel) {}

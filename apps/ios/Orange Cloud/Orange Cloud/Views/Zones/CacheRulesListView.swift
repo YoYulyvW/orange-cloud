@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct CacheRulesListView: View {
 
@@ -38,7 +39,7 @@ struct CacheRulesListView: View {
             if viewModel.isLoading && !viewModel.loaded {
                 SkeletonList(rows: 5, icon: .none, trailing: true)
             } else if viewModel.rules.isEmpty {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label("没有缓存规则", systemImage: "bolt.horizontal")
                 } description: {
                     Text(canWrite
@@ -53,7 +54,7 @@ struct CacheRulesListView: View {
                     }
                 }
             } else if filteredRules.isEmpty {
-                ContentUnavailableView.search(text: searchText)
+                OCContentUnavailableView.search(text: searchText)
             } else {
                 List {
                     Section {

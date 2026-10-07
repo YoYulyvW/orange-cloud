@@ -12,6 +12,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct ZoneRulesHubView: View {
 
@@ -197,7 +198,7 @@ struct ZonePhaseRulesListView: View {
             if viewModel.isLoading && !viewModel.loaded {
                 SkeletonList(rows: 5, icon: .none, trailing: true)
             } else if viewModel.rules.isEmpty {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label(String(localized: "没有\(phase.title)"), systemImage: phase.systemImage)
                 } description: {
                     Text(!phase.supportsEditor
@@ -263,7 +264,7 @@ struct ZonePhaseRulesListView: View {
             }
         }
         .task { await viewModel.load() }
-        .sensoryFeedback(.success, trigger: viewModel.didMutate)
+        .ocSensoryFeedback(.success, trigger: viewModel.didMutate)
         .sheet(item: $detailRule) { rule in
             ZoneRuleDetailSheet(rule: rule, phase: phase)
         }
@@ -425,7 +426,7 @@ struct PageRulesListView: View {
             if viewModel.isLoading && !viewModel.loaded {
                 SkeletonList(rows: 5, icon: .none, trailing: true)
             } else if viewModel.rules.isEmpty {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label("没有 Page Rules", systemImage: "doc.text.below.ecg")
                 } description: {
                     Text("Page Rules 是传统功能，Cloudflare 建议迁移到新的规则产品；已有规则可在此查看、启停与删除。")
@@ -484,7 +485,7 @@ struct PageRulesListView: View {
         .navigationTitle("Page Rules")
         .navigationBarTitleDisplayMode(.inline)
         .task { await viewModel.load() }
-        .sensoryFeedback(.success, trigger: viewModel.didMutate)
+        .ocSensoryFeedback(.success, trigger: viewModel.didMutate)
         .confirmationDialog(
             "删除规则",
             isPresented: .init(get: { ruleToDelete != nil }, set: { if !$0 { ruleToDelete = nil } }),
@@ -573,7 +574,7 @@ struct URLNormalizationView: View {
         .navigationTitle("URL 规范化")
         .navigationBarTitleDisplayMode(.inline)
         .task { await viewModel.load() }
-        .sensoryFeedback(.success, trigger: viewModel.didMutate)
+        .ocSensoryFeedback(.success, trigger: viewModel.didMutate)
         .alert("出错了", isPresented: .init(
             get: { viewModel.error != nil },
             set: { if !$0 { viewModel.error = nil } }

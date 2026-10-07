@@ -88,7 +88,7 @@ struct TunnelConnectView: View {
         .daybreakList()
         .navigationTitle("连接隧道")
         .navigationBarTitleDisplayMode(.inline)
-        .sensoryFeedback(.success, trigger: copied)
+        .ocSensoryFeedback(.success, trigger: copied)
         .task { await viewModel.loadToken() }
         .toolbar {
             if let onDone {

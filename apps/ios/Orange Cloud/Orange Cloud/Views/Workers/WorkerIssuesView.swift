@@ -11,6 +11,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct WorkerIssuesView: View {
 
@@ -118,7 +119,7 @@ struct WorkerIssuesView: View {
             .glassRow()
         } else if let error = viewModel.error, viewModel.issues.isEmpty {
             Section {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label("加载失败", systemImage: "exclamationmark.triangle")
                 } description: {
                     Text(error)
@@ -132,7 +133,7 @@ struct WorkerIssuesView: View {
             }
         } else if viewModel.loaded && viewModel.issues.isEmpty {
             Section {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label("没有检测到问题", systemImage: "checkmark.circle")
                 } description: {
                     Text("Cloudflare 会自动把 Worker 的未捕获异常、5xx 响应和错误日志归类成问题（公开测试中）")
@@ -311,7 +312,7 @@ struct WorkerIssueDetailSheet: View {
             }
             .task { await viewModel.load() }
             .refreshable { await viewModel.load() }
-            .sensoryFeedback(.success, trigger: viewModel.didUpdate)
+            .ocSensoryFeedback(.success, trigger: viewModel.didUpdate)
             // 发生记录加载失败已内联展示；这里只弹改状态失败
             .alert("出错了", isPresented: .init(
                 get: { viewModel.actionError != nil },

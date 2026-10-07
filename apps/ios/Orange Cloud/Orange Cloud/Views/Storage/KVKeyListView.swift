@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct KVKeyListView: View {
 
@@ -40,13 +41,13 @@ struct KVKeyListView: View {
             if viewModel.keys.isEmpty && viewModel.isLoading {
                 SkeletonList(rows: 10, icon: .none)
             } else if viewModel.keys.isEmpty {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label("空命名空间", systemImage: "square.grid.2x2")
                 } description: {
                     Text("这个命名空间里还没有键")
                 }
             } else if filteredKeys.isEmpty {
-                ContentUnavailableView.search(text: searchText)
+                OCContentUnavailableView.search(text: searchText)
             } else {
                 keyList
             }
@@ -163,7 +164,7 @@ struct KVValueView: View {
             if viewModel.isLoading {
                 valueSkeleton
             } else if viewModel.isBinary {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label("二进制数据", systemImage: "doc.zipper")
                 } description: {
                     Text("该值不是 UTF-8 文本（\(Int64(viewModel.byteCount).ocBytes)），暂不支持预览")
@@ -191,7 +192,7 @@ struct KVValueView: View {
             }
         }
         .task { await viewModel.load() }
-        .sensoryFeedback(.success, trigger: viewModel.didSave)
+        .ocSensoryFeedback(.success, trigger: viewModel.didSave)
         .alert("出错了", isPresented: .init(
             get: { viewModel.error != nil },
             set: { if !$0 { viewModel.error = nil } }

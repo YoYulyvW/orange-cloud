@@ -30,7 +30,7 @@ struct WorkerLogsView: View {
             Divider()
             content
         }
-        .sensoryFeedback(.success, trigger: copyTick)
+        .ocSensoryFeedback(.success, trigger: copyTick)
         .sheet(item: $detailEvent) { item in
             LogEventDetailSheet(event: item.event) { copy(item.event) }
         }
@@ -181,7 +181,7 @@ struct WorkerLogsView: View {
     }
 
     private var emptyHint: some View {
-        ContentUnavailableView {
+        OCContentUnavailableView {
             Label("这段时间没有日志", systemImage: "clock.badge.questionmark")
         } description: {
             Text("换个时间范围看看。若这个 Worker 从未出现日志，多半是没有开启 Observability——在 wrangler.toml 里打开 [observability] 后重新部署即可。")
@@ -190,7 +190,7 @@ struct WorkerLogsView: View {
     }
 
     private func errorHint(_ message: String) -> some View {
-        ContentUnavailableView {
+        OCContentUnavailableView {
             Label("查询失败", systemImage: "exclamationmark.triangle")
         } description: {
             Text(message)

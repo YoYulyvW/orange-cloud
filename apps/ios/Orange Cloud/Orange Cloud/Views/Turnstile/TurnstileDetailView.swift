@@ -8,6 +8,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct TurnstileDetailView: View {
 
@@ -62,7 +63,7 @@ struct TurnstileDetailView: View {
                 widget = fresh
             }
         }
-        .sensoryFeedback(.success, trigger: copied)
+        .ocSensoryFeedback(.success, trigger: copied)
         .confirmationDialog("轮换密钥", isPresented: $showRotate, titleVisibility: .visible) {
             Button("轮换（旧密钥保留 2 小时）") {
                 Task {

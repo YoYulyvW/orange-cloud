@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct SnippetsListView: View {
 
@@ -35,7 +36,7 @@ struct SnippetsListView: View {
             if viewModel.isLoading && !viewModel.loaded {
                 SkeletonList(rows: 5, icon: .none, trailing: true)
             } else if viewModel.snippets.isEmpty {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label("还没有 Snippet", systemImage: "curlybraces")
                 } description: {
                     Text(canWrite
@@ -50,7 +51,7 @@ struct SnippetsListView: View {
                     }
                 }
             } else if filteredSnippets.isEmpty {
-                ContentUnavailableView.search(text: searchText)
+                OCContentUnavailableView.search(text: searchText)
             } else {
                 List {
                     Section {

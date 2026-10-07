@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct RequestTracerView: View {
 
@@ -30,7 +31,7 @@ struct RequestTracerView: View {
         .daybreakList()
         .navigationTitle("请求追踪")
         .navigationBarTitleDisplayMode(.inline)
-        .sensoryFeedback(.success, trigger: viewModel.didTrace)
+        .ocSensoryFeedback(.success, trigger: viewModel.didTrace)
         .alert("出错了", isPresented: .init(
             get: { viewModel.error != nil }, set: { if !$0 { viewModel.error = nil } }
         )) {

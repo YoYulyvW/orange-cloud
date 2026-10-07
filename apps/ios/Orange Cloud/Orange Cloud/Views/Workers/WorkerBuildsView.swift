@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct WorkerBuildsView: View {
 
@@ -79,7 +80,7 @@ struct WorkerBuildsView: View {
             await viewModel.load()
         }
         .refreshable { await viewModel.load() }
-        .sensoryFeedback(.success, trigger: viewModel.didMutate)
+        .ocSensoryFeedback(.success, trigger: viewModel.didMutate)
         .sheet(item: $logTarget) { build in
             NavigationStack {
                 BuildLogsView(build: build, viewModel: viewModel)

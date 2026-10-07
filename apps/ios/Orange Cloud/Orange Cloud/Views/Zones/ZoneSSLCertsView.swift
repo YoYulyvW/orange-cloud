@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct ZoneSSLCertsView: View {
 
@@ -36,7 +37,7 @@ struct ZoneSSLCertsView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.top, 40)
                 } else if viewModel.loaded && viewModel.packs.isEmpty {
-                    ContentUnavailableView("暂无证书", systemImage: "checkmark.seal",
+                    OCContentUnavailableView("暂无证书", systemImage: "checkmark.seal",
                         description: Text("此域名暂时没有边缘证书。"))
                         .padding(.top, 30)
                 } else {

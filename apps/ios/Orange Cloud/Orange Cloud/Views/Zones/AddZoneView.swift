@@ -247,7 +247,7 @@ private struct AddZoneResultView: View {
                 .contentTransition(.symbolEffect(.replace))
             }
         }
-        .sensoryFeedback(.success, trigger: copied)
+        .ocSensoryFeedback(.success, trigger: copied)
     }
 
     private var stepsCard: some View {

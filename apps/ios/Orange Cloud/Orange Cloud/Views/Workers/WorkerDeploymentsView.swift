@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct WorkerDeploymentsView: View {
 
@@ -28,7 +29,7 @@ struct WorkerDeploymentsView: View {
             if !viewModel.loaded && viewModel.isLoading {
                 SkeletonList(rows: 6, trailing: true)
             } else if viewModel.deployments.isEmpty {
-                ContentUnavailableView("暂无部署", systemImage: "clock.arrow.circlepath")
+                OCContentUnavailableView("暂无部署", systemImage: "clock.arrow.circlepath")
             } else {
                 List {
                     Section {
@@ -58,7 +59,7 @@ struct WorkerDeploymentsView: View {
         .navigationTitle("部署历史")
         .navigationBarTitleDisplayMode(.inline)
         .task { if !viewModel.loaded { await viewModel.load() } }
-        .sensoryFeedback(.success, trigger: viewModel.didDelete)
+        .ocSensoryFeedback(.success, trigger: viewModel.didDelete)
         .alert("删除此部署？", isPresented: Binding(get: { toDelete != nil }, set: { if !$0 { toDelete = nil } })) {
             Button("取消", role: .cancel) { toDelete = nil }
             Button("删除", role: .destructive) {

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct WorkerTriggersView: View {
 
@@ -91,7 +92,7 @@ struct WorkerTriggersView: View {
     }
 
     private var emptyState: some View {
-        ContentUnavailableView {
+        OCContentUnavailableView {
             Label("没有定时触发器", systemImage: "clock.badge.xmark")
         } description: {
             Text(canWrite

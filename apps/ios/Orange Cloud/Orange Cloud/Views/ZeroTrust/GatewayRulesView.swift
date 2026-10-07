@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct GatewayRulesView: View {
 
@@ -76,7 +77,7 @@ struct GatewayRulesView: View {
         if vm.isLoading && !vm.loaded {
             ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity)
         } else if vm.rules.isEmpty {
-            ContentUnavailableView {
+            OCContentUnavailableView {
                 Label("没有 Gateway 策略", systemImage: "shield.lefthalf.filled")
             } description: {
                 Text(vm.error ?? String(localized: "该账号下还没有 Gateway（DNS / HTTP / 网络）策略。"))
@@ -120,7 +121,7 @@ struct GatewayRulesView: View {
             }
             .daybreakList()
             .refreshable { await vm.load() }
-            .sensoryFeedback(.success, trigger: vm.didChange)
+            .ocSensoryFeedback(.success, trigger: vm.didChange)
         }
     }
 

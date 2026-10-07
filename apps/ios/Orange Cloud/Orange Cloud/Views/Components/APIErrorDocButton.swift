@@ -22,7 +22,7 @@ func apiErrorDocButton(for message: String?) -> some View {
     }
 }
 
-/// 页内错误态（ContentUnavailableView 的 actions、内联错误文字下方）用的链接样式版本
+/// 页内错误态（OCContentUnavailableView 的 actions、内联错误文字下方）用的链接样式版本
 struct APIErrorDocLink: View {
     let message: String?
 

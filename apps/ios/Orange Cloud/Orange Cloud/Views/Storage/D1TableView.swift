@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct D1TableView: View {
 
@@ -46,7 +47,7 @@ struct D1TableView: View {
                 }
             } else if viewModel.rows.isEmpty {
                 ScrollView {
-                    ContentUnavailableView {
+                    OCContentUnavailableView {
                         Label("空表", systemImage: "tablecells")
                     } description: {
                         Text("这张表里还没有数据")
@@ -93,7 +94,7 @@ struct D1TableView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-        .sensoryFeedback(.success, trigger: viewModel.didSave)
+        .ocSensoryFeedback(.success, trigger: viewModel.didSave)
     }
 
     // MARK: - 索引卡（PRAGMA index_list，只读补充信息）

@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct PagesDomainsView: View {
 
@@ -76,7 +77,7 @@ struct PagesDomainsView: View {
         } message: {
             Text("将从该 Pages 项目移除此域名，不影响已有 DNS 记录。")
         }
-        .sensoryFeedback(.success, trigger: viewModel.didMutate)
+        .ocSensoryFeedback(.success, trigger: viewModel.didMutate)
         .alert("权限不足", isPresented: $writeDenied) {
             Button("好", role: .cancel) {}
         } message: {
@@ -123,7 +124,7 @@ struct PagesDomainsView: View {
     }
 
     private var emptyState: some View {
-        ContentUnavailableView {
+        OCContentUnavailableView {
             Label("没有自定义域名", systemImage: "globe")
         } description: {
             Text("绑定你自己的域名，并在此完成解析与验证。")

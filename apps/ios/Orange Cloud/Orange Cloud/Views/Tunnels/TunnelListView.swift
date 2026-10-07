@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct TunnelListView: View {
 
@@ -30,7 +31,7 @@ struct TunnelListView: View {
             if viewModel.tunnels.isEmpty && viewModel.isLoading {
                 SkeletonList(rows: 5)
             } else if viewModel.tunnels.isEmpty {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label("没有隧道", systemImage: "arrow.triangle.2.circlepath")
                 } description: {
                     Text(canWrite

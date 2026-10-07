@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct PagesProjectDetailView: View {
 
@@ -95,8 +96,8 @@ struct PagesProjectDetailView: View {
                     }
             }
         }
-        .sensoryFeedback(.success, trigger: viewModel.didMutate)
-        .sensoryFeedback(.success, trigger: deployViewModel.phase == .done)
+        .ocSensoryFeedback(.success, trigger: viewModel.didMutate)
+        .ocSensoryFeedback(.success, trigger: deployViewModel.phase == .done)
         .confirmationDialog("删除项目「\(project.name)」？", isPresented: $showDeleteConfirm, titleVisibility: .visible) {
             Button("删除项目", role: .destructive) {
                 Task { if await viewModel.deleteProject() { dismiss() } }

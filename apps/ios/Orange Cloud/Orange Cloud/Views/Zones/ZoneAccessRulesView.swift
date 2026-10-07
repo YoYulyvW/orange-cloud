@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct ZoneAccessRulesView: View {
 
@@ -40,7 +41,7 @@ struct ZoneAccessRulesView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .padding(.top, 60)
             } else if viewModel.loaded && viewModel.rules.isEmpty && !canWrite {
-                ContentUnavailableView("暂无访问规则", systemImage: "hand.raised",
+                OCContentUnavailableView("暂无访问规则", systemImage: "hand.raised",
                     description: Text("此域名暂时没有 IP 访问规则。"))
             } else {
                 List {

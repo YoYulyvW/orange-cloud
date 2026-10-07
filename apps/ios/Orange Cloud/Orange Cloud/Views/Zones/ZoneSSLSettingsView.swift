@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct ZoneSSLSettingsView: View {
 
@@ -32,7 +33,7 @@ struct ZoneSSLSettingsView: View {
                             .frame(maxWidth: .infinity)
                             .padding(.top, 60)
                     } else {
-                        ContentUnavailableView {
+                        OCContentUnavailableView {
                             Label(String(localized: "无法读取 SSL/TLS 设置"), systemImage: "lock")
                         } description: {
                             Text("当前授权未包含「缓存与防护」的读取权限。请退出登录后重新授权。")

@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct QueuesView: View {
 
@@ -73,7 +74,7 @@ struct QueuesView: View {
         if vm.isLoading && !vm.loaded {
             ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity)
         } else if vm.queues.isEmpty {
-            ContentUnavailableView {
+            OCContentUnavailableView {
                 Label("没有队列", systemImage: "tray.2")
             } description: {
                 Text(vm.error ?? String(localized: "该账号下还没有 Queue。"))
@@ -106,7 +107,7 @@ struct QueuesView: View {
             }
             .daybreakList()
             .refreshable { await vm.load() }
-            .sensoryFeedback(.success, trigger: vm.didChange)
+            .ocSensoryFeedback(.success, trigger: vm.didChange)
         }
     }
 }

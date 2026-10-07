@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct ZoneTransformRulesView: View {
 
@@ -31,7 +32,7 @@ struct ZoneTransformRulesView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .padding(.top, 60)
             } else if viewModel.loaded && !viewModel.hasAnyRule && !canWrite {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label("暂无 Transform Rules", systemImage: "arrow.triangle.branch")
                 } description: {
                     Text("此域名暂时没有 URL 重写或请求/响应头规则。")

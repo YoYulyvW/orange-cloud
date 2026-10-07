@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct WorkerSecretsView: View {
 

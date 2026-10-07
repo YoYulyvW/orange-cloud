@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct ZoneDNSSettingsView: View {
 
@@ -43,7 +44,7 @@ struct ZoneDNSSettingsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task { await viewModel.load() }
         .refreshable { await viewModel.load() }
-        .sensoryFeedback(.success, trigger: viewModel.didMutate)
+        .ocSensoryFeedback(.success, trigger: viewModel.didMutate)
         .alert("出错了", isPresented: .init(
             get: { viewModel.error != nil }, set: { if !$0 { viewModel.error = nil } }
         )) {

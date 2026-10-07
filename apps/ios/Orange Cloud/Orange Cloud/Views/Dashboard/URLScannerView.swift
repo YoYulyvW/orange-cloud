@@ -31,7 +31,7 @@ struct URLScannerView: View {
         .daybreakList()
         .navigationTitle("URL 扫描")
         .navigationBarTitleDisplayMode(.inline)
-        .sensoryFeedback(.success, trigger: viewModel.didFinish)
+        .ocSensoryFeedback(.success, trigger: viewModel.didFinish)
         .alert("出错了", isPresented: .init(
             get: { viewModel.error != nil }, set: { if !$0 { viewModel.error = nil } }
         )) {

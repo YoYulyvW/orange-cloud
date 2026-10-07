@@ -8,6 +8,7 @@
 //
 
 import SwiftUI
+import Perception
 import SwiftData
 import TipKit
 
@@ -61,7 +62,7 @@ struct ZoneListView: View {
                             .zoneRouteDestinations(session: session)
                     }
                 } else {
-                    ContentUnavailableView("选择一个域名", systemImage: "globe", description: Text("从左侧列表选择域名查看详情"))
+                    OCContentUnavailableView("选择一个域名", systemImage: "globe", description: Text("从左侧列表选择域名查看详情"))
                 }
             }
             // 窄画布（744pt 这一档）下 .automatic 会偏向详情栏、把边栏挤没；balanced 让两栏平权
@@ -171,7 +172,7 @@ private struct ZoneListContent: View {
             } else if cachedZones.isEmpty {
                 emptyState
             } else if filteredZones.isEmpty {
-                ContentUnavailableView.search(text: searchText)
+                OCContentUnavailableView.search(text: searchText)
             } else {
                 List(selection: $selectedZone) {
                     Section {
@@ -210,7 +211,7 @@ private struct ZoneListContent: View {
             } else if cachedZones.isEmpty {
                 emptyState
             } else if filteredZones.isEmpty {
-                ContentUnavailableView.search(text: searchText)
+                OCContentUnavailableView.search(text: searchText)
             } else {
                 zoneList
             }
@@ -270,7 +271,7 @@ private struct ZoneListContent: View {
     }
 
     private var emptyState: some View {
-        ContentUnavailableView {
+        OCContentUnavailableView {
             Label("没有域名", systemImage: "globe.slash")
         } description: {
             Text(canWrite

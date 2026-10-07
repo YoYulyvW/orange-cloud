@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct PermissionDeniedView: View {
 
@@ -15,7 +16,7 @@ struct PermissionDeniedView: View {
     @Environment(AuthManager.self) private var auth
 
     var body: some View {
-        ContentUnavailableView {
+        OCContentUnavailableView {
             Label("\(featureName) 未授权", systemImage: "lock.shield")
         } description: {
             Text("当前授权未包含「\(featureName)」的访问权限（\(requiredScope)）。点「一键重授权」补齐，无需退出登录。")

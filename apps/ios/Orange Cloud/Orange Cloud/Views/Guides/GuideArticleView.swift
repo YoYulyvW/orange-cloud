@@ -25,7 +25,7 @@ struct GuideArticleView: View {
             if viewModel.blocks.isEmpty, viewModel.isLoading {
                 skeleton
             } else if viewModel.blocks.isEmpty, let error = viewModel.error {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label("加载失败", systemImage: "wifi.exclamationmark")
                 } description: {
                     Text(error)

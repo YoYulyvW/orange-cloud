@@ -27,7 +27,7 @@ struct PagesDeploymentDetailView: View {
         .daybreakList()
         .navigationTitle(deployment.shortId ?? String(localized: "部署"))
         .navigationBarTitleDisplayMode(.inline)
-        .sensoryFeedback(.success, trigger: viewModel.didMutate)
+        .ocSensoryFeedback(.success, trigger: viewModel.didMutate)
         .confirmationDialog(
             pendingAction?.title ?? "",
             isPresented: .init(get: { pendingAction != nil }, set: { if !$0 { pendingAction = nil } }),

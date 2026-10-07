@@ -33,7 +33,7 @@ struct WorkerTailView: View {
             Divider()
             logConsole
         }
-        .sensoryFeedback(.success, trigger: copyTick)
+        .ocSensoryFeedback(.success, trigger: copyTick)
         .sheet(item: $detailLine) { line in
             LogLineDetailSheet(line: line) { copy(line) }
         }
@@ -251,7 +251,7 @@ struct WorkerTailView: View {
     }
 
     private var emptyHint: some View {
-        ContentUnavailableView {
+        OCContentUnavailableView {
             Label("等待事件", systemImage: "dot.radiowaves.left.and.right")
         } description: {
             Text("向这个 Worker 发起一次请求，日志会实时出现在这里")
@@ -261,7 +261,7 @@ struct WorkerTailView: View {
 
     /// 筛选后无结果：明确告知原始日志仍在，避免用户误以为丢了历史
     private var noMatchHint: some View {
-        ContentUnavailableView {
+        OCContentUnavailableView {
             Label("没有匹配的日志", systemImage: "line.3.horizontal.decrease.circle")
         } description: {
             Text("换个关键词或级别再看看，已接收的日志不会丢失")

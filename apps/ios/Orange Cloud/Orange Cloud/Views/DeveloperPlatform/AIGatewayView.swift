@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct AIGatewayView: View {
 
@@ -68,7 +69,7 @@ struct AIGatewayView: View {
         if vm.isLoading && !vm.loaded {
             ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity)
         } else if vm.gateways.isEmpty {
-            ContentUnavailableView {
+            OCContentUnavailableView {
                 Label("没有 AI Gateway", systemImage: "brain.head.profile")
             } description: {
                 Text(vm.error ?? String(localized: "该账号下还没有 AI Gateway。"))
@@ -102,7 +103,7 @@ struct AIGatewayView: View {
             }
             .daybreakList()
             .refreshable { await vm.load() }
-            .sensoryFeedback(.success, trigger: vm.didChange)
+            .ocSensoryFeedback(.success, trigger: vm.didChange)
         }
     }
 

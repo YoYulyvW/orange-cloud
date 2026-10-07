@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct BulkRedirectListsView: View {
 
@@ -40,7 +41,7 @@ struct BulkRedirectListsView: View {
             if viewModel.isLoading && !viewModel.loaded {
                 SkeletonList(rows: 5, trailing: true)
             } else if viewModel.lists.isEmpty {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label("没有重定向列表", systemImage: "arrowshape.turn.up.right")
                 } description: {
                     Text(canWrite
@@ -53,7 +54,7 @@ struct BulkRedirectListsView: View {
                     }
                 }
             } else if filtered.isEmpty {
-                ContentUnavailableView.search(text: searchText)
+                OCContentUnavailableView.search(text: searchText)
             } else {
                 List {
                     Section {
@@ -93,7 +94,7 @@ struct BulkRedirectListsView: View {
             }
         }
         .task { await viewModel.load() }
-        .sensoryFeedback(.success, trigger: viewModel.didMutate)
+        .ocSensoryFeedback(.success, trigger: viewModel.didMutate)
         .sheet(isPresented: $showCreate) {
             CreateRedirectListSheet(viewModel: viewModel)
         }

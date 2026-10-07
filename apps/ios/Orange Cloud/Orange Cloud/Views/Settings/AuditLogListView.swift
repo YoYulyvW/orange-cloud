@@ -42,7 +42,7 @@ struct AuditLogListView: View {
             ProgressView()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else if vm.entries.isEmpty {
-            ContentUnavailableView {
+            OCContentUnavailableView {
                 Label("暂无审计记录", systemImage: "clock.arrow.circlepath")
             } description: {
                 Text(vm.error ?? String(localized: "最近 30 天没有可显示的账号操作记录。"))

@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct RedirectListDetailView: View {
 
@@ -46,7 +47,7 @@ struct RedirectListDetailView: View {
             await viewModel.loadItems()
             await viewModel.loadEnableStatus()
         }
-        .sensoryFeedback(.success, trigger: viewModel.didMutate)
+        .ocSensoryFeedback(.success, trigger: viewModel.didMutate)
         .sheet(isPresented: $showItemEditor) {
             RedirectItemEditorView(viewModel: viewModel)
         }

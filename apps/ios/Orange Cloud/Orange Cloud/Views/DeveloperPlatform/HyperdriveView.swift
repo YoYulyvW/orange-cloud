@@ -8,6 +8,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct HyperdriveView: View {
 
@@ -74,7 +75,7 @@ struct HyperdriveView: View {
         if vm.isLoading && !vm.loaded {
             ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity)
         } else if vm.configs.isEmpty {
-            ContentUnavailableView {
+            OCContentUnavailableView {
                 Label("没有 Hyperdrive 配置", systemImage: "bolt.horizontal.circle")
             } description: {
                 Text(vm.error ?? String(localized: "该账号下还没有 Hyperdrive 配置。"))
@@ -120,7 +121,7 @@ struct HyperdriveView: View {
             }
             .daybreakList()
             .refreshable { await vm.load() }
-            .sensoryFeedback(.success, trigger: vm.didChange)
+            .ocSensoryFeedback(.success, trigger: vm.didChange)
         }
     }
 }

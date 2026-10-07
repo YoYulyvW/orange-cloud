@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct HealthCheckListView: View {
 
@@ -42,7 +43,7 @@ struct HealthCheckListView: View {
         .task { await viewModel.load() }
         .task { if auth.hasScope("notifications.read") { await alertViewModel.load() } }
         .refreshable { await viewModel.load() }
-        .sensoryFeedback(.success, trigger: viewModel.didMutate)
+        .ocSensoryFeedback(.success, trigger: viewModel.didMutate)
         .sheet(item: $detailTarget) { check in
             NavigationStack {
                 HealthCheckDetailView(check: check)

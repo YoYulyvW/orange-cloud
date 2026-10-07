@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 enum StorageKind: String, CaseIterable, Identifiable {
     case r2, d1, kv
@@ -148,12 +149,12 @@ private struct StorageContent: View {
         } message: {
             Text("当前授权未包含此资源的写权限（\(kind.writeScope)）。\n请在设置中退出登录后重新授权以启用此功能。")
         }
-        .sensoryFeedback(.success, trigger: r2ViewModel.didCreate)
-        .sensoryFeedback(.success, trigger: r2ViewModel.didDelete)
-        .sensoryFeedback(.success, trigger: d1ViewModel.didCreate)
-        .sensoryFeedback(.success, trigger: d1ViewModel.didDelete)
-        .sensoryFeedback(.success, trigger: kvViewModel.didCreate)
-        .sensoryFeedback(.success, trigger: kvViewModel.didDelete)
+        .ocSensoryFeedback(.success, trigger: r2ViewModel.didCreate)
+        .ocSensoryFeedback(.success, trigger: r2ViewModel.didDelete)
+        .ocSensoryFeedback(.success, trigger: d1ViewModel.didCreate)
+        .ocSensoryFeedback(.success, trigger: d1ViewModel.didDelete)
+        .ocSensoryFeedback(.success, trigger: kvViewModel.didCreate)
+        .ocSensoryFeedback(.success, trigger: kvViewModel.didDelete)
     }
 
     private var proContent: some View {
@@ -199,7 +200,7 @@ private struct StorageContent: View {
         } else if r2ViewModel.buckets.isEmpty, let error = r2ViewModel.error {
             loadErrorView(error)
         } else if r2ViewModel.buckets.isEmpty {
-            ContentUnavailableView {
+            OCContentUnavailableView {
                 Label("没有存储桶", systemImage: "archivebox")
             } description: {
                 Text(canWriteR2 ? String(localized: "点击右上角 + 创建第一个存储桶") : String(localized: "当前授权仅限读取，无法创建存储桶"))
@@ -275,7 +276,7 @@ private struct StorageContent: View {
         } else if d1ViewModel.databases.isEmpty, let error = d1ViewModel.error {
             loadErrorView(error)
         } else if d1ViewModel.databases.isEmpty {
-            ContentUnavailableView {
+            OCContentUnavailableView {
                 Label("没有数据库", systemImage: "cylinder")
             } description: {
                 Text(canWriteD1 ? String(localized: "点击右上角 + 创建第一个数据库") : String(localized: "当前授权仅限读取，无法创建数据库"))
@@ -325,7 +326,7 @@ private struct StorageContent: View {
         } else if kvViewModel.namespaces.isEmpty, let error = kvViewModel.error {
             loadErrorView(error)
         } else if kvViewModel.namespaces.isEmpty {
-            ContentUnavailableView {
+            OCContentUnavailableView {
                 Label("没有命名空间", systemImage: "key")
             } description: {
                 Text(canWriteKV ? String(localized: "点击右上角 + 创建第一个命名空间") : String(localized: "当前授权仅限读取，无法创建命名空间"))
@@ -383,7 +384,7 @@ private struct StorageContent: View {
     /// 列表加载失败（403 / 断网）以前没有任何展示，看起来跟「账号里没有资源」一模一样，
     /// 创建表单反而会替它显示这条错误。这里给一个带重试的失败态。
     private func loadErrorView(_ message: String) -> some View {
-        ContentUnavailableView {
+        OCContentUnavailableView {
             Label("加载失败", systemImage: "exclamationmark.triangle")
         } description: {
             Text(message)

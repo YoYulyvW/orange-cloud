@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct PoolListView: View {
 
@@ -32,7 +33,7 @@ struct PoolListView: View {
             if viewModel.isLoading && !viewModel.loaded {
                 SkeletonList(rows: 5, icon: .none, trailing: true)
             } else if viewModel.pools.isEmpty {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label("没有源站池", systemImage: "server.rack")
                 } description: {
                     Text(canWrite
@@ -91,7 +92,7 @@ struct PoolListView: View {
             }
         }
         .task { await viewModel.load() }
-        .sensoryFeedback(.success, trigger: viewModel.didMutate)
+        .ocSensoryFeedback(.success, trigger: viewModel.didMutate)
         .sheet(item: $editorTarget) { target in
             PoolEditorView(existing: target.pool, viewModel: viewModel)
         }

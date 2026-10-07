@@ -19,7 +19,7 @@ struct CloudflareStatusView: View {
             } else if let overall = viewModel.overall {
                 statusList(overall)
             } else {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label("加载失败", systemImage: "wifi.exclamationmark")
                 } description: {
                     Text(viewModel.error ?? "")

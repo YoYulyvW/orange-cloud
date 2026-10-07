@@ -8,6 +8,7 @@
 //
 
 import SwiftUI
+import Perception
 
 /// 触发付费墙的场景，决定付费墙头部与锁定态文案
 nonisolated enum ProFeature: String, Identifiable, Sendable {
@@ -237,7 +238,7 @@ struct ProLockedView: View {
     @State private var paywallPresented = false
 
     var body: some View {
-        ContentUnavailableView {
+        OCContentUnavailableView {
             Label(feature.headline, systemImage: feature.systemImage)
         } description: {
             Text(feature.blurb)

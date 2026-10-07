@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Perception
 import SwiftData
 
 struct DNSRecordFormView: View {

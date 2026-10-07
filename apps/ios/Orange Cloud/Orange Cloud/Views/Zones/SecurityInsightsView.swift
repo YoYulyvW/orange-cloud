@@ -9,6 +9,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct SecurityInsightsView: View {
 
@@ -36,7 +37,7 @@ struct SecurityInsightsView: View {
                 } else if !viewModel.loaded, let error = viewModel.error {
                     loadFailed(error)
                 } else if viewModel.loaded && viewModel.issues.isEmpty {
-                    ContentUnavailableView {
+                    OCContentUnavailableView {
                         Label("未发现安全问题", systemImage: "checkmark.shield")
                     } description: {
                         Text("每个账户每 24 小时最多扫描 5 次")
@@ -74,8 +75,8 @@ struct SecurityInsightsView: View {
         }
         .task { await viewModel.load() }
         .refreshable { await viewModel.load() }
-        .sensoryFeedback(.success, trigger: viewModel.didStartScan)
-        .sensoryFeedback(.success, trigger: viewModel.didDismiss)
+        .ocSensoryFeedback(.success, trigger: viewModel.didStartScan)
+        .ocSensoryFeedback(.success, trigger: viewModel.didDismiss)
         .onChange(of: viewModel.didStartScan) { showScanStarted = true }
         .alert("已发起扫描，结果稍后更新", isPresented: $showScanStarted) {
             Button("好", role: .cancel) {}
@@ -204,7 +205,7 @@ struct SecurityInsightsView: View {
     }
 
     private func loadFailed(_ message: String) -> some View {
-        ContentUnavailableView {
+        OCContentUnavailableView {
             Label("加载失败", systemImage: "exclamationmark.triangle")
         } description: {
             Text(message)

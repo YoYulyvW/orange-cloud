@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct MonitorListView: View {
 
@@ -32,7 +33,7 @@ struct MonitorListView: View {
             if viewModel.isLoading && !viewModel.loaded {
                 SkeletonList(rows: 4, icon: .none, trailing: true)
             } else if viewModel.monitors.isEmpty {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label("没有健康监测", systemImage: "waveform.path.ecg")
                 } description: {
                     Text(canWrite
@@ -80,7 +81,7 @@ struct MonitorListView: View {
             }
         }
         .task { await viewModel.load() }
-        .sensoryFeedback(.success, trigger: viewModel.didMutate)
+        .ocSensoryFeedback(.success, trigger: viewModel.didMutate)
         .sheet(item: $editorTarget) { target in
             MonitorEditorView(existing: target.monitor, viewModel: viewModel)
         }

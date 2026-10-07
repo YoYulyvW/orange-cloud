@@ -11,6 +11,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct TurnstileListView: View {
 
@@ -35,7 +36,7 @@ struct TurnstileListView: View {
             if viewModel.widgets.isEmpty && viewModel.isLoading {
                 SkeletonList(rows: 4)
             } else if viewModel.widgets.isEmpty {
-                ContentUnavailableView {
+                OCContentUnavailableView {
                     Label("没有 Turnstile 组件", systemImage: "checkmark.shield")
                 } description: {
                     Text("Turnstile 是 Cloudflare 的免费人机验证，替代传统验证码。新建组件后把 sitekey 嵌进你的网站即可。")

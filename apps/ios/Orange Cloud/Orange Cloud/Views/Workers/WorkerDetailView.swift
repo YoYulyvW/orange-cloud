@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Perception
 import Charts
 
 struct WorkerDetailView: View {
@@ -201,7 +202,7 @@ struct WorkerDetailView: View {
         .sheet(isPresented: $editPaywallPresented) {
             PaywallView(feature: .workerEdit)
         }
-        .sensoryFeedback(.success, trigger: uploadViewModel.didUpload)
+        .ocSensoryFeedback(.success, trigger: uploadViewModel.didUpload)
         .alert("权限不足", isPresented: $uploadDenied) {
             Button("好", role: .cancel) {}
         } message: {
