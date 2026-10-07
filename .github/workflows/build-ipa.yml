@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: build-ipa
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: macos-15
@@ -53,7 +57,9 @@ jobs:
           git config user.email "actions@github.com"
           git add -f ci-errors.txt build.log
           git commit -m "ci: build errors [skip ci]" || echo "no changes"
-          git push origin HEAD:main || echo "push failed"
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && break || sleep 5
+          done
 
       - name: Package IPA
         if: steps.build.outputs.BUILD_EXIT == '0'
