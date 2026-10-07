@@ -13,6 +13,7 @@
 //
 
 import Foundation
+import Perception
 import os
 import Sentry
 
