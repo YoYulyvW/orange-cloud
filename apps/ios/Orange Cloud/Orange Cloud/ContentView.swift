@@ -11,6 +11,7 @@ import Perception
 struct ContentView: View {
 
     @Environment(AuthManager.self) private var auth
+    @Environment(\.scenePhase) private var scenePhase
     @AppStorage(AppMotion.storageKey) private var reduceAnimations = false
 
     var body: some View {
@@ -38,6 +39,12 @@ struct ContentView: View {
             await FileProviderMountManager.reconcile(
                 liveSessionIds: Set(auth.sessions.map(\.id.uuidString))
             )
+        }
+        .ocOnChange(of: scenePhase) {
+            AppLog.app.info("scenePhase -> \(String(describing: scenePhase))")
+            if scenePhase == .background {
+                BackgroundRefresh.schedule()
+            }
         }
     }
 }

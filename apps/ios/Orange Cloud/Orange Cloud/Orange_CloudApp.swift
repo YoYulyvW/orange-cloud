@@ -77,12 +77,6 @@ struct Orange_CloudApp: App {
                     handleSpotlightTap(activity)
                 }
         }
-        .ocOnChange(of: scenePhase) {
-            AppLog.app.info("scenePhase -> \(String(describing: scenePhase))")
-            if scenePhase == .background {
-                BackgroundRefresh.schedule()
-            }
-        }
     }
 
     /// 收尸：结束上次进程残留的 tail Live Activity。冷启动时没有任何 VM 持有引用，

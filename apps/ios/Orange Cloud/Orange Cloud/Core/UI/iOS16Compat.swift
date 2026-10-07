@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Charts
 
 // MARK: - ContentUnavailableView（iOS 17+）
 
