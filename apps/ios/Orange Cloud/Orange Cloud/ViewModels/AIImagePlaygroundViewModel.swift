@@ -7,12 +7,12 @@
 //
 
 import Foundation
-import Observation
+import Perception
 #if canImport(UIKit)
 import UIKit
 #endif
 
-@Observable
+@Perceptible
 @MainActor
 final class AIImagePlaygroundViewModel {
 

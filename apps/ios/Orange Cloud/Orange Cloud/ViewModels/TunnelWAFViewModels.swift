@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import Observation
+import Perception
 
-@Observable
+@Perceptible
 @MainActor
 final class TunnelListViewModel {
 
@@ -64,7 +64,7 @@ final class TunnelListViewModel {
     }
 }
 
-@Observable
+@Perceptible
 @MainActor
 final class TunnelDetailViewModel {
 
@@ -266,7 +266,7 @@ final class TunnelDetailViewModel {
     }
 }
 
-@Observable
+@Perceptible
 @MainActor
 final class WAFRulesViewModel {
 

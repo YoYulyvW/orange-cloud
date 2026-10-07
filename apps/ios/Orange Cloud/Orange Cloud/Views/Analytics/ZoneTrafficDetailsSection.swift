@@ -12,7 +12,7 @@ import SwiftUI
 struct ZoneTrafficDetailsSection: View {
 
     /// 宿主页持有并传入，下拉刷新与本区共用同一实例
-    @Bindable var viewModel: ZoneTrafficDetailsViewModel
+    @Perception.Bindable var viewModel: ZoneTrafficDetailsViewModel
     let range: AnalyticsTimeRange
 
     var body: some View {

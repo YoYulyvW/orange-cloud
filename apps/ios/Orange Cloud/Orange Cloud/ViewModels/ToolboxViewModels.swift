@@ -2,16 +2,16 @@
 //  ToolboxViewModels.swift
 //  Orange Cloud
 //
-//  免登录工具箱各工具的 ViewModel（@Observable / @MainActor）。
+//  免登录工具箱各工具的 ViewModel（@Perceptible / @MainActor）。
 //  CIDR 为纯本地同步计算，无 VM，直接在 View 里调 CIDRCalculator。
 //
 
 import Foundation
-import Observation
+import Perception
 
 // MARK: - DNS 查询
 
-@Observable
+@Perceptible
 @MainActor
 final class DNSLookupViewModel {
     var name = ""
@@ -41,7 +41,7 @@ final class DNSLookupViewModel {
 
 // MARK: - CF 数据中心 trace
 
-@Observable
+@Perceptible
 @MainActor
 final class CFTraceViewModel {
     var host = "1.1.1.1"
@@ -66,7 +66,7 @@ final class CFTraceViewModel {
 
 // MARK: - HTTP 请求器
 
-@Observable
+@Perceptible
 @MainActor
 final class HTTPProbeViewModel {
     var urlString = "https://"
@@ -95,7 +95,7 @@ final class HTTPProbeViewModel {
 
 // MARK: - SSL 证书检查
 
-@Observable
+@Perceptible
 @MainActor
 final class CertInspectViewModel {
     var host = ""
@@ -122,7 +122,7 @@ final class CertInspectViewModel {
 
 // MARK: - WHOIS
 
-@Observable
+@Perceptible
 @MainActor
 final class WhoisViewModel {
     var domain = ""
@@ -149,7 +149,7 @@ final class WhoisViewModel {
 
 // MARK: - GeoIP
 
-@Observable
+@Perceptible
 @MainActor
 final class GeoIPViewModel {
     var ip = ""

@@ -7,9 +7,9 @@
 //
 
 import Foundation
-import Observation
+import Perception
 
-@Observable
+@Perceptible
 @MainActor
 final class WorkerIssuesViewModel {
 
@@ -101,7 +101,7 @@ final class WorkerIssuesViewModel {
 
 // MARK: - 问题详情
 
-@Observable
+@Perceptible
 @MainActor
 final class WorkerIssueDetailViewModel {
 

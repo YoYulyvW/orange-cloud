@@ -8,11 +8,11 @@
 
 import Foundation
 import AppIntents
-import Observation
+import Perception
 
 // MARK: - 路由（Intent → 主界面 Tab）
 
-@Observable
+@Perceptible
 @MainActor
 final class AppRouter {
     static let shared = AppRouter()

@@ -6,11 +6,11 @@
 //
 
 import Foundation
-import Observation
+import Perception
 
 // MARK: - Load Balancer（zone）
 
-@Observable
+@Perceptible
 @MainActor
 final class LoadBalancerListViewModel {
 
@@ -111,7 +111,7 @@ final class LoadBalancerListViewModel {
 
 // MARK: - 源站池（account）
 
-@Observable
+@Perceptible
 @MainActor
 final class PoolListViewModel {
 
@@ -234,7 +234,7 @@ final class PoolListViewModel {
 
 // MARK: - 健康监测（account）
 
-@Observable
+@Perceptible
 @MainActor
 final class MonitorListViewModel {
 

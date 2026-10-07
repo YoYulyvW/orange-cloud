@@ -54,7 +54,7 @@ nonisolated struct AuthSessionMeta: Codable, Identifiable, Hashable, Sendable {
     var scopes: [String]
 }
 
-@Observable
+@Perceptible
 @MainActor
 final class AuthManager {
 

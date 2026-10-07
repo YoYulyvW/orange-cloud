@@ -8,9 +8,9 @@
 
 import Foundation
 import UIKit
-import Observation
+import Perception
 
-@Observable
+@Perceptible
 @MainActor
 final class PushRegistrar {
 

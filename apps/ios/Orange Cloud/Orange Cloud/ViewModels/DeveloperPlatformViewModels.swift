@@ -6,11 +6,11 @@
 //
 
 import Foundation
-import Observation
+import Perception
 
 // MARK: - Queues
 
-@Observable
+@Perceptible
 @MainActor
 final class QueuesViewModel {
 
@@ -119,7 +119,7 @@ final class QueuesViewModel {
 
 // MARK: - AI Gateway
 
-@Observable
+@Perceptible
 @MainActor
 final class AIGatewayViewModel {
 
@@ -186,7 +186,7 @@ final class AIGatewayViewModel {
 
 // MARK: - Durable Objects（只读）
 
-@Observable
+@Perceptible
 @MainActor
 final class DurableObjectsViewModel {
 
@@ -221,7 +221,7 @@ final class DurableObjectsViewModel {
 
 // MARK: - Workers AI（只读模型目录）
 
-@Observable
+@Perceptible
 @MainActor
 final class WorkersAIViewModel {
 
@@ -263,7 +263,7 @@ final class WorkersAIViewModel {
 
 // MARK: - Hyperdrive
 
-@Observable
+@Perceptible
 @MainActor
 final class HyperdriveViewModel {
 
@@ -348,7 +348,7 @@ final class HyperdriveViewModel {
 
 // MARK: - Durable Objects 对象实例（只读，游标分页）
 
-@Observable
+@Perceptible
 @MainActor
 final class DurableObjectInstancesViewModel {
 
@@ -416,7 +416,7 @@ final class DurableObjectInstancesViewModel {
 
 // MARK: - Workers AI 文本生成 Playground
 
-@Observable
+@Perceptible
 @MainActor
 final class AIPlaygroundViewModel {
 

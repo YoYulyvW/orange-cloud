@@ -9,7 +9,7 @@
 import Foundation
 import StoreKit
 
-@Observable
+@Perceptible
 @MainActor
 final class EntitlementStore {
 

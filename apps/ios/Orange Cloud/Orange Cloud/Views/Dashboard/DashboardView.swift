@@ -168,7 +168,7 @@ private struct DashboardHomeView: View {
     @State private var showSearch = false
     @State private var pendingRoute: DashboardResourceRoute?
     /// 免费层点 Pro 资源（R2 / D1 / KV / Tunnel）时弹的付费墙场景。
-    /// 状态放 @Observable 而非本视图 @State：本视图 body 极重（问候区 TimelineView、
+    /// 状态放 @Perceptible 而非本视图 @State：本视图 body 极重（问候区 TimelineView、
     /// 宫格、每个域名的迷你图、置顶清单的全量资源字典），@State 翻转会让整页在
     /// sheet 呈现动画的起帧同帧重算，iPhone 11 级设备上是可感知的顿挫（issue #69）；
     /// 隔离后只有 PaywallSheetHost 重算。
@@ -1832,9 +1832,9 @@ private struct StatIsland: View {
 
 // MARK: - 付费墙弹层隔离宿主（issue #69）
 
-/// 付费墙场景的独立状态载体：@Observable 按属性追踪，DashboardHomeView 只写不读，
+/// 付费墙场景的独立状态载体：@Perceptible 按属性追踪，DashboardHomeView 只写不读，
 /// 触发 / 收起弹层都不会牵连整个概览页 body 重算（那是弹层起帧顿挫的来源）。
-@Observable
+@Perceptible
 private final class DashboardPaywallPresenter {
     var feature: ProFeature?
 }
@@ -1842,7 +1842,7 @@ private final class DashboardPaywallPresenter {
 /// 透明叶子视图，唯一读取 presenter.feature 的地方——sheet 起落只重算它自己
 private struct PaywallSheetHost: View {
 
-    @Bindable var presenter: DashboardPaywallPresenter
+    @Perception.Bindable var presenter: DashboardPaywallPresenter
 
     var body: some View {
         Color.clear

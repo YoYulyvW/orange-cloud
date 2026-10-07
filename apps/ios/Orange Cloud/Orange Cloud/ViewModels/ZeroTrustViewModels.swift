@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import Observation
+import Perception
 
-@Observable
+@Perceptible
 @MainActor
 final class AccessAppsViewModel {
 
@@ -149,7 +149,7 @@ final class AccessAppsViewModel {
     }
 }
 
-@Observable
+@Perceptible
 @MainActor
 final class GatewayRulesViewModel {
 

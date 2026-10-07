@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5EAB1E0000000000000000E3 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 5EAB1E0000000000000000E2 /* Sentry */; };
+		ABCD00000000000000000F02 /* Perception in Frameworks */ = {isa = PBXBuildFile; productRef = ABCD00000000000000000F01 /* Perception */; };
 		AB12CD00000000000000000C /* OrangeCloudWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AB12CD000000000000000001 /* OrangeCloudWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E9AD1A792FE1B6A90020AAAF /* Orange Cloud Watch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E9AD1A6F2FE1B6A80020AAAF /* Orange Cloud Watch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E9AD1A852FE1B6CA0020AAAF /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9AD1A842FE1B6CA0020AAAF /* WidgetKit.framework */; };
@@ -260,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5EAB1E0000000000000000E3 /* Sentry in Frameworks */,
+				ABCD00000000000000000F02 /* Perception in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,6 +444,7 @@
 			name = "Orange Cloud";
 			packageProductDependencies = (
 				5EAB1E0000000000000000E2 /* Sentry */,
+				ABCD00000000000000000F01 /* Perception */,
 			);
 			productName = "Orange Cloud";
 			productReference = E9EF3A232FD98F7B007C2377 /* Orange Cloud.app */;
@@ -500,6 +503,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				5EAB1E0000000000000000E1 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+				ABCD00000000000000000F00 /* XCRemoteSwiftPackageReference "swift-perception" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E9EF3A242FD98F7B007C2377 /* Products */;
@@ -1249,6 +1253,14 @@
 				minimumVersion = 8.0.0;
 			};
 		};
+		ABCD00000000000000000F00 /* XCRemoteSwiftPackageReference "swift-perception" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-perception";
+			requirement = {
+				kind = exactVersion;
+				version = 2.0.11;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1256,6 +1268,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5EAB1E0000000000000000E1 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
 			productName = Sentry;
+		};
+		ABCD00000000000000000F01 /* Perception */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ABCD00000000000000000F00 /* XCRemoteSwiftPackageReference "swift-perception" */;
+			productName = Perception;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

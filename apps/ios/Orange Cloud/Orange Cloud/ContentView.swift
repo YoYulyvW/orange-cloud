@@ -14,7 +14,7 @@ struct ContentView: View {
     @AppStorage(AppMotion.storageKey) private var reduceAnimations = false
 
     var body: some View {
-        @Bindable var router = AppRouter.shared
+        @Perception.Bindable var router = AppRouter.shared
         return Group {
             if auth.isLoggedIn {
                 // 按身份重建会话子树：切换/新增登录身份时 SessionStore（含 token 客户端）全新创建

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Observation
+import Perception
 
 /// PRAGMA index_list 的一行
 nonisolated struct D1IndexInfo: Identifiable, Sendable {
@@ -28,7 +28,7 @@ nonisolated struct D1IndexInfo: Identifiable, Sendable {
     }
 }
 
-@Observable
+@Perceptible
 @MainActor
 final class D1IndexListViewModel {
 

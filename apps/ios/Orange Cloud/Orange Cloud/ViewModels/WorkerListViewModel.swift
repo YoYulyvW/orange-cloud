@@ -6,10 +6,10 @@
 //
 
 import Foundation
-import Observation
+import Perception
 import SwiftData
 
-@Observable
+@Perceptible
 @MainActor
 final class WorkerListViewModel {
 

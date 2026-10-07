@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import Observation
+import Perception
 
-@Observable
+@Perceptible
 @MainActor
 final class AuditLogViewModel {
 

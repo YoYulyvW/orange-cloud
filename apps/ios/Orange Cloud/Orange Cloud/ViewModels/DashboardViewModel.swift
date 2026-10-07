@@ -6,11 +6,11 @@
 //
 
 import Foundation
-import Observation
+import Perception
 import SwiftData
 import WidgetKit
 
-@Observable
+@Perceptible
 @MainActor
 final class DashboardViewModel {
 

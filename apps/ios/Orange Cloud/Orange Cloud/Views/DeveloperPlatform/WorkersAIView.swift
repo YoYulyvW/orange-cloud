@@ -134,8 +134,8 @@ private struct AIModelDetailSheet: View {
     private var hasAIWrite: Bool { auth.hasScope("ai.write") }
 
     var body: some View {
-        @Bindable var playVM = playVM
-        @Bindable var imageVM = imageVM
+        @Perception.Bindable var playVM = playVM
+        @Perception.Bindable var imageVM = imageVM
         NavigationStack {
             List {
                 Section {

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Observation
+import Perception
 
 /// SSL/TLS 加密模式（zone setting `ssl` 的取值）
 nonisolated enum SSLMode: String, CaseIterable, Identifiable, Sendable {
@@ -45,7 +45,7 @@ nonisolated enum MinTLSVersion: String, CaseIterable, Identifiable, Sendable {
     var title: String { "TLS \(rawValue)" }
 }
 
-@Observable
+@Perceptible
 @MainActor
 final class ZoneSSLViewModel {
 

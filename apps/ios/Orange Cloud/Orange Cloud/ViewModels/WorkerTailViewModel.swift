@@ -7,10 +7,10 @@
 //
 
 import Foundation
-import Observation
+import Perception
 import ActivityKit
 
-@Observable
+@Perceptible
 @MainActor
 final class WorkerTailViewModel {
 

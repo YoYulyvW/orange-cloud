@@ -76,7 +76,7 @@ nonisolated enum TelemetryReporter {
 
 // MARK: - 同意状态（MainActor，驱动弹窗与设置开关）
 
-@Observable
+@Perceptible
 @MainActor
 final class TelemetryStore {
 

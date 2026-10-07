@@ -8,7 +8,7 @@
 //
 
 import Foundation
-import Observation
+import Perception
 
 /// 缓存级别（zone setting `cache_level` 的取值）
 nonisolated enum CacheLevel: String, CaseIterable, Identifiable, Sendable {
@@ -25,7 +25,7 @@ nonisolated enum CacheLevel: String, CaseIterable, Identifiable, Sendable {
     }
 }
 
-@Observable
+@Perceptible
 @MainActor
 final class ZonePerformanceViewModel {
 

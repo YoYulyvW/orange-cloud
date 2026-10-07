@@ -8,11 +8,11 @@
 //
 
 import Foundation
-import Observation
+import Perception
 
 // MARK: - 清单
 
-@Observable
+@Perceptible
 @MainActor
 final class GuidesIndexViewModel {
 
@@ -80,7 +80,7 @@ final class GuidesIndexViewModel {
 
 // MARK: - 正文
 
-@Observable
+@Perceptible
 @MainActor
 final class GuideArticleViewModel {
 

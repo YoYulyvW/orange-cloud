@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import Observation
+import Perception
 
-@Observable
+@Perceptible
 @MainActor
 final class RedirectListsViewModel {
 
@@ -78,7 +78,7 @@ final class RedirectListsViewModel {
     }
 }
 
-@Observable
+@Perceptible
 @MainActor
 final class RedirectListDetailViewModel {
 

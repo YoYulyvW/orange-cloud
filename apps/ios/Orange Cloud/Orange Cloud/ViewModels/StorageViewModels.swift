@@ -7,12 +7,12 @@
 //
 
 import Foundation
-import Observation
+import Perception
 import UIKit
 
 // MARK: - R2
 
-@Observable
+@Perceptible
 @MainActor
 final class R2BucketListViewModel {
 
@@ -93,7 +93,7 @@ final class R2BucketListViewModel {
     }
 }
 
-@Observable
+@Perceptible
 @MainActor
 final class R2ObjectListViewModel {
 
@@ -344,7 +344,7 @@ final class R2ObjectListViewModel {
 
 // MARK: - R2 桶设置（公开访问 / CORS）
 
-@Observable
+@Perceptible
 @MainActor
 final class R2BucketSettingsViewModel {
 
@@ -467,7 +467,7 @@ final class R2BucketSettingsViewModel {
 
 // MARK: - D1
 
-@Observable
+@Perceptible
 @MainActor
 final class D1DatabaseListViewModel {
 
@@ -553,7 +553,7 @@ final class D1DatabaseListViewModel {
     }
 }
 
-@Observable
+@Perceptible
 @MainActor
 final class D1QueryViewModel {
 
@@ -656,7 +656,7 @@ final class D1QueryViewModel {
     }
 }
 
-@Observable
+@Perceptible
 @MainActor
 final class D1TableViewModel {
 
@@ -878,7 +878,7 @@ final class D1TableViewModel {
 
 // MARK: - KV
 
-@Observable
+@Perceptible
 @MainActor
 final class KVNamespaceListViewModel {
 
@@ -944,7 +944,7 @@ final class KVNamespaceListViewModel {
     }
 }
 
-@Observable
+@Perceptible
 @MainActor
 final class KVKeyListViewModel {
 
@@ -1035,7 +1035,7 @@ final class KVKeyListViewModel {
     }
 }
 
-@Observable
+@Perceptible
 @MainActor
 final class KVValueViewModel {
 

@@ -11,7 +11,7 @@
 //
 
 import Foundation
-import Observation
+import Perception
 
 /// 单个数据库的历史 + 收藏
 nonisolated struct D1QueryBook: Codable, Sendable, Equatable {
@@ -40,7 +40,7 @@ nonisolated struct D1QueryBook: Codable, Sendable, Equatable {
     }
 }
 
-@Observable
+@Perceptible
 @MainActor
 final class D1QueryHistoryStore {
 

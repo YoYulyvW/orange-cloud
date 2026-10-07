@@ -7,11 +7,11 @@
 //
 
 import Foundation
-import Observation
+import Perception
 
 // MARK: - Rulesets phase 泛化
 
-@Observable
+@Perceptible
 @MainActor
 final class ZonePhaseRulesViewModel {
 
@@ -109,7 +109,7 @@ final class ZonePhaseRulesViewModel {
 
 // MARK: - Page Rules（传统）
 
-@Observable
+@Perceptible
 @MainActor
 final class PageRulesViewModel {
 
@@ -175,7 +175,7 @@ final class PageRulesViewModel {
 
 // MARK: - URL Normalization
 
-@Observable
+@Perceptible
 @MainActor
 final class URLNormalizationViewModel {
 

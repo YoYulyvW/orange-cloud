@@ -10,7 +10,7 @@
 //
 
 import Foundation
-import Observation
+import Perception
 
 /// 可固定的资源类型（rawValue 进持久化，勿改）
 nonisolated enum PinnedResourceType: String, Codable, Sendable, Hashable, CaseIterable {
@@ -70,7 +70,7 @@ nonisolated struct PinnedResource: Codable, Hashable, Identifiable, Sendable {
 /// 未与 AccountPrefsStore 合并的原因：Prefs 是套餐 / 账单日这类**低频配置**且整块镜像给 Widget，
 /// 置顶是高频增删的资源状态，混进去会让每次点星标都重写 App Group 镜像，
 /// 也要冒着往已持久化的 Prefs JSON 里加非可选字段的解码迁移风险。
-@Observable
+@Perceptible
 @MainActor
 final class PinnedResourceStore {
 

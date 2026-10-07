@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import Observation
+import Perception
 
-@Observable
+@Perceptible
 @MainActor
 final class PagesProjectListViewModel {
 
@@ -60,7 +60,7 @@ final class PagesProjectListViewModel {
     }
 }
 
-@Observable
+@Perceptible
 @MainActor
 final class PagesProjectDetailViewModel {
 
@@ -188,7 +188,7 @@ final class PagesProjectDetailViewModel {
 
 // MARK: - 自定义域名
 
-@Observable
+@Perceptible
 @MainActor
 final class PagesDomainsViewModel {
 
@@ -359,7 +359,7 @@ final class PagesDomainsViewModel {
 
 // MARK: - 直接上传部署
 
-@Observable
+@Perceptible
 @MainActor
 final class PagesDeployViewModel {
 
