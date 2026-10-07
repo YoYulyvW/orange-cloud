@@ -1,0 +1,56 @@
+name: Build Unsigned IPA
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: |
+          echo "=== Available Xcode ==="
+          ls /Applications/ | grep -i xcode || true
+          sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+          xcodebuild -version
+
+      - name: Build
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project "apps/ios/Orange Cloud/Orange Cloud.xcodeproj" \
+            -scheme "Orange Cloud" \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            build 2>&1 | tee build.log
+          echo "BUILD_EXIT=$?"
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
+
+      - name: Package IPA
+        if: success()
+        run: |
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/*.app Payload/
+          zip -r OrangeCloud-unsigned.ipa Payload
+
+      - name: Upload IPA
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: OrangeCloud-unsigned-ipa
+          path: OrangeCloud-unsigned.ipa
