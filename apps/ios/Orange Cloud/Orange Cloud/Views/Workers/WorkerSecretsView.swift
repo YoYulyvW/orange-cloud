@@ -33,83 +33,96 @@ struct WorkerSecretsView: View {
     private var canBind:    Bool { canWrite && (canReadD1 || canReadKV || canReadR2) }
 
     var body: some View {
-        Group {
-            if !viewModel.loaded && viewModel.isLoading {
-                SkeletonList(rows: 5, icon: .none, trailing: true)
-            } else {
-                List {
-                    secretsSection
-                    variablesSection
-                    if !viewModel.otherBindings.isEmpty || canBind {
-                        otherSection
-                    }
+        coreContent
+            .background { SkyBackground() }
+            .navigationTitle("变量与密钥")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { toolbarContent }
+            .confirmationDialog(
+                secretToDelete.map { String(localized: "删除密钥「\($0.name)」？") } ?? "",
+                isPresented: Binding(get: { secretToDelete != nil }, set: { if !$0 { secretToDelete = nil } }),
+                titleVisibility: .visible
+            ) {
+                Button("删除", role: .destructive) {
+                    if let s = secretToDelete { Task { await viewModel.deleteSecret(s) } }
                 }
-                .scrollContentBackground(.hidden)
-                .refreshable { await viewModel.load() }
+            } message: {
+                Text("密钥值无法读回，删除后需重新设置，不可撤销。")
             }
-        }
-        .background { SkyBackground() }
-        .navigationTitle("变量与密钥")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            if canWrite {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("批量导入 JSON", systemImage: "arrow.down.doc") {
-                        sheet = .bulkImport
-                    }
+            .confirmationDialog(
+                variableToDelete.map { String(localized: "删除变量「\($0.name)」？") } ?? "",
+                isPresented: Binding(get: { variableToDelete != nil }, set: { if !$0 { variableToDelete = nil } }),
+                titleVisibility: .visible
+            ) {
+                Button("删除", role: .destructive) {
+                    if let v = variableToDelete { Task { await viewModel.deleteVariable(v) } }
                 }
             }
-        }
-        .confirmationDialog(
-            secretToDelete.map { String(localized: "删除密钥「\($0.name)」？") } ?? "",
-            isPresented: Binding(get: { secretToDelete != nil }, set: { if !$0 { secretToDelete = nil } }),
-            titleVisibility: .visible
-        ) {
-            Button("删除", role: .destructive) {
-                if let s = secretToDelete { Task { await viewModel.deleteSecret(s) } }
+            .confirmationDialog(
+                bindingToUnbind.map { String(localized: "解除绑定「\($0.name)」？") } ?? "",
+                isPresented: Binding(get: { bindingToUnbind != nil }, set: { if !$0 { bindingToUnbind = nil } }),
+                titleVisibility: .visible
+            ) {
+                Button("解除绑定", role: .destructive) {
+                    if let b = bindingToUnbind { Task { await viewModel.unbindResource(b) } }
+                }
+            } message: {
+                Text("仅解除该 Worker 与此资源的绑定，不会删除资源本身。")
             }
-        } message: {
-            Text("密钥值无法读回，删除后需重新设置，不可撤销。")
-        }
-        .confirmationDialog(
-            variableToDelete.map { String(localized: "删除变量「\($0.name)」？") } ?? "",
-            isPresented: Binding(get: { variableToDelete != nil }, set: { if !$0 { variableToDelete = nil } }),
-            titleVisibility: .visible
-        ) {
-            Button("删除", role: .destructive) {
-                if let v = variableToDelete { Task { await viewModel.deleteVariable(v) } }
+            .task { if !viewModel.loaded { await viewModel.load() } }
+            .sheet(item: $sheet) { kind in sheetContent(kind) }
+            .alert("出错了", isPresented: alertBinding) {
+                apiErrorDocButton(for: viewModel.error)
+                Button("好", role: .cancel) {}
+            } message: {
+                Text(viewModel.error ?? "")
             }
-        }
-        .confirmationDialog(
-            bindingToUnbind.map { String(localized: "解除绑定「\($0.name)」？") } ?? "",
-            isPresented: Binding(get: { bindingToUnbind != nil }, set: { if !$0 { bindingToUnbind = nil } }),
-            titleVisibility: .visible
-        ) {
-            Button("解除绑定", role: .destructive) {
-                if let b = bindingToUnbind { Task { await viewModel.unbindResource(b) } }
-            }
-        } message: {
-            Text("仅解除该 Worker 与此资源的绑定，不会删除资源本身。")
-        }
-        .task { if !viewModel.loaded { await viewModel.load() } }
-        .sheet(item: $sheet) { kind in
-            switch kind {
-            case .bulkImport:
-                WorkerBulkImportSheet(viewModel: viewModel)
-            case .bindResource:
-                WorkerBindResourceSheet(viewModel: viewModel, canReadD1: canReadD1, canReadKV: canReadKV, canReadR2: canReadR2)
-            default:
-                WorkerValueEditorSheet(kind: kind, viewModel: viewModel)
-            }
-        }
-        .alert("出错了", isPresented: .init(
+    }
+
+    private var alertBinding: Binding<Bool> {
+        Binding(
             get: { viewModel.error != nil && sheet == nil },
             set: { if !$0 { viewModel.error = nil } }
-        )) {
-            apiErrorDocButton(for: viewModel.error)
-            Button("好", role: .cancel) {}
-        } message: {
-            Text(viewModel.error ?? "")
+        )
+    }
+
+    @ViewBuilder
+    private var coreContent: some View {
+        if !viewModel.loaded && viewModel.isLoading {
+            SkeletonList(rows: 5, icon: .none, trailing: true)
+        } else {
+            List {
+                secretsSection
+                variablesSection
+                if !viewModel.otherBindings.isEmpty || canBind {
+                    otherSection
+                }
+            }
+            .scrollContentBackground(.hidden)
+            .refreshable { await viewModel.load() }
+        }
+    }
+
+    @ToolbarContentBuilder
+    private var toolbarContent: some ToolbarContent {
+        if canWrite {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("批量导入 JSON", systemImage: "arrow.down.doc") {
+                    sheet = .bulkImport
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func sheetContent(_ kind: EditorSheet) -> some View {
+        switch kind {
+        case .bulkImport:
+            WorkerBulkImportSheet(viewModel: viewModel)
+        case .bindResource:
+            WorkerBindResourceSheet(viewModel: viewModel, canReadD1: canReadD1, canReadKV: canReadKV, canReadR2: canReadR2)
+        default:
+            WorkerValueEditorSheet(kind: kind, viewModel: viewModel)
         }
     }
 
