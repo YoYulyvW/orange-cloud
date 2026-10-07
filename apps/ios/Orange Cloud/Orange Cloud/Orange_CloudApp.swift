@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Perception
 import TipKit
 import CoreSpotlight
 import ActivityKit
