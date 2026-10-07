@@ -64,5 +64,5 @@ private struct SessionRootView: View {
 #Preview {
     ContentView()
         .environment(AuthManager())
-        .modelContainer(for: [CachedZone.self, CachedDNSRecord.self], inMemory: true)
+        .modelContainer(nil)
 }

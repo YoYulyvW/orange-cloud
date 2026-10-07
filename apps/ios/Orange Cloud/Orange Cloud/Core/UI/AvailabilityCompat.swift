@@ -85,8 +85,10 @@ extension View {
     func loadingSpinSymbolEffect(isActive: Bool) -> some View {
         if #available(iOS 18.0, *) {
             symbolEffect(.rotate, isActive: isActive)
-        } else {
+        } else if #available(iOS 17.0, *) {
             symbolEffect(.pulse, isActive: isActive)
+        } else {
+            self
         }
     }
 
@@ -228,11 +230,7 @@ private struct TabBarMinimizeOnScroll: ViewModifier {
 
     @ViewBuilder
     func body(content: Content) -> some View {
-        if #available(iOS 26.0, *) {
-            content.tabBarMinimizeBehavior(sizeClass == .compact ? .onScrollDown : .never)
-        } else {
-            content
-        }
+        content
     }
 }
 

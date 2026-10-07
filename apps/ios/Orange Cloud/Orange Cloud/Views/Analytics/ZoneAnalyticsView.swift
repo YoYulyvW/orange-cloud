@@ -331,7 +331,7 @@ struct ZoneAnalyticsSection: View {
                 RuleMark(x: .value("选中", selected.date))
                     .foregroundStyle(.secondary.opacity(0.4))
                     .accessibilityHidden(true)
-                    .annotation(position: .top, overflowResolution: .init(x: .fit(to: .chart))) {
+                    .annotation(position: .top) {
                         VStack(alignment: .leading, spacing: 2) {
                             Text(axisLabel(for: selected.date))
                                 .font(.caption2)

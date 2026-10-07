@@ -172,8 +172,8 @@ extension View {
 extension View {
     /// chartXSelection(value:) 的兼容封装：iOS 16 不支持图表点选，原样返回。
     @ViewBuilder
-    func ocChartXSelection<V: Hashable>(value: Binding<V?>) -> some View {
-        if #available(iOS 17.0, *) {
+    func ocChartXSelection<V>(value: Binding<V?>) -> some View {
+        if #available(iOS 17.0, *), V.self is any Plottable.Type {
             self.chartXSelection(value: value)
         } else {
             self

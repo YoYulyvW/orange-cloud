@@ -3,12 +3,20 @@
 //  Orange Cloud
 //
 //  iOS 16.4 移植：替代 SwiftData 的 ModelContext / FetchDescriptor / @Query / modelContainer。
-//  缓存是可随时从 API 重拉的次要数据，用 CacheStore（内存 + JSON）承载。
 //
 
 import Foundation
 import SwiftUI
 import Perception
+
+// MARK: - SortDescriptor
+
+struct SortDescriptor<T> {
+    let compare: (T, T) -> Bool
+    init<V: Comparable>(_ keyPath: KeyPath<T, V>) {
+        compare = { $0[keyPath: keyPath] < $1[keyPath: keyPath] }
+    }
+}
 
 // MARK: - ModelContext
 
@@ -27,7 +35,6 @@ final class ModelContext {
             all = store.allRecords as! [T]
         }
         if let p = descriptor.predicate { all = all.filter(p) }
-        if let s = descriptor.sortBy { all = all.sorted(by: s) }
         return all
     }
 
@@ -52,10 +59,8 @@ final class ModelContext {
 
 struct FetchDescriptor<T> {
     var predicate: ((T) -> Bool)?
-    var sortBy: ((T, T) -> Bool)?
-    init(predicate: ((T) -> Bool)? = nil, sortBy: ((T, T) -> Bool)? = nil) {
+    init(predicate: ((T) -> Bool)? = nil) {
         self.predicate = predicate
-        self.sortBy = sortBy
     }
 }
 
@@ -81,14 +86,28 @@ extension View {
 @propertyWrapper
 struct Query<T> {
     private let filter: ((T) -> Bool)?
-    private let sort: ((T, T) -> Bool)?
+    private let comparators: [(T, T) -> Bool]
 
-    init(filter: ((T) -> Bool)? = nil, sort: ((T, T) -> Bool)? = nil) {
-        self.filter = filter
-        self.sort = sort
+    init() {
+        self.filter = nil
+        self.comparators = []
     }
 
-    @MainActor
+    init(filter: ((T) -> Bool)? = nil) {
+        self.filter = filter
+        self.comparators = []
+    }
+
+    init<V: Comparable>(filter: ((T) -> Bool)? = nil, sort: KeyPath<T, V>) {
+        self.filter = filter
+        self.comparators = [{ $0[keyPath: sort] < $1[keyPath: sort] }]
+    }
+
+    init(filter: ((T) -> Bool)? = nil, sort: [SortDescriptor<T>]) {
+        self.filter = filter
+        self.comparators = sort.map { $0.compare }
+    }
+
     var wrappedValue: [T] {
         let store = CacheStore.shared
         var all: [T] = []
@@ -100,7 +119,15 @@ struct Query<T> {
             all = store.allRecords as! [T]
         }
         if let f = filter { all = all.filter(f) }
-        if let s = sort { all = all.sorted(by: s) }
+        if !comparators.isEmpty {
+            all = all.sorted { a, b in
+                for cmp in comparators {
+                    if cmp(a, b) { return true }
+                    if cmp(b, a) { return false }
+                }
+                return false
+            }
+        }
         return all
     }
 }

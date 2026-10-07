@@ -18,6 +18,10 @@ final class CacheStore {
     private(set) var workers: [CachedWorkerScript] = []
     private(set) var records: [CachedDNSRecord] = []
 
+    var allZones: [CachedZone] { zones }
+    var allWorkers: [CachedWorkerScript] { workers }
+    var allRecords: [CachedDNSRecord] { records }
+
     private let queue = DispatchQueue(label: "oc.cache.store")
     private var loaded = false
 

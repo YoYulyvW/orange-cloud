@@ -474,6 +474,5 @@ private nonisolated struct D1CSVDocument: Transferable {
             // BOM：Excel 打开非 BOM 的 UTF-8 CSV 会把中文识别成乱码
             Data([0xEF, 0xBB, 0xBF]) + Data(document.text.utf8)
         }
-        .suggestedFileName { $0.filename }
     }
 }

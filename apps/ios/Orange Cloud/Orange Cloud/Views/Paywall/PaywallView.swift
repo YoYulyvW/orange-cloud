@@ -19,7 +19,6 @@ struct PaywallView: View {
 
     @Environment(EntitlementStore.self) private var entitlements
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.purchase) private var purchase
 
     @State private var selectedID = EntitlementStore.ProductID.yearly
     @State private var isPurchasing = false
@@ -275,7 +274,7 @@ struct PaywallView: View {
         isPurchasing = true
         defer { isPurchasing = false }
         do {
-            let result = try await purchase(product)
+            let result = try await product.purchase()
             await entitlements.handle(result)
         } catch {
             entitlements.purchaseError = error.localizedDescription

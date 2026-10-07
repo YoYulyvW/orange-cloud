@@ -19,11 +19,9 @@ struct ZoneTrafficMapCard: View {
 
     @Environment(EntitlementStore.self) private var entitlements
     @State private var paywallPresented = false
-    @State private var camera: MapCameraPosition = .region(
-        MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: 25, longitude: 0),
-            span: MKCoordinateSpan(latitudeDelta: 120, longitudeDelta: 200)
-        )
+    @State private var region = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 25, longitude: 0),
+        span: MKCoordinateSpan(latitudeDelta: 120, longitudeDelta: 200)
     )
 
     var body: some View {
@@ -93,7 +91,7 @@ struct ZoneTrafficMapCard: View {
     @ViewBuilder
     private var map: some View {
         if #available(iOS 17.0, *) {
-            Map(position: $camera, interactionModes: [.pan, .zoom]) {
+            Map(position: .constant(.region(region)), interactionModes: [.pan, .zoom]) {
                 ForEach(bubbles) { bubble in
                     // 标题留空避免 200+ 国家名在图上堆叠；无障碍标签挂在圆点本身
                     Annotation("", coordinate: bubble.coordinate) {
