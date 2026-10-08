@@ -15,6 +15,7 @@ struct CIDRToolView: View {
     @State private var invalid = false
 
     var body: some View {
+        WithPerceptionTracking {
         ScrollView {
             VStack(spacing: OCLayout.islandGap) {
                 VStack(spacing: 12) {
@@ -48,7 +49,8 @@ struct CIDRToolView: View {
         .background { SkyBackground() }
         .navigationTitle("CIDR 计算器")
         .navigationBarTitleDisplayMode(.inline)
-    }
+    
+        }}
     
 
     private func compute() {

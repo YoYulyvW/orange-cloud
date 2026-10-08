@@ -15,6 +15,7 @@ struct ToolKV: View {
     var mono: Bool = true
 
     var body: some View {
+        WithPerceptionTracking {
         HStack(alignment: .top, spacing: 12) {
             Text(key)
                 .foregroundStyle(.secondary)
@@ -26,7 +27,8 @@ struct ToolKV: View {
         }
         .padding(.horizontal, OCLayout.islandPadding)
         .padding(.vertical, 9)
-    }
+    
+        }}
     
 }
 

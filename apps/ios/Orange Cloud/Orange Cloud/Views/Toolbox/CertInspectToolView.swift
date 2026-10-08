@@ -13,6 +13,7 @@ struct CertInspectToolView: View {
     @State private var vm = CertInspectViewModel()
 
     var body: some View {
+        WithPerceptionTracking {
         ScrollView {
             VStack(spacing: OCLayout.islandGap) {
                 VStack(spacing: 12) {
@@ -83,7 +84,8 @@ struct CertInspectToolView: View {
         .background { SkyBackground() }
         .navigationTitle("SSL 证书检查")
         .navigationBarTitleDisplayMode(.inline)
-    }
+    
+        }}
     
 
     private func rows(_ info: CertInfo) -> [ToolKVRow] {
