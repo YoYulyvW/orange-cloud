@@ -177,7 +177,7 @@ struct D1QueryView: View {
                             }
                         }
                     }
-                    .glassIsland(cornerRadius: OCLayout.chipRadius)
+                    .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
                 }
             }
         }
@@ -290,7 +290,7 @@ struct D1QueryView: View {
             .frame(minHeight: 100, maxHeight: 180)
             .scrollContentBackground(.hidden)
             .padding(8)
-            .glassIsland(cornerRadius: OCLayout.chipRadius)
+            .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
             // SQL 始终 LTR，避免在 RTL 语言下镜像
             .environment(\.layoutDirection, .leftToRight)
 
@@ -406,7 +406,7 @@ private struct D1ResultCard: View {
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .glassIsland()
+        .glassIslandFlat()
         .task(id: resultSignature) {
             guard !rows.isEmpty else {
                 csvDoc = nil

@@ -235,7 +235,7 @@ private struct AddZoneResultView: View {
         }
         .padding()
         .frame(maxWidth: .infinity)
-        .glassIsland()
+        .glassIslandFlat()
     }
 
     private var nameServerCard: some View {
@@ -296,7 +296,7 @@ private struct AddZoneResultView: View {
                     .padding(.vertical, 12)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .glassIsland(cornerRadius: OCLayout.chipRadius)
+            .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
         }
     }
 }

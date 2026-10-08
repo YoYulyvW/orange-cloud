@@ -72,7 +72,7 @@ struct ToolKVSection: View {
                     ToolKV(key: row.key, value: row.value, mono: row.mono)
                 }
             }
-            .glassIsland()
+            .glassIslandFlat()
         }
     }
     
@@ -108,7 +108,7 @@ struct ToolNotice: View {
         }
         .padding(OCLayout.islandPadding)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .glassIsland()
+        .glassIslandFlat()
     }
     
 }
@@ -132,7 +132,7 @@ struct ToolResultIsland<Content: View>: View {
             VStack(spacing: 0) {
                 content
             }
-            .glassIsland()
+            .glassIslandFlat()
         }
     }
     

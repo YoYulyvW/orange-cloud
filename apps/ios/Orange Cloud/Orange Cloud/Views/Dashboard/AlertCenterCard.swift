@@ -55,7 +55,7 @@ struct AlertCenterCard: View {
                     }
                 }
             }
-            .glassIsland()
+            .glassIslandFlat()
         }
     }
 
@@ -69,7 +69,7 @@ struct AlertCenterCard: View {
         }
         .padding(.horizontal, OCLayout.islandPadding)
         .padding(.vertical, 14)
-        .glassIsland(cornerRadius: OCLayout.chipRadius)
+        .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
     }
 
     @ViewBuilder

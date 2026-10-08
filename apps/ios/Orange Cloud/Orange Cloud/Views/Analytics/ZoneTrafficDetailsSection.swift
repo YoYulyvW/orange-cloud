@@ -235,6 +235,6 @@ struct ZoneTrafficDetailsSection: View {
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .glassIsland()
+        .glassIslandFlat()
     }
 }

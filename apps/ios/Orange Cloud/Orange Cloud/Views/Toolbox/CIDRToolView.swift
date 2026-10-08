@@ -35,7 +35,7 @@ struct CIDRToolView: View {
                     .tint(.ocOrange)
                 }
                 .padding(OCLayout.islandPadding)
-                .glassIsland()
+                .glassIslandFlat()
 
                 if invalid {
                     ToolNotice(

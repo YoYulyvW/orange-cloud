@@ -119,7 +119,7 @@ struct ZoneSSLCertsView: View {
             }
         }
         .padding(14)
-        .glassIsland(cornerRadius: OCLayout.chipRadius)
+        .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
     }
 
     private func card(_ pack: SSLCertificatePack) -> some View {
@@ -153,7 +153,7 @@ struct ZoneSSLCertsView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(14)
-        .glassIsland(cornerRadius: OCLayout.chipRadius)
+        .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
         .contextMenu {
             if canWrite && !pack.isUniversal {
                 Button("删除证书", systemImage: "trash", role: .destructive) {

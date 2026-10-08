@@ -179,7 +179,7 @@ struct SkeletonIslandRows: View {
                 }
             }
         }
-        .glassIsland(cornerRadius: OCLayout.chipRadius)
+        .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
         .skeletonPulse()
     }
     
@@ -217,7 +217,7 @@ struct SkeletonCardList: View {
                             .frame(width: 8, height: 8)
                     }
                     .padding(OCLayout.islandPadding)
-                    .glassIsland()
+                    .glassIslandFlat()
                 }
             }
             .padding(OCLayout.pagePadding)
@@ -233,7 +233,7 @@ struct SkeletonCardList: View {
         SkeletonIslandRows(rows: 3)
         SkeletonRow(icon: .circle(36), trailingWidth: 36)
             .padding(OCLayout.islandPadding)
-            .glassIsland()
+            .glassIslandFlat()
             .skeletonPulse()
     }
     .padding()

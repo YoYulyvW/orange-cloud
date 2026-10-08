@@ -137,7 +137,7 @@ struct SecurityInsightsView: View {
                     }
                 }
             }
-            .glassIsland(cornerRadius: OCLayout.chipRadius)
+            .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
         }
     }
 

@@ -96,7 +96,7 @@ struct ResourceSearchView: View {
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 10)
-        .glassIsland(cornerRadius: OCLayout.chipRadius)
+        .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
         .padding(.horizontal, OCLayout.pagePadding)
     }
 

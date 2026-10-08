@@ -112,7 +112,7 @@ struct PurgeCacheSheet: View {
                         .frame(minHeight: 180)
                         .scrollContentBackground(.hidden)
                         .padding(8)
-                        .glassIsland(cornerRadius: OCLayout.chipRadius)
+                        .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
                         .autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
                         .keyboardType(mode.usesURLKeyboard ? .URL : .default)

@@ -37,7 +37,7 @@ struct CertInspectToolView: View {
                     .disabled(vm.isLoading)
                 }
                 .padding(OCLayout.islandPadding)
-                .glassIsland()
+                .glassIslandFlat()
 
                 if vm.isLoading {
                     ProgressView().padding()

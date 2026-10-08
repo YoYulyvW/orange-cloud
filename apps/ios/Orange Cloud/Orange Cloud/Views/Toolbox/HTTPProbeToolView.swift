@@ -48,7 +48,7 @@ struct HTTPProbeToolView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(OCLayout.islandPadding)
-                .glassIsland()
+                .glassIslandFlat()
 
                 if vm.isLoading {
                     ProgressView().padding()

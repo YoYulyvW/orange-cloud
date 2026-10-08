@@ -205,7 +205,7 @@ struct ZoneSSLSettingsView: View {
                     .padding(.horizontal, 14)
                     .padding(.vertical, 12)
             }
-            .glassIsland(cornerRadius: OCLayout.chipRadius)
+            .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
         }
     }
 }

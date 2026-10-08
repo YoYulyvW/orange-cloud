@@ -90,7 +90,7 @@ struct PushCenterView: View {
         }
         .padding(OCLayout.islandPadding)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .glassIsland()
+        .glassIslandFlat()
     }
 
     private func enableButton(_ title: LocalizedStringKey) -> some View {
@@ -154,7 +154,7 @@ struct PushCenterView: View {
         }
         .padding(OCLayout.islandPadding)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .glassIsland()
+        .glassIslandFlat()
     }
 
     // MARK: - CF 告警推送（仅登录后）
@@ -182,7 +182,7 @@ struct PushCenterView: View {
             }
             .padding(OCLayout.islandPadding)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .glassIsland()
+            .glassIslandFlat()
         }
         .buttonStyle(.plain)
     }
@@ -236,7 +236,7 @@ struct PushCenterView: View {
         }
         .padding(OCLayout.islandPadding)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .glassIsland()
+        .glassIslandFlat()
     }
 
     // MARK: - 收件箱
@@ -271,7 +271,7 @@ struct PushCenterView: View {
                         inboxRow(msg)
                     }
                 }
-                .glassIsland()
+                .glassIslandFlat()
             }
         }
     }

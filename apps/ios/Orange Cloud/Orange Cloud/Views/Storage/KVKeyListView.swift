@@ -227,7 +227,7 @@ struct KVValueView: View {
             }
             .frame(maxWidth: .infinity, alignment: .topLeading)
             .padding(16)
-            .glassIsland(cornerRadius: OCLayout.chipRadius)
+            .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
             SkeletonBlock(width: 80, height: 10)
         }
         .padding()
@@ -248,7 +248,7 @@ struct KVValueView: View {
                 .autocorrectionDisabled()
                 .scrollContentBackground(.hidden)
                 .padding(8)
-                .glassIsland(cornerRadius: OCLayout.chipRadius)
+                .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
             } else {
                 ScrollView {
                     Text(viewModel.valueText)
@@ -257,7 +257,7 @@ struct KVValueView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(8)
                 }
-                .glassIsland(cornerRadius: OCLayout.chipRadius)
+                .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
             }
 
             Label {

@@ -92,7 +92,7 @@ struct CFAlertingView: View {
             }
             .padding(OCLayout.islandPadding)
             .frame(maxWidth: .infinity)
-            .glassIsland()
+            .glassIslandFlat()
         }
         .tint(.ocOrange)
     }
@@ -117,7 +117,7 @@ struct CFAlertingView: View {
         }
         .padding(OCLayout.islandPadding)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .glassIsland()
+        .glassIslandFlat()
     }
 
     private func alertGroup(_ vm: CFAlertingViewModel, category: String, alerts: [CFAvailableAlert]) -> some View {
@@ -132,7 +132,7 @@ struct CFAlertingView: View {
                     alertRow(vm, alert)
                 }
             }
-            .glassIsland()
+            .glassIslandFlat()
         }
     }
 

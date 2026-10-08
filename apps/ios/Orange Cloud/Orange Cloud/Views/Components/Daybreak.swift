@@ -92,6 +92,9 @@ private struct GlassIsland: ViewModifier {
 
     @Environment(\.colorScheme) private var colorScheme
     var cornerRadius: CGFloat
+    /// 是否绘制投影。密集滚动列表传 false：逐行高斯模糊阴影是 iOS 16 滚动掉帧主因，
+    /// 改用描边 + 微阴影模拟层次，静态页保持 true 不变。
+    var elevated: Bool = true
 
     func body(content: Content) -> some View {
         content
@@ -109,7 +112,12 @@ private struct GlassIsland: ViewModifier {
                         lineWidth: 0.5
                     )
             }
-            .shadow(color: .black.opacity(colorScheme == .dark ? 0.30 : 0.07), radius: 12, y: 5)
+            // 轻量模式：用 1pt 低透明度阴影替代 12pt 大模糊，视觉层次接近、滚动零重绘
+            .shadow(
+                color: .black.opacity(elevated ? (colorScheme == .dark ? 0.30 : 0.07) : (colorScheme == .dark ? 0.22 : 0.05)),
+                radius: elevated ? 12 : 2,
+                y: elevated ? 5 : 1
+            )
     }
 }
 
@@ -117,6 +125,11 @@ extension View {
     /// 把任意内容变成浮在天色上的玻璃岛
     func glassIsland(cornerRadius: CGFloat = OCLayout.islandRadius) -> some View {
         modifier(GlassIsland(cornerRadius: cornerRadius))
+    }
+
+    /// 密集滚动列表里的玻璃岛：去掉大模糊阴影，滚动更顺滑
+    func glassIslandFlat(cornerRadius: CGFloat = OCLayout.islandRadius) -> some View {
+        modifier(GlassIsland(cornerRadius: cornerRadius, elevated: false))
     }
 }
 

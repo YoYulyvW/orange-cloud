@@ -459,7 +459,7 @@ private struct DashboardHomeView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)
-        .glassIsland(cornerRadius: OCLayout.chipRadius)
+        .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
     }
 
     /// 下拉刷新 / 顶部失败提示重试：强制重拉账号、资产、流量、用量、资源清单
@@ -823,7 +823,7 @@ private struct DashboardHomeView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(OCLayout.islandPadding)
-                .glassIsland(cornerRadius: OCLayout.chipRadius)
+                .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
             }
         }
         .skeletonPulse()
@@ -890,7 +890,7 @@ private struct DashboardHomeView: View {
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.vertical, 16)
-                    .glassIsland(cornerRadius: OCLayout.chipRadius)
+                    .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
             } else if let usage = viewModel.usage {
                 if viewModel.accountAnalyticsPartial {
                     // 部分时间窗被 authz 挡（免费账号常见）：数据照常显示，
@@ -908,7 +908,7 @@ private struct DashboardHomeView: View {
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.vertical, 16)
-                    .glassIsland(cornerRadius: OCLayout.chipRadius)
+                    .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
             } else {
                 usageSkeleton
             }
@@ -932,7 +932,7 @@ private struct DashboardHomeView: View {
         .frame(maxWidth: .infinity)
         .padding(.vertical, 18)
         .padding(.horizontal, 12)
-        .glassIsland(cornerRadius: OCLayout.chipRadius)
+        .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
     }
 
     /// 用量宫格骨架：与真实瓦片同形状的 2×2 占位
@@ -958,7 +958,7 @@ private struct DashboardHomeView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(12)
-                .glassIsland(cornerRadius: OCLayout.chipRadius)
+                .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
             }
         }
         .skeletonPulse()
@@ -1343,7 +1343,7 @@ private struct DashboardHomeView: View {
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.vertical, 20)
-                    .glassIsland(cornerRadius: OCLayout.chipRadius)
+                    .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
             } else {
                 VStack(spacing: 0) {
                     ForEach(displayZones) { zone in
@@ -1361,7 +1361,7 @@ private struct DashboardHomeView: View {
                         }
                     }
                 }
-                .glassIsland()
+                .glassIslandFlat()
 
                 if pinnedZoneIds.isEmpty {
                     Label("在域名详情页点图钉，可固定想在首页看到的域名", systemImage: "pin")
@@ -1405,7 +1405,7 @@ private struct DashboardHomeView: View {
                 }
             }
         }
-        .glassIsland()
+        .glassIslandFlat()
     }
 
     @ViewBuilder
@@ -1526,7 +1526,7 @@ private struct DashboardHomeView: View {
         }
         .padding(.horizontal, OCLayout.islandPadding + 2)
         .padding(.vertical, 12)
-        .glassIsland(cornerRadius: 24)
+        .glassIslandFlat(cornerRadius: 24)
     }
 
     // MARK: - Bulk Redirects（account 级）
@@ -1543,7 +1543,7 @@ private struct DashboardHomeView: View {
         )
         .padding(.horizontal, OCLayout.islandPadding + 2)
         .padding(.vertical, 12)
-        .glassIsland(cornerRadius: 24)
+        .glassIslandFlat(cornerRadius: 24)
     }
 
 }
@@ -1635,7 +1635,7 @@ private struct UsageServiceTile: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(12)
         .contentShape(Rectangle())
-        .glassIsland(cornerRadius: OCLayout.chipRadius)
+        .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
     }
     
 }
@@ -1873,7 +1873,7 @@ private struct StatIsland: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(OCLayout.islandPadding)
-        .glassIsland(cornerRadius: OCLayout.chipRadius)
+        .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
     }
     
 }

@@ -99,7 +99,7 @@ struct ZoneAnalyticsSection: View {
             }
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
-            .glassIsland()
+            .glassIslandFlat()
         }
     }
 
@@ -204,7 +204,7 @@ struct ZoneAnalyticsSection: View {
             }
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
-            .glassIsland()
+            .glassIslandFlat()
 
             // 缓存命中率卡
             HStack(spacing: 18) {
@@ -220,7 +220,7 @@ struct ZoneAnalyticsSection: View {
             }
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
-            .glassIsland()
+            .glassIslandFlat()
 
             // 小卡网格
             LazyVGrid(columns: [GridItem(.flexible(), spacing: 14), GridItem(.flexible())], spacing: 14) {
@@ -233,7 +233,7 @@ struct ZoneAnalyticsSection: View {
                     }
                     .padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .glassIsland()
+                    .glassIslandFlat()
                 }
             }
         }
@@ -283,7 +283,7 @@ struct ZoneAnalyticsSection: View {
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .glassIsland()
+        .glassIslandFlat()
     }
 
     private var selectedPoint: TrafficDataPoint? {
@@ -443,7 +443,7 @@ struct ZoneAnalyticsSection: View {
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .glassIsland()
+        .glassIslandFlat()
     }
 
     // MARK: - 小卡网格
@@ -579,7 +579,7 @@ struct SmallStatCard: View {
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .glassIsland()
+        .glassIslandFlat()
     }
     
 }

@@ -124,7 +124,7 @@ struct ZoneDetailView: View {
                             .foregroundStyle(.secondary)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .padding(.vertical, 16)
-                            .glassIsland(cornerRadius: OCLayout.chipRadius)
+                            .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
                     }
                 }
 
@@ -966,7 +966,7 @@ struct ZoneDetailView: View {
         }
         .padding()
         .frame(maxWidth: .infinity)
-        .glassIsland()
+        .glassIslandFlat()
     }
 
     // MARK: - 分组卡
@@ -983,7 +983,7 @@ struct ZoneDetailView: View {
                     .padding(.horizontal, 14)
                     .padding(.vertical, 11)
             }
-            .glassIsland(cornerRadius: OCLayout.chipRadius)
+            .glassIslandFlat(cornerRadius: OCLayout.chipRadius)
         }
     }
 

@@ -377,7 +377,7 @@ struct ZoneCard: View {
                 .foregroundStyle(.tertiary)
         }
         .padding(OCLayout.islandPadding)
-        .glassIsland()
+        .glassIslandFlat()
     }
     
 }
