@@ -13,11 +13,6 @@ struct CFTraceToolView: View {
     @State private var vm = CFTraceViewModel()
 
     var body: some View {
-        WithPerceptionTracking { ocBodyContent }
-    }
-
-    @ViewBuilder
-    private var ocBodyContent: some View {
         ScrollView {
             VStack(spacing: OCLayout.islandGap) {
                 VStack(spacing: 12) {

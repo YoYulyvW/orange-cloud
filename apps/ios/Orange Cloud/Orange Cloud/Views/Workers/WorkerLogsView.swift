@@ -224,11 +224,7 @@ private struct LogEventRow: View {
     let onOpen: () -> Void
 
     var body: some View {
-        WithPerceptionTracking { ocBodyContent }
-    }
-
-    @ViewBuilder
-    private var ocBodyContent: some View {
+        // 纯值行（不读可观察状态）：不包 WithPerceptionTracking，列表滚动零追踪开销
         Button(action: onOpen) {
             HStack(alignment: .firstTextBaseline, spacing: 8) {
                 Text(event.date, format: .dateTime.month(.twoDigits).day(.twoDigits)

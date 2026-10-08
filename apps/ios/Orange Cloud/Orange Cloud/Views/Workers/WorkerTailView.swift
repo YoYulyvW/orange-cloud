@@ -293,11 +293,7 @@ private struct LogLineRow: View {
     let onOpen: () -> Void
 
     var body: some View {
-        WithPerceptionTracking { ocBodyContent }
-    }
-
-    @ViewBuilder
-    private var ocBodyContent: some View {
+        // 纯值行（不读可观察状态）：不包 WithPerceptionTracking，实时刷新时零追踪开销
         // 用 Button 承载点击、contextMenu 挂在 Button 上：
         // 系统按钮自带长按/点击的手势仲裁，两者可稳定共存（自绘 onTapGesture + contextMenu 会互相吞手势）
         Button(action: onOpen) {

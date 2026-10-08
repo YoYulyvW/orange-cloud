@@ -15,11 +15,6 @@ struct ToolKV: View {
     var mono: Bool = true
 
     var body: some View {
-        WithPerceptionTracking { ocBodyContent }
-    }
-
-    @ViewBuilder
-    private var ocBodyContent: some View {
         HStack(alignment: .top, spacing: 12) {
             Text(key)
                 .foregroundStyle(.secondary)
@@ -54,11 +49,6 @@ struct ToolKVSection: View {
     let rows: [ToolKVRow]
 
     var body: some View {
-        WithPerceptionTracking { ocBodyContent }
-    }
-
-    @ViewBuilder
-    private var ocBodyContent: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
                 .font(.caption)
@@ -86,11 +76,6 @@ struct ToolNotice: View {
     var tint: Color = .secondary
 
     var body: some View {
-        WithPerceptionTracking { ocBodyContent }
-    }
-
-    @ViewBuilder
-    private var ocBodyContent: some View {
         HStack(spacing: 12) {
             Image(systemName: systemImage)
                 .font(.title3)
@@ -119,11 +104,6 @@ struct ToolResultIsland<Content: View>: View {
     @ViewBuilder var content: Content
 
     var body: some View {
-        WithPerceptionTracking { ocBodyContent }
-    }
-
-    @ViewBuilder
-    private var ocBodyContent: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
                 .font(.caption)
