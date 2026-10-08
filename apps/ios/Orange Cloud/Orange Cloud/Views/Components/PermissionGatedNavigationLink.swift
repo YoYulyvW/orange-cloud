@@ -32,7 +32,12 @@ struct PermissionGatedNavigationLink<Destination: View>: View {
         }
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         if auth.hasScope(requiredScope) {
             NavigationLink(destination: destination()) {
                 HStack {
@@ -67,7 +72,8 @@ struct PermissionGatedNavigationLink<Destination: View>: View {
                 Text("当前授权未包含「\(label)」的访问权限（\(requiredScope)）。点「一键重授权」补齐，无需退出登录。")
             }
         }
-    }}
+    }
+    
 }
 
 /// 值式（value-based）版权限门控导航行：有 scope 则 `NavigationLink(value:)`（目的地由宿主栈根的
@@ -95,7 +101,12 @@ struct PermissionGatedValueLink<V: Hashable>: View {
         }
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         if auth.hasScope(requiredScope) {
             NavigationLink(value: value) {
                 HStack {
@@ -130,5 +141,6 @@ struct PermissionGatedValueLink<V: Hashable>: View {
                 Text("当前授权未包含「\(label)」的访问权限（\(requiredScope)）。点「一键重授权」补齐，无需退出登录。")
             }
         }
-    }}
+    }
+    
 }

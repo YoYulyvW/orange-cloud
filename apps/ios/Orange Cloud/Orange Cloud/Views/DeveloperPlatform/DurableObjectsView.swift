@@ -15,7 +15,12 @@ struct DurableObjectsView: View {
     @State private var vm: DurableObjectsViewModel?
     @State private var detailTarget: DurableObjectNamespace?
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Group {
             if let vm { content(vm) } else { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
         }
@@ -32,7 +37,8 @@ struct DurableObjectsView: View {
             vm = model
             await model.load()
         }
-    }}
+    }
+    
 
     @ViewBuilder
     private func content(_ vm: DurableObjectsViewModel) -> some View {
@@ -96,7 +102,12 @@ private struct DurableObjectInstancesSheet: View {
     @Environment(\.dismiss) private var dismiss
     @State private var vm: DurableObjectInstancesViewModel?
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Group {
                 if let vm { content(vm) } else { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
@@ -119,7 +130,8 @@ private struct DurableObjectInstancesSheet: View {
                 await model.loadMemory()
             }
         }
-    }}
+    }
+    
 
     @ViewBuilder
     private func content(_ vm: DurableObjectInstancesViewModel) -> some View {

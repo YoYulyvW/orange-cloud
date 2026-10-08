@@ -28,7 +28,12 @@ struct WorkerTailView: View {
         ))
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         VStack(spacing: 0) {
             header
             Divider()
@@ -71,7 +76,8 @@ struct WorkerTailView: View {
             default:          break
             }
         }
-    }}
+    }
+    
 
     // MARK: - 顶部：连接状态 + 筛选
 
@@ -286,7 +292,12 @@ private struct LogLineRow: View {
     /// 点击展开详情（详情里才允许框选行内片段）
     let onOpen: () -> Void
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         // 用 Button 承载点击、contextMenu 挂在 Button 上：
         // 系统按钮自带长按/点击的手势仲裁，两者可稳定共存（自绘 onTapGesture + contextMenu 会互相吞手势）
         Button(action: onOpen) {
@@ -297,7 +308,8 @@ private struct LogLineRow: View {
             Button("复制此行", systemImage: "doc.on.doc", action: onCopy)
         }
         .accessibilityHint(Text("轻点查看详情，长按复制整行"))
-    }}
+    }
+    
 
     private var rowContent: some View {
         HStack(alignment: .firstTextBaseline, spacing: 8) {
@@ -378,7 +390,12 @@ private struct LogLineDetailSheet: View {
 
     private var detail: LogLineDetail { LogLineDetail(line) }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 12) {
@@ -401,7 +418,8 @@ private struct LogLineDetailSheet: View {
                 }
             }
         }
-    }}
+    }
+    
 
     // MARK: 分区
 

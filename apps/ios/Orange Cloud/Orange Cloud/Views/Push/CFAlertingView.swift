@@ -15,7 +15,12 @@ struct CFAlertingView: View {
     @Environment(AuthManager.self) private var auth
     @State private var vm: CFAlertingViewModel?
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Group {
             if !auth.hasScope("notifications.read") {
                 noScope
@@ -32,7 +37,8 @@ struct CFAlertingView: View {
             if vm == nil { vm = CFAlertingViewModel(auth: auth, endpointURL: endpointURL) }
             await vm?.load()
         }
-    }}
+    }
+    
 
     private var noScope: some View {
         ScrollView {

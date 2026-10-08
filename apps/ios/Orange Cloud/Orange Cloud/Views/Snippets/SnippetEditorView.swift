@@ -37,7 +37,12 @@ struct SnippetEditorView: View {
             && !loadingCode
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Form {
                 if let existing {
@@ -117,7 +122,8 @@ struct SnippetEditorView: View {
                 }
             }
         }
-    }}
+    }
+    
 
     private func loadCode() async {
         guard let existing else { return }

@@ -26,14 +26,20 @@ struct PlanBadge: View {
         }
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Text(shortName)
             .font(.caption2.weight(.semibold))
             .foregroundStyle(tone)
             .padding(.horizontal, 7)
             .padding(.vertical, 3)
             .background(tone.opacity(0.14), in: Capsule())
-    }}
+    }
+    
 }
 
 #Preview {

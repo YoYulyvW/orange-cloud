@@ -39,7 +39,12 @@ struct D1TableView: View {
 
     private var canWrite: Bool { auth.hasScope("d1.write") }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Group {
             if viewModel.rows.isEmpty && viewModel.isLoading {
                 ScrollView {
@@ -95,7 +100,8 @@ struct D1TableView: View {
             Text(viewModel.error ?? "")
         }
         .ocSensoryFeedback(.success, trigger: viewModel.didSave)
-    }}
+    }
+    
 
     // MARK: - 索引卡（PRAGMA index_list，只读补充信息）
 
@@ -330,7 +336,12 @@ private struct D1RowEditorView: View {
         return result
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Form {
                 Section {
@@ -422,7 +433,8 @@ private struct D1RowEditorView: View {
             }
             .interactiveDismissDisabled(viewModel.isSaving)
         }
-    }}
+    }
+    
 
     private func isNull(_ value: JSONValue?) -> Bool {
         if case .null = value { return true }

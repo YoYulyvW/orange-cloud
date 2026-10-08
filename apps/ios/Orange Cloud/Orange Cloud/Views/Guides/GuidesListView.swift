@@ -16,7 +16,12 @@ struct GuidesListView: View {
 
     @State private var viewModel = GuidesIndexViewModel()
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Group {
             if viewModel.guides.isEmpty, viewModel.isLoading {
                 skeleton
@@ -43,7 +48,8 @@ struct GuidesListView: View {
             GuideArticleView(summary: summary, locale: viewModel.selectedLocale)
         }
         .task { await viewModel.loadIfNeeded() }
-    }}
+    }
+    
 
     private var list: some View {
         List {

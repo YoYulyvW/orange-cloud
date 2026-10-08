@@ -21,7 +21,12 @@ struct GuideArticleView: View {
 
     private var articleURL: URL? { URL(string: viewModel.summary.url) }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Group {
             if viewModel.blocks.isEmpty, viewModel.isLoading {
                 skeleton
@@ -55,7 +60,8 @@ struct GuideArticleView: View {
         } message: {
             Text(viewModel.translationError ?? "")
         }
-    }}
+    }
+    
 
     private var translationErrorBinding: Binding<Bool> {
         Binding(get: { viewModel.translationError != nil }, set: { if !$0 { viewModel.translationError = nil } })

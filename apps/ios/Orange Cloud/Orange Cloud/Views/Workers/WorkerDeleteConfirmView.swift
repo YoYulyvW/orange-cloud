@@ -30,7 +30,12 @@ struct WorkerDeleteConfirmView: View {
         nameMatches && !accountId.isEmpty && !viewModel.isDeleting
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Form {
                 Section {
@@ -101,7 +106,8 @@ struct WorkerDeleteConfirmView: View {
             .onAppear { fieldFocused = true }
             .interactiveDismissDisabled(viewModel.isDeleting)
         }
-    }}
+    }
+    
 
     private func performDelete() async {
         guard canDelete else { return }

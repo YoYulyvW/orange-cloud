@@ -27,7 +27,12 @@ struct D1DropTableConfirmView: View {
         nameMatches && !viewModel.isDroppingTable
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Form {
                 Section {
@@ -98,7 +103,8 @@ struct D1DropTableConfirmView: View {
             .onAppear { fieldFocused = true }
             .interactiveDismissDisabled(viewModel.isDroppingTable)
         }
-    }}
+    }
+    
 
     private func performDrop() async {
         guard canDelete else { return }

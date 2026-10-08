@@ -73,7 +73,12 @@ struct AccessAppEditorView: View {
         return canEditRules ? rulesValid : true
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Form {
                 if loadingDetail {
@@ -104,7 +109,8 @@ struct AccessAppEditorView: View {
             .interactiveDismissDisabled(viewModel.isSaving)
             .task { await prefillIfNeeded() }
         }
-    }}
+    }
+    
 
     // MARK: - 应用字段
 

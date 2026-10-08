@@ -32,7 +32,12 @@ struct HealthCheckListView: View {
 
     private var canWrite: Bool { auth.hasScope("healthcheck.write") }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         List {
             alertSection
             checksSection
@@ -70,7 +75,8 @@ struct HealthCheckListView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }}
+    }
+    
 
     /// 源站异常时推送。走 CF 原生告警（health_check_status_notification），
     /// 服务端投递 webhook —— App 关着也能收到，比客户端轮询可靠。
@@ -188,7 +194,12 @@ private struct HealthCheckDetailView: View {
     let check: HealthCheck
     @Environment(\.dismiss) private var dismiss
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         List {
             Section("状态") {
                 LabeledContent("当前状态", value: check.displayStatus.label)
@@ -244,5 +255,6 @@ private struct HealthCheckDetailView: View {
                 Button("完成") { dismiss() }
             }
         }
-    }}
+    }
+    
 }

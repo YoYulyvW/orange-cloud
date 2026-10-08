@@ -15,7 +15,12 @@ struct PermissionDeniedView: View {
 
     @Environment(AuthManager.self) private var auth
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         OCContentUnavailableView {
             Label("\(featureName) 未授权", systemImage: "lock.shield")
         } description: {
@@ -28,7 +33,8 @@ struct PermissionDeniedView: View {
                     .fontWeight(.bold)
             }
         }
-    }}
+    }
+    
 }
 
 #Preview {

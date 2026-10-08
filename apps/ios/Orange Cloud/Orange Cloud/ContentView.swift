@@ -14,7 +14,12 @@ struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
     @AppStorage(AppMotion.storageKey) private var reduceAnimations = false
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         @Perception.Bindable var router = AppRouter.shared
         return Group {
             if auth.isLoggedIn {
@@ -46,7 +51,8 @@ struct ContentView: View {
                 BackgroundRefresh.schedule()
             }
         }
-    }}
+    }
+    
 }
 
 /// 登录后才存在的子树：持有本次会话的 SessionStore（API Client + Services）
@@ -58,14 +64,20 @@ private struct SessionRootView: View {
         _session = State(initialValue: SessionStore(authManager: auth))
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         MainTabView()
             .environment(session)
             .whatsNewSheet()
             .telemetryConsentPrompt()
             .ratingPrompt()
             .testFlightSunsetNotice()
-    }}
+    }
+    
 }
 
 #Preview {

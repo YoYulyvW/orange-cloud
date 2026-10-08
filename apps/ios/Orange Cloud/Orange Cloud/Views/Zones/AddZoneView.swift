@@ -55,7 +55,12 @@ struct AddZoneView: View {
 
     private var canSubmit: Bool { isValidDomain && !viewModel.isSaving }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Group {
                 if let zone = viewModel.createdZone {
@@ -89,7 +94,8 @@ struct AddZoneView: View {
             }
             .interactiveDismissDisabled(viewModel.isSaving)
         }
-    }}
+    }
+    
 
     // MARK: - 表单
 
@@ -166,7 +172,12 @@ private struct AddZoneResultView: View {
         ]
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
                 header
@@ -201,7 +212,8 @@ private struct AddZoneResultView: View {
             .padding(OCLayout.pagePadding)
             .background(.ultraThinMaterial)
         }
-    }}
+    }
+    
 
     // MARK: 子视图
 

@@ -14,7 +14,12 @@ struct ToolboxHubView: View {
 
     @Environment(\.dismiss) private var dismiss
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             List {
                 Section {
@@ -80,7 +85,8 @@ struct ToolboxHubView: View {
             }
         }
         .tint(.ocOrange)
-    }}
+    }
+    
 
     @ViewBuilder
     private func toolRow<Destination: View>(

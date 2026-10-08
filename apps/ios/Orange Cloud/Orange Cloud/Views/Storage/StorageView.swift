@@ -62,12 +62,18 @@ struct StorageView: View {
         self.session = session
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             StorageContent(session: session)
                 .id(session.selectedAccount?.id)
         }
-    }}
+    }
+    
 }
 
 /// 存储页内容（原 StorageView 本体）：ViewModel 持有的列表随外壳 `.id` 在账号切换时重置。
@@ -101,7 +107,12 @@ private struct StorageContent: View {
         _kvViewModel = State(initialValue: KVNamespaceListViewModel(service: session.kvService))
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Group {
             // 整模块 Pro 闸门：免费层不展示存储内容
             if entitlements.isPro {
@@ -155,7 +166,8 @@ private struct StorageContent: View {
         .ocSensoryFeedback(.success, trigger: d1ViewModel.didDelete)
         .ocSensoryFeedback(.success, trigger: kvViewModel.didCreate)
         .ocSensoryFeedback(.success, trigger: kvViewModel.didDelete)
-    }}
+    }
+    
 
     private var proContent: some View {
         VStack(spacing: 0) {
@@ -413,14 +425,20 @@ private struct StorageContent: View {
 struct R2BandwidthRow: View {
     let bandwidth: R2Bandwidth
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         HStack(spacing: 0) {
             cell(String(localized: "上传"), systemImage: "arrow.up.circle", bytes: bandwidth.uploadBytes)
             Divider().frame(height: 28)
             cell(String(localized: "下载"), systemImage: "arrow.down.circle", bytes: bandwidth.downloadBytes)
         }
         .padding(.vertical, 2)
-    }}
+    }
+    
 
     private func cell(_ title: String, systemImage: String, bytes: Int) -> some View {
         VStack(spacing: 2) {
@@ -442,7 +460,12 @@ struct R2BandwidthRow: View {
 struct R2JurisdictionBadge: View {
     let text: String
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Text(text)
             .font(.caption2.weight(.semibold))
             .foregroundStyle(Color.ocOrangeText)
@@ -451,7 +474,8 @@ struct R2JurisdictionBadge: View {
             .background(Color.ocOrange.opacity(0.14), in: Capsule())
             .fixedSize()
             .accessibilityLabel(text)
-    }}
+    }
+    
 }
 
 // MARK: - 存储行（设计稿 StorageRow）
@@ -465,7 +489,12 @@ private struct StorageRow: View {
     /// 区域限制桶的辖区徽章（欧盟 / 美国 / FedRAMP），默认辖区为 nil
     var badge: String? = nil
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         HStack(spacing: 12) {
             TintIcon(systemImage: icon, color: tint)
             VStack(alignment: .leading, spacing: 2) {
@@ -487,5 +516,6 @@ private struct StorageRow: View {
             }
         }
         .padding(.vertical, 2)
-    }}
+    }
+    
 }

@@ -34,7 +34,12 @@ struct ZoneAccessRulesView: View {
         }
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Group {
             if viewModel.isLoading && !viewModel.loaded {
                 ProgressView()
@@ -116,7 +121,8 @@ struct ZoneAccessRulesView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }}
+    }
+    
 
     private func row(_ rule: FirewallAccessRule) -> some View {
         Button {

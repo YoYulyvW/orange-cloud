@@ -44,7 +44,12 @@ struct ZoneListView: View {
         self.session = session
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         if sizeClass == .regular {
             NavigationSplitView(columnVisibility: $columnVisibility) {
                 ZoneListContent(session: session, isSplit: true, selectedZone: $selectedZone, zoomNamespace: zoomNamespace)
@@ -77,7 +82,8 @@ struct ZoneListView: View {
                     .id(session.selectedAccount?.id)
             }
         }
-    }}
+    }
+    
 }
 
 /// 域名列表内容（原 ZoneListView 本体）：@Query 谓词在 init 按当前账号构建，
@@ -129,7 +135,12 @@ private struct ZoneListContent: View {
         if canWrite { showAddSheet = true } else { showAddDenied = true }
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Group {
             if isSplit {
                 sidebarLayout
@@ -154,7 +165,8 @@ private struct ZoneListContent: View {
         } message: {
             Text("当前授权未包含域名编辑权限（zone.write）。\n请在设置中退出登录后重新授权「域名」并开启编辑权限。")
         }
-    }}
+    }
+    
 
     private var addButton: some View {
         Button("添加域名", systemImage: "plus") {
@@ -305,7 +317,12 @@ private struct ZoneListContent: View {
 private struct ZoneSidebarRow: View {
     let zone: CachedZone
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         HStack(spacing: 10) {
             ZoneAvatar(domain: zone.name, size: 30)
             VStack(alignment: .leading, spacing: 2) {
@@ -318,7 +335,8 @@ private struct ZoneSidebarRow: View {
             StatusDot(status: zone.displayStatus, size: 7)
         }
         .padding(.vertical, 2)
-    }}
+    }
+    
 }
 
 // MARK: - Zone 卡片（iPhone）
@@ -327,7 +345,12 @@ struct ZoneCard: View {
     let zone: CachedZone
     var accountName: String = ""
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         HStack(spacing: 12) {
             ZoneAvatar(domain: zone.name, size: 36)
 
@@ -355,5 +378,6 @@ struct ZoneCard: View {
         }
         .padding(OCLayout.islandPadding)
         .glassIsland()
-    }}
+    }
+    
 }

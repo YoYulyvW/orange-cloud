@@ -45,7 +45,12 @@ struct DashboardView: View {
         session.selectedAccount?.id ?? ""
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             DashboardHomeView(session: session, resourceRoute: $resourceRoute)
                 .navigationDestination(for: CachedZone.self) { zone in
@@ -102,7 +107,8 @@ struct DashboardView: View {
         .ocOnChange(of: session.selectedAccount?.id) {
             resourceRoute = nil
         }
-    }}
+    }
+    
 
     /// 免费层的 Pro 资源正常做法是在**派发前**就弹付费墙（DashboardHomeView.openResource），
     /// 根本走不到这里；这层只是兜底，防止将来新加的入口漏挂闸门直接把详情页放进来。
@@ -308,7 +314,12 @@ private struct DashboardHomeView: View {
         )
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 daybreakHeader
@@ -433,7 +444,8 @@ private struct DashboardHomeView: View {
         // 免费层点 Pro 资源（搜索结果 / 告警 / 已固定）的付费墙：
         // sheet 挂在透明宿主上，触发 / 收起都不重算本视图 body（见 paywallPresenter 注释）
         .background { PaywallSheetHost(presenter: paywallPresenter) }
-    }}
+    }
+    
 
     /// 「需重新授权」引导：说明 + 一键重授权（同身份原地换令牌），成功摘标后自动重拉
     private func reauthBanner(sessionId: UUID) -> some View {
@@ -1585,7 +1597,12 @@ private struct UsageServiceTile: View {
     let quotaText: String?
     let ratio: Double?
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("\(title) · \(context)")
                 .font(.caption)
@@ -1619,7 +1636,8 @@ private struct UsageServiceTile: View {
         .padding(12)
         .contentShape(Rectangle())
         .glassIsland(cornerRadius: OCLayout.chipRadius)
-    }}
+    }
+    
 }
 
 /// 额度环：随消耗比例从品牌橙渐变到警示红
@@ -1633,7 +1651,12 @@ private struct UsageRing: View {
         return .ocOrange
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         ZStack {
             Circle()
                 .stroke(.quaternary, lineWidth: 4)
@@ -1643,7 +1666,8 @@ private struct UsageRing: View {
                 .rotationEffect(.degrees(-90))
         }
         .accessibilityHidden(true)
-    }}
+    }
+    
 }
 
 // MARK: - 用量行（值 + 可选额度进度条）
@@ -1678,7 +1702,12 @@ private struct UsageRow: View {
         return usedText
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 10) {
                 Image(systemName: icon)
@@ -1698,7 +1727,8 @@ private struct UsageRow: View {
                     .padding(.leading, 34)
             }
         }
-    }}
+    }
+    
 }
 
 // MARK: - 域名信息卡（基础信息 + 24h 请求迷你图）
@@ -1726,7 +1756,12 @@ private struct DashboardZoneCard: View {
         zone.planName.components(separatedBy: " ").first ?? zone.planName
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         HStack(spacing: 10) {
             ZoneAvatar(domain: zone.name, size: 32)
             VStack(alignment: .leading, spacing: 2) {
@@ -1760,7 +1795,8 @@ private struct DashboardZoneCard: View {
         .padding(.horizontal, OCLayout.islandPadding)
         .padding(.vertical, 10)
         .contentShape(Rectangle())
-    }}
+    }
+    
 }
 
 // MARK: - 已固定资源行（跨类型：Workers / R2 / D1 / KV / Tunnel）
@@ -1773,7 +1809,12 @@ private struct PinnedResourceRow: View {
     /// 能否在当前数据源里解析到该资源（否则弱化显示，不给跳转）
     let resolved: Bool
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         HStack(spacing: 10) {
             TintIcon(systemImage: type.symbolName, color: type.tint, size: 32)
             VStack(alignment: .leading, spacing: 2) {
@@ -1796,7 +1837,8 @@ private struct PinnedResourceRow: View {
         .padding(.horizontal, OCLayout.islandPadding)
         .padding(.vertical, 10)
         .contentShape(Rectangle())
-    }}
+    }
+    
 }
 
 // MARK: - 指标小岛（数字用主文本色，橙色只留给可交互元素）
@@ -1807,7 +1849,12 @@ private struct StatIsland: View {
     let value: Int
     var sub: String? = nil
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(label)
                 .font(.caption)
@@ -1827,7 +1874,8 @@ private struct StatIsland: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(OCLayout.islandPadding)
         .glassIsland(cornerRadius: OCLayout.chipRadius)
-    }}
+    }
+    
 }
 
 // MARK: - 付费墙弹层隔离宿主（issue #69）
@@ -1844,11 +1892,17 @@ private struct PaywallSheetHost: View {
 
     @Perception.Bindable var presenter: DashboardPaywallPresenter
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Color.clear
             .allowsHitTesting(false)
             .sheet(item: $presenter.feature) { feature in
                 PaywallView(feature: feature)
             }
-    }}
+    }
+    
 }

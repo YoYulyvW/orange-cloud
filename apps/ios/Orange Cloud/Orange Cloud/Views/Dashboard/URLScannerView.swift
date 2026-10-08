@@ -21,7 +21,12 @@ struct URLScannerView: View {
         ))
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         List {
             inputSection
             if let result = viewModel.result {
@@ -41,7 +46,8 @@ struct URLScannerView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }}
+    }
+    
 
     private var inputSection: some View {
         Section {

@@ -14,7 +14,12 @@ struct ToolKV: View {
     let value: String
     var mono: Bool = true
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         HStack(alignment: .top, spacing: 12) {
             Text(key)
                 .foregroundStyle(.secondary)
@@ -26,7 +31,8 @@ struct ToolKV: View {
         }
         .padding(.horizontal, OCLayout.islandPadding)
         .padding(.vertical, 9)
-    }}
+    }
+    
 }
 
 /// 一行键值的数据载体（供 ToolKVSection 的 ForEach 使用，规避 ViewBuilder 10 子视图上限）
@@ -47,7 +53,12 @@ struct ToolKVSection: View {
     let title: LocalizedStringKey
     let rows: [ToolKVRow]
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
                 .font(.caption)
@@ -63,7 +74,8 @@ struct ToolKVSection: View {
             }
             .glassIsland()
         }
-    }}
+    }
+    
 }
 
 /// 提示岛（空态 / 错误态），玻璃底
@@ -73,7 +85,12 @@ struct ToolNotice: View {
     var message: String? = nil
     var tint: Color = .secondary
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         HStack(spacing: 12) {
             Image(systemName: systemImage)
                 .font(.title3)
@@ -92,7 +109,8 @@ struct ToolNotice: View {
         .padding(OCLayout.islandPadding)
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassIsland()
-    }}
+    }
+    
 }
 
 /// 工具结果容器：标题 + 玻璃岛内容
@@ -100,7 +118,12 @@ struct ToolResultIsland<Content: View>: View {
     let title: LocalizedStringKey
     @ViewBuilder var content: Content
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
                 .font(.caption)
@@ -111,7 +134,8 @@ struct ToolResultIsland<Content: View>: View {
             }
             .glassIsland()
         }
-    }}
+    }
+    
 }
 
 /// 工具页统一的日期格式化

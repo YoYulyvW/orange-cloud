@@ -30,7 +30,12 @@ struct SnippetDetailView: View {
     private var canWrite: Bool { auth.hasScope("snippets.write") }
     private var myRules: [SnippetRule] { viewModel.rules(for: snippet.snippetName) }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         List {
             // 代码
             Section {
@@ -181,7 +186,8 @@ struct SnippetDetailView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }}
+    }
+    
 
     private func loadCode() async {
         loadingCode = true
@@ -208,7 +214,12 @@ private struct SnippetRuleRow: View {
             ?? String(localized: "未命名规则")
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         // 文本区与开关是两个独立点击目标：点文本进编辑，开关只管启停
         HStack(alignment: .top, spacing: 12) {
             Button(action: onEdit) {
@@ -254,7 +265,8 @@ private struct SnippetRuleRow: View {
         }
         .padding(.vertical, 4)
         .opacity(isEnabled ? 1 : 0.5)
-    }}
+    }
+    
 }
 
 // MARK: - 规则表单（新增 / 编辑共用）
@@ -285,7 +297,12 @@ private struct SnippetRuleFormView: View {
         !expression.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !viewModel.isSaving
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Form {
                 Section("规则") {
@@ -336,7 +353,8 @@ private struct SnippetRuleFormView: View {
             }
             .interactiveDismissDisabled(viewModel.isSaving)
         }
-    }}
+    }
+    
 
     private func save() async {
         viewModel.error = nil

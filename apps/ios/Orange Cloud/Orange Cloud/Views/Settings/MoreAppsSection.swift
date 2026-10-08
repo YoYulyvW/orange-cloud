@@ -80,7 +80,12 @@ struct MoreAppsSection: View {
         return URL(string: "https://zhe.ltd\(path)")!
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Section {
             ForEach(visibleApps) { app in
                 // 用 Button + openURL 而非 Link：Link 会把整行文字染成强调色
@@ -114,7 +119,8 @@ struct MoreAppsSection: View {
             Text("Orange Cloud 出自柘家科技，以上是我们开发的其他 App。", tableName: "MoreApps")
         }
         .glassRow()
-    }}
+    }
+    
 
     private func appRow(_ app: ProductApp) -> some View {
         HStack(spacing: 12) {

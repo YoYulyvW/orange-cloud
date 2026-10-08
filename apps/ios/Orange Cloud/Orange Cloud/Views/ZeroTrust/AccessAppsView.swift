@@ -21,7 +21,12 @@ struct AccessAppsView: View {
 
     private var canWrite: Bool { auth.hasScope("access.write") }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Group {
             if let vm {
                 content(vm)
@@ -74,7 +79,8 @@ struct AccessAppsView: View {
             vm = model
             await model.load()
         }
-    }}
+    }
+    
 
     @ViewBuilder
     private func content(_ vm: AccessAppsViewModel) -> some View {

@@ -41,7 +41,12 @@ struct PagesProjectDetailView: View {
     private var project: PagesProject { viewModel.project }
     private var canWrite: Bool { auth.hasScope("page.write") }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         List {
             infoSection
             if canWrite { deploySection }
@@ -113,7 +118,8 @@ struct PagesProjectDetailView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }}
+    }
+    
 
     // MARK: - 信息
 

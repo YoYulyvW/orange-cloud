@@ -36,7 +36,12 @@ struct KVKeyListView: View {
         return viewModel.keys.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Group {
             if viewModel.keys.isEmpty && viewModel.isLoading {
                 SkeletonList(rows: 10, icon: .none)
@@ -87,7 +92,8 @@ struct KVKeyListView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }}
+    }
+    
 
     private var keyList: some View {
         List {
@@ -159,7 +165,12 @@ struct KVValueView: View {
 
     private var canWrite: Bool { auth.hasScope("workers-kv-storage.write") }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Group {
             if viewModel.isLoading {
                 valueSkeleton
@@ -202,7 +213,8 @@ struct KVValueView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }}
+    }
+    
 
     /// 值加载骨架：按编辑器形状铺几行文本占位
     private var valueSkeleton: some View {

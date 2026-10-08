@@ -21,7 +21,12 @@ struct RequestTracerView: View {
         ))
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         List {
             inputSection
             if let result = viewModel.result {
@@ -40,7 +45,8 @@ struct RequestTracerView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }}
+    }
+    
 
     private var inputSection: some View {
         Section {

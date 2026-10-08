@@ -49,7 +49,12 @@ struct GatewayRuleEditorView: View {
         !trimmedName.isEmpty && !trimmedTraffic.isEmpty && !viewModel.isSaving
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Form {
                 Section {
@@ -115,7 +120,8 @@ struct GatewayRuleEditorView: View {
                 }
             }
         }
-    }}
+    }
+    
 
     // MARK: - 表达式编辑器
 

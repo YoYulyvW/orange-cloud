@@ -17,7 +17,12 @@ struct PermissionSelectionView: View {
     @State private var viewModel = PermissionSelectionViewModel()
     @State private var showScopeDetail = false
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         List {
             // 说明 Section
             Section {
@@ -120,7 +125,8 @@ struct PermissionSelectionView: View {
         } message: {
             Text(auth.errorMessage ?? "")
         }
-    }}
+    }
+    
 
     /// 快捷预设小按钮（等宽铺满一行）
     private func quickPresetButton(_ title: LocalizedStringKey, systemImage: String, action: @escaping () -> Void) -> some View {
@@ -147,7 +153,12 @@ struct FeaturePermissionRow: View {
     let onToggle:     () -> Void
     let onToggleEdit: () -> Void
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
                 Label {
@@ -201,7 +212,8 @@ struct FeaturePermissionRow: View {
         }
         .padding(.vertical, 2)
         .opacity(permission.isEnabled ? 1 : 0.4)
-    }}
+    }
+    
 }
 
 #Preview {

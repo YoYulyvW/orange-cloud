@@ -16,7 +16,12 @@ struct WhatsNewView: View {
 
     @Environment(\.dismiss) private var dismiss
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(spacing: 32) {
@@ -72,7 +77,8 @@ struct WhatsNewView: View {
         }
         .background { SkyBackground().ignoresSafeArea() }
         .interactiveDismissDisabled()   // 必须点「继续」，确保 lastSeen 被写入
-    }}
+    }
+    
 }
 
 // MARK: - 触发修饰器

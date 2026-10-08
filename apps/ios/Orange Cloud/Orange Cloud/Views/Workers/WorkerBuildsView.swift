@@ -28,7 +28,12 @@ struct WorkerBuildsView: View {
 
     private var canWrite: Bool { auth.hasScope("workers-ci.write") }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         List {
             Section {
                 Toggle("构建失败时通知我", isOn: Binding(
@@ -94,7 +99,8 @@ struct WorkerBuildsView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }}
+    }
+    
 
     private func buildRow(_ build: WorkerBuild) -> some View {
         Button {
@@ -156,7 +162,12 @@ private struct BuildLogsView: View {
     let viewModel: WorkerBuildViewModel
     @Environment(\.dismiss) private var dismiss
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         List {
             Section {
                 if viewModel.isLoadingLogs {
@@ -185,5 +196,6 @@ private struct BuildLogsView: View {
                 Button("完成") { dismiss() }
             }
         }
-    }}
+    }
+    
 }

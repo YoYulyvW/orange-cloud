@@ -28,7 +28,12 @@ struct PoolListView: View {
 
     private var canWrite: Bool { auth.hasScope("load-balancing-monitors-and-pools.write") }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Group {
             if viewModel.isLoading && !viewModel.loaded {
                 SkeletonList(rows: 5, icon: .none, trailing: true)
@@ -116,7 +121,8 @@ struct PoolListView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }}
+    }
+    
 
     private func poolRow(_ pool: Pool) -> some View {
         Button {
@@ -198,7 +204,12 @@ private struct PoolEditorView: View {
         return originRows.contains { !$0.address.trimmingCharacters(in: .whitespaces).isEmpty }
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Form {
                 Section("基本") {
@@ -264,7 +275,8 @@ private struct PoolEditorView: View {
             .interactiveDismissDisabled(viewModel.isMutating)
             .onDisappear { viewModel.error = nil }
         }
-    }}
+    }
+    
 
     private func save() async {
         viewModel.error = nil

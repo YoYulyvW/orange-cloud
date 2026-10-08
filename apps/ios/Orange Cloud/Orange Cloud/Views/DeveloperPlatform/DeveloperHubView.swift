@@ -13,7 +13,12 @@ struct DeveloperHubView: View {
 
     let session: SessionStore
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         // NavigationStack 常驻，账号切换只重建栈内内容（.id 在栈内、挂在 hubList 上）。
         // **不要把 .id(账号) 挪回栈外或 MainTabView**：selectedAccount 可能在本 Tab 可见时
         // 才翻转，重建可见 NavigationStack 在 iOS 17.0.x 导航栏硬断言必崩（1.8.2(24) 复发根因）。
@@ -21,7 +26,8 @@ struct DeveloperHubView: View {
             hubList
                 .id(session.selectedAccount?.id)
         }
-    }}
+    }
+    
 
     private var hubList: some View {
             List {

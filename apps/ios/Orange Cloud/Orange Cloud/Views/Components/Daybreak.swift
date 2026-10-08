@@ -40,7 +40,12 @@ struct SkyBackground: View {
     /// 预览用固定时刻；nil 时跟随系统时钟
     var date: Date? = nil
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         if let date {
             sky(at: date)
         } else {
@@ -48,7 +53,8 @@ struct SkyBackground: View {
                 sky(at: context.date)
             }
         }
-    }}
+    }
+    
 
     private func sky(at date: Date) -> some View {
         let hour = Calendar.current.component(.hour, from: date)
@@ -137,7 +143,12 @@ struct HorizonArc: View {
         return min(max(night / (12 * 60), 0.02), 0.98)
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         if let date {
             arc(at: date)
         } else {
@@ -145,7 +156,8 @@ struct HorizonArc: View {
                 arc(at: context.date)
             }
         }
-    }}
+    }
+    
 
     private func arc(at date: Date) -> some View {
         GeometryReader { geo in

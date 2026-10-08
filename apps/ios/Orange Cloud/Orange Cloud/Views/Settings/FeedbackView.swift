@@ -25,7 +25,12 @@ struct FeedbackView: View {
         !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Form {
                 Section {
@@ -76,7 +81,8 @@ struct FeedbackView: View {
                 }
             }
         }
-    }}
+    }
+    
 
     private func send() {
         let header = DiagnosticsInfo.summary(accountCount: auth.sessions.count)

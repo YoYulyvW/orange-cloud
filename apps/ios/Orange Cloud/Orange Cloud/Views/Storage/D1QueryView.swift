@@ -45,7 +45,12 @@ struct D1QueryView: View {
 
     private var canWrite: Bool { auth.hasScope("d1.write") }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 tablesIsland
@@ -117,7 +122,8 @@ struct D1QueryView: View {
         .sheet(item: $tableToDrop) { target in
             D1DropTableConfirmView(tableName: target.name, viewModel: viewModel)
         }
-    }}
+    }
+    
 
     /// 表入口：玻璃岛列表，点按进入 D1TableView 浏览/编辑行
     @ViewBuilder
@@ -322,7 +328,12 @@ private struct D1ResultCard: View {
         return first.keys.sorted()
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         VStack(alignment: .leading, spacing: 8) {
             if total > 1 || !rows.isEmpty {
                 HStack(spacing: 8) {
@@ -406,7 +417,8 @@ private struct D1ResultCard: View {
                 text: D1CSV.text(columns: columns, rows: rows)
             )
         }
-    }}
+    }
+    
 
     /// 导出当前结果集为 CSV（只导已驻留的行，不为导出再发一次无上限查询）。
     /// CSV 文本在 .task 里生成一次并缓存，避免每次 body 求值都重新拼几百行字符串。

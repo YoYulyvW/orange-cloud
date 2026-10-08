@@ -31,7 +31,12 @@ struct LoadBalancerListView: View {
 
     private var canWrite: Bool { auth.hasScope("load-balancers.write") }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         List {
             lbSection
             accountResourcesSection
@@ -73,7 +78,8 @@ struct LoadBalancerListView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }}
+    }
+    
 
     private var lbSection: some View {
         Section {
@@ -222,7 +228,12 @@ private struct LoadBalancerEditorView: View {
         return true
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Form {
                 Section {
@@ -307,7 +318,8 @@ private struct LoadBalancerEditorView: View {
             .interactiveDismissDisabled(viewModel.isMutating)
             .onDisappear { viewModel.error = nil }
         }
-    }}
+    }
+    
 
     private func save() async {
         viewModel.error = nil

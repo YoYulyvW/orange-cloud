@@ -29,7 +29,12 @@ struct R2SQLQueryView: View {
         !sql.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !viewModel.isRunning
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
@@ -69,7 +74,8 @@ struct R2SQLQueryView: View {
             }
             .task { await viewModel.loadSchema() }
         }
-    }}
+    }
+    
 
     // MARK: - 编辑器
 

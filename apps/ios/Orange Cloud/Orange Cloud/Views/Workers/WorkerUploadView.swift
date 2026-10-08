@@ -88,7 +88,12 @@ struct WorkerUploadView: View {
         isCreate ? String(localized: "新建 Worker") : String(localized: "更新代码")
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Form {
                 if isCreate {
@@ -149,7 +154,8 @@ struct WorkerUploadView: View {
             .fileImporter(isPresented: $showModuleImporter, allowedContentTypes: [.javaScript, .text, .item], allowsMultipleSelection: true) { importModules($0) }
             .fileImporter(isPresented: $showAssetImporter, allowedContentTypes: [.item], allowsMultipleSelection: true) { importAssets($0) }
         }
-    }}
+    }
+    
 
     // MARK: - 公共字段（仅新建）
 

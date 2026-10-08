@@ -20,7 +20,12 @@ struct ZoneRulesHubView: View {
     let zoneName: String
     let session: SessionStore
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         // 本页 eager 门控行的保留判据：目的页是叶子（ZonePhaseRules / Transform / 缓存规则 /
         // Page Rules / URL 规范化内部只开 sheet、不再 push）。Bulk Redirects 与 Snippets
         // 的目的页还要继续 push，已改值式（ZoneRoute，navdest 在宿主栈根）。
@@ -166,7 +171,8 @@ struct ZoneRulesHubView: View {
         .background { SkyBackground() }
         .navigationTitle("规则")
         .navigationBarTitleDisplayMode(.inline)
-    }}
+    }
+    
 }
 
 // MARK: - Rulesets phase 泛化列表（查看 / 启停 / 删除）
@@ -193,7 +199,12 @@ struct ZonePhaseRulesListView: View {
     /// 可在 App 内新建 / 编辑（缓存响应规则只查看 / 启停 / 删除）
     private var canEditRules: Bool { canWrite && phase.supportsEditor }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Group {
             if viewModel.isLoading && !viewModel.loaded {
                 SkeletonList(rows: 5, icon: .none, trailing: true)
@@ -303,7 +314,8 @@ struct ZonePhaseRulesListView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }}
+    }
+    
 
     private func row(_ rule: ZoneRule) -> some View {
         Button {
@@ -358,7 +370,12 @@ private struct ZoneRuleDetailSheet: View {
     let phase: ZoneRulePhase
     @Environment(\.dismiss) private var dismiss
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             List {
                 Section("规则") {
@@ -394,7 +411,8 @@ private struct ZoneRuleDetailSheet: View {
                 }
             }
         }
-    }}
+    }
+    
 
     private static func prettyJSON(_ value: TunnelJSONValue) -> String {
         let encoder = JSONEncoder()
@@ -421,7 +439,12 @@ struct PageRulesListView: View {
 
     private var canWrite: Bool { auth.hasScope("page-rules.write") }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Group {
             if viewModel.isLoading && !viewModel.loaded {
                 SkeletonList(rows: 5, icon: .none, trailing: true)
@@ -518,7 +541,8 @@ struct PageRulesListView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }}
+    }
+    
 }
 
 // MARK: - URL Normalization
@@ -536,7 +560,12 @@ struct URLNormalizationView: View {
 
     private var canWrite: Bool { auth.hasScope("config-settings.write") }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         List {
             if let value = viewModel.value {
                 Section {
@@ -584,5 +613,6 @@ struct URLNormalizationView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }}
+    }
+    
 }

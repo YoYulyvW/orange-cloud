@@ -17,7 +17,12 @@ struct RuleValidateSection: View {
     let disabled: Bool
     let action: () -> Void
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Section {
             Button(action: action) {
                 HStack(spacing: 8) {
@@ -37,5 +42,6 @@ struct RuleValidateSection: View {
             }
             .disabled(disabled)
         }
-    }}
+    }
+    
 }

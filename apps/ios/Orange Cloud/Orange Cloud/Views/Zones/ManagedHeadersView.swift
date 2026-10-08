@@ -21,7 +21,12 @@ struct ManagedHeadersView: View {
 
     private var canWrite: Bool { auth.hasScope("managed-headers.write") }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         List {
             section(
                 title: String(localized: "请求头"),
@@ -48,7 +53,8 @@ struct ManagedHeadersView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }}
+    }
+    
 
     @ViewBuilder
     private func section(title: String, items: [ManagedTransform], isRequest: Bool) -> some View {

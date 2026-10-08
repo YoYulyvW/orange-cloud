@@ -28,7 +28,12 @@ struct MonitorListView: View {
 
     private var canWrite: Bool { auth.hasScope("load-balancing-monitors-and-pools.write") }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Group {
             if viewModel.isLoading && !viewModel.loaded {
                 SkeletonList(rows: 4, icon: .none, trailing: true)
@@ -105,7 +110,8 @@ struct MonitorListView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }}
+    }
+    
 
     private func monitorRow(_ monitor: Monitor) -> some View {
         Button {
@@ -187,7 +193,12 @@ private struct MonitorEditorView: View {
         return true
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Form {
                 Section("类型") {
@@ -244,7 +255,8 @@ private struct MonitorEditorView: View {
             .interactiveDismissDisabled(viewModel.isMutating)
             .onDisappear { viewModel.error = nil }
         }
-    }}
+    }
+    
 
     private func numberField(_ title: LocalizedStringKey, text: Binding<String>, unit: String) -> some View {
         HStack {

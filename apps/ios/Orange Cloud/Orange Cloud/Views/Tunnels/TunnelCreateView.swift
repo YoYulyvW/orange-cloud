@@ -22,7 +22,12 @@ struct TunnelCreateView: View {
         !name.trimmingCharacters(in: .whitespaces).isEmpty && !viewModel.isSaving
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Form {
                 Section {
@@ -74,5 +79,6 @@ struct TunnelCreateView: View {
             }
             .interactiveDismissDisabled(viewModel.isSaving)
         }
-    }}
+    }
+    
 }

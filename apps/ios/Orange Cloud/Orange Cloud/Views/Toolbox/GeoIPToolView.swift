@@ -12,7 +12,12 @@ struct GeoIPToolView: View {
 
     @State private var vm = GeoIPViewModel()
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         ScrollView {
             VStack(spacing: OCLayout.islandGap) {
                 VStack(spacing: 12) {
@@ -50,7 +55,8 @@ struct GeoIPToolView: View {
         .task {
             if !vm.hasRun { await vm.run() }
         }
-    }}
+    }
+    
 
     private func rows(_ r: GeoIPResult) -> [ToolKVRow] {
         var rows: [ToolKVRow] = []

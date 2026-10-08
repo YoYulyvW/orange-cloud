@@ -22,7 +22,12 @@ struct ZoneAnalyticsSection: View {
     // 总请求大数字：保留 40pt 视觉基线，同时随动态字体缩放
     @ScaledMetric(relativeTo: .largeTitle) private var heroNumberSize: CGFloat = 40
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         VStack(spacing: 14) {
             rangePicker
 
@@ -68,7 +73,8 @@ struct ZoneAnalyticsSection: View {
             viewModel.clearInsight()
             Task { await viewModel.load() }
         }
-    }}
+    }
+    
 
     // MARK: - 智能摘要卡（设备端 AI，只读，Pro）
 
@@ -485,7 +491,12 @@ struct TrendBadge: View {
     var unit: String = "%"
     var positiveIsGood: Bool = true
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         if let delta, delta.isFinite, abs(delta) >= 0.05 {
             HStack(spacing: 2) {
                 Image(systemName: delta >= 0 ? "arrow.up" : "arrow.down")
@@ -499,7 +510,8 @@ struct TrendBadge: View {
             .accessibilityLabel(delta >= 0 ? "上升" : "下降")
             .accessibilityValue(Text(verbatim: "\(abs(delta).formatted(.number.precision(.fractionLength(1))))\(unit)"))
         }
-    }}
+    }
+    
 }
 
 // MARK: - 环形仪表
@@ -509,7 +521,12 @@ struct RingGauge: View {
     let percent: Double    // 0–100
     var size: CGFloat = 76
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         ZStack {
             Circle()
                 .stroke(Color.ocOrange.opacity(0.15), lineWidth: 10)
@@ -522,7 +539,8 @@ struct RingGauge: View {
         }
         .frame(width: size, height: size)
         .animation(.smooth, value: percent)
-    }}
+    }
+    
 }
 
 // MARK: - 小指标卡（迷你走势）
@@ -536,7 +554,12 @@ struct SmallStatCard: View {
     let sparkValues: [Double]
     let sparkColor: Color
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(title)
                 .font(.footnote)
@@ -557,7 +580,8 @@ struct SmallStatCard: View {
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassIsland()
-    }}
+    }
+    
 }
 
 // MARK: - 迷你走势线
@@ -567,7 +591,12 @@ struct Sparkline: View {
     let values: [Double]
     let color: Color
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         if values.count > 1, values.contains(where: { $0 > 0 }) {
             Chart(Array(values.enumerated()), id: \.offset) { index, value in
                 LineMark(
@@ -588,7 +617,8 @@ struct Sparkline: View {
                 .frame(height: 1.5)
                 .frame(maxHeight: .infinity, alignment: .bottom)
         }
-    }}
+    }
+    
 }
 
 #Preview {

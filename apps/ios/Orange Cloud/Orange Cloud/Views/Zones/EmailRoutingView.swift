@@ -25,7 +25,12 @@ struct EmailRoutingView: View {
     private var canEditRules: Bool { auth.hasScope("email-routing-rule.write") }
     private var canEditAddresses: Bool { auth.hasScope("email-routing-address.write") }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Group {
             if let vm {
                 content(vm)
@@ -46,7 +51,8 @@ struct EmailRoutingView: View {
             vm = model
             await model.load()
         }
-    }}
+    }
+    
 
     @ViewBuilder
     private func content(_ vm: EmailRoutingViewModel) -> some View {
@@ -310,7 +316,12 @@ private struct RuleEditorSheet: View {
         match.contains("@") && !destination.isEmpty
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Form {
                 Section {
@@ -365,7 +376,8 @@ private struct RuleEditorSheet: View {
                 }
             }
         }
-    }}
+    }
+    
 }
 
 // MARK: - 新增目的地址
@@ -380,7 +392,12 @@ private struct AddAddressSheet: View {
 
     private var isValid: Bool { email.contains("@") && email.contains(".") }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Form {
                 Section {
@@ -418,5 +435,6 @@ private struct AddAddressSheet: View {
                 }
             }
         }
-    }}
+    }
+    
 }

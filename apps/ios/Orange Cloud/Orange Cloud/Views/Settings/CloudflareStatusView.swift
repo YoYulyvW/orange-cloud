@@ -13,7 +13,12 @@ struct CloudflareStatusView: View {
 
     @State private var viewModel = CloudflareStatusViewModel()
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Group {
             if viewModel.overall == nil && viewModel.isLoading {
                 statusSkeleton
@@ -38,7 +43,8 @@ struct CloudflareStatusView: View {
         .navigationTitle("Cloudflare 状态")
         .navigationBarTitleDisplayMode(.inline)
         .task { await viewModel.load() }
-    }}
+    }
+    
 
     // MARK: - 骨架（总体状态一行 + 产品服务若干行）
 
@@ -240,7 +246,12 @@ struct StatusIncidentDetailView: View {
 
     let incident: StatusPageIncident
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         List {
             Section {
                 Text(incident.name)
@@ -295,5 +306,6 @@ struct StatusIncidentDetailView: View {
         .daybreakList()
         .navigationTitle("事件详情")
         .navigationBarTitleDisplayMode(.inline)
-    }}
+    }
+    
 }

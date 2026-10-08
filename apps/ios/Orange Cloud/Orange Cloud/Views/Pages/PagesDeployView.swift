@@ -49,7 +49,12 @@ struct PagesDeployView: View {
 
     private var canDeploy: Bool { !filesToDeploy.isEmpty && !viewModel.isDeploying }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Form {
                 Section {
@@ -104,7 +109,8 @@ struct PagesDeployView: View {
                 handleImport(result)
             }
         }
-    }}
+    }
+    
 
     // MARK: - 粘贴代码
 

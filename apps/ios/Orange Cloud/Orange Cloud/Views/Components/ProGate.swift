@@ -130,14 +130,20 @@ nonisolated enum ProFeature: String, Identifiable, Sendable {
 
 /// 橙色 PRO 胶囊徽章
 struct ProBadge: View {
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Text(verbatim: "PRO")
             .font(.caption2.weight(.heavy))
             .foregroundStyle(Color.ocOrangeText)
             .padding(.horizontal, 6)
             .padding(.vertical, 2)
             .background(Color.ocOrange.opacity(0.14), in: Capsule())
-    }}
+    }
+    
 }
 
 /// 行级 Pro 闸门：已解锁则退化为既有的 scope 门控导航行；未解锁显示 PRO 徽章并弹付费墙。
@@ -154,7 +160,12 @@ struct ProGatedNavigationLink<Destination: View>: View {
     @Environment(EntitlementStore.self) private var entitlements
     @State private var paywallPresented = false
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         if entitlements.isPro {
             PermissionGatedNavigationLink(
                 label: label,
@@ -181,7 +192,8 @@ struct ProGatedNavigationLink<Destination: View>: View {
                 PaywallView(feature: feature)
             }
         }
-    }}
+    }
+    
 }
 
 /// 行级 Pro 闸门（值式导航版）：目的页自身还要继续 push 的入口用它——eager
@@ -200,7 +212,12 @@ struct ProGatedValueLink<V: Hashable>: View {
     @Environment(EntitlementStore.self) private var entitlements
     @State private var paywallPresented = false
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         if entitlements.isPro {
             PermissionGatedValueLink(
                 label: label,
@@ -227,7 +244,8 @@ struct ProGatedValueLink<V: Hashable>: View {
                 PaywallView(feature: feature)
             }
         }
-    }}
+    }
+    
 }
 
 /// 整页锁定态（如存储 Tab）：占满内容区的 Pro 介绍 + 付费墙入口
@@ -237,7 +255,12 @@ struct ProLockedView: View {
 
     @State private var paywallPresented = false
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         OCContentUnavailableView {
             Label(feature.headline, systemImage: feature.systemImage)
         } description: {
@@ -255,7 +278,8 @@ struct ProLockedView: View {
         .sheet(isPresented: $paywallPresented) {
             PaywallView(feature: feature)
         }
-    }}
+    }
+    
 }
 
 #Preview("锁定态") {

@@ -37,7 +37,12 @@ struct AccessRuleEditorView: View {
         return isEditing || !value.trimmingCharacters(in: .whitespaces).isEmpty
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Form {
                 Section("匹配对象") {
@@ -94,7 +99,8 @@ struct AccessRuleEditorView: View {
             .interactiveDismissDisabled(viewModel.isSaving)
             .onDisappear { viewModel.error = nil }
         }
-    }}
+    }
+    
 
     private func save() async {
         viewModel.error = nil

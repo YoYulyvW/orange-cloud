@@ -29,7 +29,12 @@ struct SecurityInsightsView: View {
 
     private var canWrite: Bool { auth.hasScope("zone-settings.write") }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
                 if !viewModel.loaded && viewModel.isLoading {
@@ -103,7 +108,8 @@ struct SecurityInsightsView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }}
+    }
+    
 
     // MARK: - 分组
 

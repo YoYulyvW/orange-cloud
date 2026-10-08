@@ -26,7 +26,12 @@ struct ZoneDNSSettingsView: View {
     private var canEditSettings: Bool { auth.hasScope("zone-dns-settings.write") }
     private var canEditDNS: Bool { auth.hasScope("dns.write") }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         List {
             if viewModel.dnssecLoaded { dnssecSection }
             if viewModel.settingsLoaded { settingsSection }
@@ -53,7 +58,8 @@ struct ZoneDNSSettingsView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }}
+    }
+    
 
     // MARK: DNSSEC
 

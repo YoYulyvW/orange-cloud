@@ -54,7 +54,12 @@ struct DNSListView: View {
 
     // MARK: - body
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Group {
             if records.isEmpty && viewModel.isLoading {
                 SkeletonList(rows: 10, icon: .rounded(width: 52, height: 24), trailing: true)
@@ -130,7 +135,8 @@ struct DNSListView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }}
+    }
+    
 
     private var recordList: some View {
         List {
@@ -191,7 +197,12 @@ enum DNSFormMode: Identifiable {
 struct DNSRecordRow: View {
     let record: CachedDNSRecord
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         HStack(spacing: 12) {
             Text(record.type)
                 .font(.caption.bold().monospaced())
@@ -234,5 +245,6 @@ struct DNSRecordRow: View {
             ProxiedBadge(proxied: record.proxied)
         }
         .padding(.vertical, 2)
-    }}
+    }
+    
 }

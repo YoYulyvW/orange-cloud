@@ -25,7 +25,12 @@ struct TestFlightSunsetView: View {
     /// 点过「领码」或「去 App Store」即视为已处理，之后不再打扰
     let onAct: () -> Void
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         VStack(spacing: 0) {
             // 内容短时居中、长时（德语/阿拉伯语等）正常滚动
             GeometryReader { proxy in
@@ -103,7 +108,8 @@ struct TestFlightSunsetView: View {
                 ActivityView(items: shareItems)
             }
         }
-    }}
+    }
+    
 
     @ViewBuilder
     private func paragraph(_ symbol: String, _ text: Text) -> some View {

@@ -65,7 +65,12 @@ struct CacheRuleEditorView: View {
         return true
     }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         NavigationStack {
             Form {
                 if isReadOnly {
@@ -176,7 +181,8 @@ struct CacheRuleEditorView: View {
                 viewModel.validationPassed = false
             }
         }
-    }}
+    }
+    
 
     private var edgeTtlSection: some View {
         Section {

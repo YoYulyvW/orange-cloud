@@ -16,7 +16,12 @@ struct MainTabView: View {
     @State private var selectedTab: AppTab = AppTab.initialTab
     private let router = AppRouter.shared
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         tabContainer
             // 向下滚动收起 Tab 栏（iOS 26+）：Duo 外屏又宽又矮，Tab 栏又和工具栏挤在同一条竖轴上，
             // 长列表滚动时把这块空间让给内容。
@@ -28,7 +33,8 @@ struct MainTabView: View {
             .ocOnChange(of: router.pendingModule) {
                 consumePendingRoute()
             }
-    }}
+    }
+    
 
     @ViewBuilder
     private var tabContainer: some View {

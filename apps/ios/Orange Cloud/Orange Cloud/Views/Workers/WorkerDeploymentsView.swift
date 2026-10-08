@@ -24,7 +24,12 @@ struct WorkerDeploymentsView: View {
 
     private var canWrite: Bool { auth.hasScope("workers-scripts.write") }
 
-    var body: some View { WithPerceptionTracking {
+    var body: some View {
+        WithPerceptionTracking { ocBodyContent }
+    }
+
+    @ViewBuilder
+    private var ocBodyContent: some View {
         Group {
             if !viewModel.loaded && viewModel.isLoading {
                 SkeletonList(rows: 6, trailing: true)
@@ -85,7 +90,8 @@ struct WorkerDeploymentsView: View {
                     .padding()
             }
         }
-    }}
+    }
+    
 
     @ViewBuilder
     private func row(_ dep: WorkerDeployment, isActive: Bool) -> some View {
