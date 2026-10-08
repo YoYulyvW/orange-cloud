@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 
 nonisolated enum ResourceSort: String, CaseIterable {
     case name       // 默认：名称字母序（列表原有顺序）

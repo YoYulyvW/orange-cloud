@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Perception
 
 /// 键值结果行（值可长按选择，等宽便于读 IP / 哈希）
 struct ToolKV: View {

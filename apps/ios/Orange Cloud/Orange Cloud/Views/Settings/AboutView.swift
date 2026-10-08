@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Perception
 import StoreKit
 
 struct AboutView: View {

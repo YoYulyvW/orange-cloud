@@ -15,6 +15,7 @@
 //
 
 import SwiftUI
+import Perception
 
 struct ResourceSearchView: View {
 

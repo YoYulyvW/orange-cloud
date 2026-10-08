@@ -9,6 +9,7 @@
 //
 
 import SwiftUI
+import Perception
 
 /// 缓存清理粒度
 nonisolated enum PurgeMode: String, CaseIterable, Identifiable {

@@ -8,6 +8,7 @@
 //
 
 import SwiftUI
+import Perception
 
 // MARK: - 布局常量（全局统一，不再各处手写魔法数）
 

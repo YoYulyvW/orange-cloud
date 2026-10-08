@@ -10,6 +10,7 @@
 //
 
 import SwiftUI
+import Perception
 import UIKit
 
 /// 放进 `.alert { … }` 的 actions：无文档地址时什么都不渲染

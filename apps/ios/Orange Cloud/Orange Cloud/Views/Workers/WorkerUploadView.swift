@@ -9,6 +9,7 @@
 //
 
 import SwiftUI
+import Perception
 import UniformTypeIdentifiers
 
 struct WorkerUploadView: View {

@@ -8,6 +8,7 @@
 //
 
 import SwiftUI
+import Perception
 
 // MARK: - 呼吸脉冲
 

@@ -4,6 +4,7 @@
 //
 
 import SwiftUI
+import Perception
 
 /// Cloudflare 代理状态徽标：橙色云朵 = 已代理，灰色 = 仅 DNS
 struct ProxiedBadge: View {

@@ -12,6 +12,7 @@
 //
 
 import SwiftUI
+import Perception
 
 // MARK: - TunnelJSONValue 取值小工具（编辑器解析用）
 
