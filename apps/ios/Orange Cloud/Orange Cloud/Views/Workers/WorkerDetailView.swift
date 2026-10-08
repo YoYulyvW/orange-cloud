@@ -105,73 +105,64 @@ struct WorkerDetailView: View {
                         }
                     }
                 }
-                ProGatedNavigationLink(
+                ProGatedValueLink(
                     label: String(localized: "变量与密钥"),
                     systemImage: "key",
                     requiredScope: "workers-scripts.read",
-                    feature: .workerSecrets
-                ) {
-                    WorkerSecretsView(accountId: script.accountId, scriptName: script.id, session: session)
-                }
-                ProGatedNavigationLink(
+                    feature: .workerSecrets,
+                    value: WorkerDetailRoute.secrets
+                )
+                ProGatedValueLink(
                     label: String(localized: "触发器"),
                     systemImage: "clock",
                     requiredScope: "workers-scripts.read",
-                    feature: .workerTriggers
-                ) {
-                    WorkerTriggersView(accountId: script.accountId, scriptName: script.id, session: session)
-                }
-                PermissionGatedNavigationLink(
+                    feature: .workerTriggers,
+                    value: WorkerDetailRoute.triggers
+                )
+                PermissionGatedValueLink(
                     label: String(localized: "构建"),
                     systemImage: "hammer.circle",
                     requiredScope: "workers-ci.read",
                     tint: .teal,
-                    showsChevron: true
-                ) {
-                    WorkerBuildsView(scriptName: script.id, session: session)
-                }
-                ProGatedNavigationLink(
+                    showsChevron: true,
+                    value: WorkerDetailRoute.builds
+                )
+                ProGatedValueLink(
                     label: String(localized: "部署历史"),
                     systemImage: "clock.arrow.circlepath",
                     requiredScope: "workers-scripts.read",
-                    feature: .workerRoutes
-                ) {
-                    WorkerDeploymentsView(accountId: script.accountId, scriptName: script.id, session: session)
-                }
-                ProGatedNavigationLink(
+                    feature: .workerRoutes,
+                    value: WorkerDetailRoute.deployments
+                )
+                ProGatedValueLink(
                     label: String(localized: "域名"),
                     systemImage: "globe",
                     requiredScope: "workers-scripts.read",
-                    feature: .workerRoutes
-                ) {
-                    WorkerRoutesView(accountId: script.accountId, scriptName: script.id, session: session)
-                }
+                    feature: .workerRoutes,
+                    value: WorkerDetailRoute.routes
+                )
             }
             .glassRow()
 
             Section("调试") {
-                ProGatedNavigationLink(
+                ProGatedValueLink(
                     label: String(localized: "实时日志"),
                     systemImage: "text.alignleft",
                     requiredScope: "workers-tail.read",
-                    feature: .workerTail
-                ) {
-                    WorkerTailView(accountId: script.accountId, scriptName: script.id, session: session)
-                }
+                    feature: .workerTail,
+                    value: WorkerDetailRoute.tail
+                )
                 // 历史日志与实时日志互补：tail 只播放连接期间的调用，这里查已落库的事件
-                ProGatedNavigationLink(
+                ProGatedValueLink(
                     label: String(localized: "历史日志"),
                     systemImage: "clock.badge.checkmark",
                     requiredScope: "workers-observability.read",
-                    feature: .workerTail
-                ) {
-                    WorkerLogsView(accountId: script.accountId, scriptName: script.id, session: session)
-                }
+                    feature: .workerTail,
+                    value: WorkerDetailRoute.logs
+                )
                 // Workers Issues：该 Worker 的活跃问题数，点进按 service 过滤的问题列表
                 if canViewIssues {
-                    NavigationLink {
-                        WorkerIssuesView(accountId: script.accountId, scriptName: script.id, session: session)
-                    } label: {
+                    NavigationLink(value: WorkerDetailRoute.issues) {
                         HStack(spacing: 12) {
                             TintIcon(systemImage: "exclamationmark.bubble", color: .ocOrange)
                             Text("问题").foregroundStyle(.primary)
@@ -186,19 +177,21 @@ struct WorkerDetailView: View {
                     }
                 } else {
                     // 未解锁 / 缺 scope：沿用门控行的付费墙与重授权提示
-                    ProGatedNavigationLink(
+                    ProGatedValueLink(
                         label: String(localized: "问题"),
                         systemImage: "exclamationmark.bubble",
                         requiredScope: "workers-observability.read",
-                        feature: .workerTail
-                    ) {
-                        WorkerIssuesView(accountId: script.accountId, scriptName: script.id, session: session)
-                    }
+                        feature: .workerTail,
+                        value: WorkerDetailRoute.issues
+                    )
                 }
             }
             .glassRow()
         }
         .daybreakList()
+        .navigationDestination(for: WorkerDetailRoute.self) { route in
+            workerDetailDestination(route)
+        }
         .navigationTitle(script.id)
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showUpload) {
@@ -439,5 +432,38 @@ struct WorkerDetailView: View {
             }
         }
         .chartXAxis(.hidden)
+    }
+}
+
+
+// MARK: - Worker 详情子入口路由（值式导航）
+
+/// Worker 详情页的子入口目的地。用值式导航（宿主栈 push）——
+/// eager NavigationLink(destination:) 会立即构造目的页（含 ViewModel），iOS 16 点按即卡死。
+enum WorkerDetailRoute: Hashable {
+    case secrets, triggers, builds, deployments, routes, tail, logs, issues
+}
+
+extension WorkerDetailView {
+    @ViewBuilder
+    func workerDetailDestination(_ route: WorkerDetailRoute) -> some View {
+        switch route {
+        case .secrets:
+            WorkerSecretsView(accountId: script.accountId, scriptName: script.id, session: session)
+        case .triggers:
+            WorkerTriggersView(accountId: script.accountId, scriptName: script.id, session: session)
+        case .builds:
+            WorkerBuildsView(scriptName: script.id, session: session)
+        case .deployments:
+            WorkerDeploymentsView(accountId: script.accountId, scriptName: script.id, session: session)
+        case .routes:
+            WorkerRoutesView(accountId: script.accountId, scriptName: script.id, session: session)
+        case .tail:
+            WorkerTailView(accountId: script.accountId, scriptName: script.id, session: session)
+        case .logs:
+            WorkerLogsView(accountId: script.accountId, scriptName: script.id, session: session)
+        case .issues:
+            WorkerIssuesView(accountId: script.accountId, scriptName: script.id, session: session)
+        }
     }
 }
