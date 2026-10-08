@@ -1,0 +1,92 @@
+BUILD_EXIT=0
+=== errors ===
+=== app info ===
+APP=build/Build/Products/Release-iphoneos/Orange Cloud.app
+16.4
+jiamin.chen.orange-cloud
+total 98784
+drwxr-xr-x  24 runner  staff       768 Oct  8 09:25 .
+drwxr-xr-x@ 15 runner  staff       480 Oct  8 09:25 ..
+-rw-r--r--   1 runner  staff      8777 Oct  8 09:21 AppIcon60x60@2x.png
+-rw-r--r--   1 runner  staff     11798 Oct  8 09:21 AppIcon76x76@2x~ipad.png
+drwxr-xr-x   7 runner  staff       224 Oct  8 09:25 ar.lproj
+-rw-r--r--   1 runner  staff    367327 Oct  8 09:21 Assets.car
+drwxr-xr-x   7 runner  staff       224 Oct  8 09:25 de.lproj
+drwxr-xr-x   7 runner  staff       224 Oct  8 09:25 en.lproj
+drwxr-xr-x   7 runner  staff       224 Oct  8 09:25 es-MX.lproj
+drwxr-xr-x   7 runner  staff       224 Oct  8 09:25 fr.lproj
+drwxr-xr-x   3 runner  staff        96 Oct  8 09:21 Frameworks
+-rw-r--r--   1 runner  staff      2044 Oct  8 09:21 Info.plist
+drwxr-xr-x   7 runner  staff       224 Oct  8 09:25 ja.lproj
+drwxr-xr-x   7 runner  staff       224 Oct  8 09:25 ko.lproj
+drwxr-xr-x   5 runner  staff       160 Oct  8 09:25 Metadata.appintents
+-rwxr-xr-x   1 runner  staff  50174536 Oct  8 09:25 Orange Cloud
+drwxr-xr-x   4 runner  staff       128 Oct  8 09:21 Orange Cloud.icon
+-rw-r--r--   1 runner  staff         8 Oct  8 09:21 PkgInfo
+drwxr-xr-x   7 runner  staff       224 Oct  8 09:25 pt-BR.lproj
+drwxr-xr-x   7 runner  staff       224 Oct  8 09:25 pt-PT.lproj
+drwxr-xr-x   7 runner  staff       224 Oct  8 09:25 tr.lproj
+drwxr-xr-x   5 runner  staff       160 Oct  8 09:25 zh-Hans.lproj
+drwxr-xr-x   7 runner  staff       224 Oct  8 09:25 zh-Hant.lproj
+drwxr-xr-x   7 runner  staff       224 Oct  8 09:25 zh-HK.lproj
+=== tail ===
+/Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange Cloud.app/zh-HK.lproj/nlu.appintents/712cf97e23c6c73c68739988d60f0bca.version
+/Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange Cloud.app/zh-Hant.lproj/nlu.appintents
+/Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange Cloud.app/zh-Hant.lproj/nlu.appintents/dec102c7bfb12dd34fed03c7f361428f.version
+/Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange Cloud.app/ar.lproj/nlu.appintents
+/Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange Cloud.app/ar.lproj/nlu.appintents/773032b2be6fcf48918bbfe887276105.version
+/Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange Cloud.app/fr.lproj/nlu.appintents
+/Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange Cloud.app/fr.lproj/nlu.appintents/2d8022cc798e585259299a9b2cca796e.version
+/Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange Cloud.app/en.lproj/nlu.appintents
+/Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange Cloud.app/en.lproj/nlu.appintents/b1c1cd0df7760725d11e0836ff32aed8.version
+/Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange Cloud.app/zh-Hans.lproj/nlu.appintents
+/Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange Cloud.app/zh-Hans.lproj/nlu.appintents/e2ea3ae2b36cdaeb79e28babe572387a.version
+/Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange Cloud.app/ko.lproj/nlu.appintents
+/Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange Cloud.app/ko.lproj/nlu.appintents/a73444e5dc92a47fa6e3885b911733a6.version
+/Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange Cloud.app/pt-PT.lproj/nlu.appintents
+/Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange Cloud.app/pt-PT.lproj/nlu.appintents/f8d0afcde2dfd45da51e61f32897e4f6.version
+/Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange Cloud.app/es-MX.lproj/nlu.appintents
+/Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange Cloud.app/es-MX.lproj/nlu.appintents/c1b95eff3ea85d7a3f8e40c78c75f649.version
+/Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange Cloud.app/ja.lproj/nlu.appintents
+/Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange Cloud.app/ja.lproj/nlu.appintents/9b60bd390be86cdcc9dbedc73e04e98b.version
+
+
+RegisterExecutionPolicyException /Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange\ Cloud.app (in target 'Orange Cloud' from project 'Orange Cloud')
+    cd /Users/runner/work/orange-cloud/orange-cloud/apps/ios/Orange\ Cloud
+    builtin-RegisterExecutionPolicyException /Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange\ Cloud.app
+
+Validate /Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange\ Cloud.app (in target 'Orange Cloud' from project 'Orange Cloud')
+    cd /Users/runner/work/orange-cloud/orange-cloud/apps/ios/Orange\ Cloud
+    builtin-validationUtility /Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange\ Cloud.app -validate-for-store -infoplist-subpath Info.plist
+
+Touch /Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange\ Cloud.app (in target 'Orange Cloud' from project 'Orange Cloud')
+    cd /Users/runner/work/orange-cloud/orange-cloud/apps/ios/Orange\ Cloud
+    /usr/bin/touch -c /Users/runner/work/orange-cloud/orange-cloud/build/Build/Products/Release-iphoneos/Orange\ Cloud.app
+
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SwiftSyntaxBuilder' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target '_SwiftSyntaxCShims' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SwiftSyntaxMacros' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SwiftSyntaxMacroExpansion' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SwiftSyntax604' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SwiftSyntax603' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SwiftSyntax602' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SwiftSyntax601' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SwiftSyntax600' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SwiftSyntax510' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SwiftSyntax509' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SwiftSyntax' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SwiftParserDiagnostics' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SwiftParser' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SwiftOperators' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SwiftIfConfig' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SwiftDiagnostics' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SwiftCompilerPluginMessageHandling' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SwiftCompilerPlugin' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SwiftBasicFormat' from project 'swift-syntax')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'SentryCppHelper' from project 'Sentry')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'PerceptionCore' from project 'swift-perception')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'Perception' from project 'swift-perception')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-Owholemodule, expected -Onone (in target 'IssueReporting' from project 'xctest-dynamic-overlay')
+note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'Orange Cloud' from project 'Orange Cloud')
+** BUILD SUCCEEDED **
+
