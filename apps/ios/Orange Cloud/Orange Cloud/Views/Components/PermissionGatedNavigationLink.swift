@@ -39,7 +39,7 @@ struct PermissionGatedNavigationLink<Destination: View>: View {
     @ViewBuilder
     private var ocBodyContent: some View {
         if auth.hasScope(requiredScope) {
-            NavigationLink(destination: destination()) {
+            NavigationLink(destination: LazyView(destination())) {
                 HStack {
                     rowLabel
                     if showsChevron {
