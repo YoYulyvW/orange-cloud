@@ -83,10 +83,19 @@ extension View {
 
 // MARK: - Query（替代 SwiftData @Query）
 
+/// Query 结果的缓存盒：class 背书，让 SwiftUI 对 View 的值拷贝共享同一份缓存。
+/// 同一 revision 内只算一次 filter+sort，避免 Dashboard 等页一次 body 里
+/// 反复访问 @Query（count / 派生集合 / 明细）导致的 O(n) 重复计算。
+final class QueryCacheBox<T> {
+    var value: [T]?
+    var revision: Int = -1
+}
+
 @propertyWrapper
 struct Query<T> {
     private let filter: ((T) -> Bool)?
     private let comparators: [(T, T) -> Bool]
+    private let box = QueryCacheBox<T>()
 
     init() {
         self.filter = nil
@@ -110,6 +119,12 @@ struct Query<T> {
 
     var wrappedValue: [T] {
         let store = CacheStore.shared
+        // 读 revision（@Perceptible 追踪属性）：数据变更时触发视图刷新，
+        // 同 revision 命中缓存直接返回，不重复 filter+sort。
+        let rev = store.revision
+        if box.revision == rev, let cached = box.value {
+            return cached
+        }
         var all: [T] = []
         if T.self == CachedZone.self {
             all = store.allZones as! [T]
@@ -128,6 +143,8 @@ struct Query<T> {
                 return false
             }
         }
+        box.value = all
+        box.revision = rev
         return all
     }
 }
