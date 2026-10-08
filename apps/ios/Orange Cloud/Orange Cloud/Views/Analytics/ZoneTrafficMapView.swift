@@ -96,17 +96,27 @@ struct ZoneTrafficMapCard: View {
 
     @ViewBuilder
     private var map: some View {
-        // iOS 16.4 移植：SwiftUI MapContentBuilder 在此部署目标下类型检查失败，
-        // 统一退化为占位；图例/数据列表仍完整展示。
-        mapPlaceholder {
-            VStack(spacing: 6) {
-                Image(systemName: "globe.americas")
-                    .font(.title2)
-                    .foregroundStyle(.tertiary)
-                Text("地图需要 iOS 17 及以上")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            }
+        // iOS 16.4 移植：用 MKMapView 封装实现流量气泡地图（等价 iOS 17 的 SwiftUI Map）。
+        TrafficBubbleMap(points: bubblePoints, initialRegion: region)
+            .frame(height: 240)
+            .clipShape(RoundedRectangle(cornerRadius: 14))
+            .overlay(
+                RoundedRectangle(cornerRadius: 14)
+                    .strokeBorder(Color(.separator).opacity(0.4), lineWidth: 0.5)
+            )
+    }
+
+    /// 把 bubbles 映射成地图组件用的气泡点
+    private var bubblePoints: [TrafficBubblePoint] {
+        bubbles.map { bubble in
+            TrafficBubblePoint(
+                id: bubble.id,
+                coordinate: bubble.coordinate,
+                diameter: bubble.diameter,
+                isHighThreat: bubble.country.isHighThreat,
+                label: bubble.country.displayName,
+                valueText: "\(bubble.country.requests) 次请求"
+            )
         }
     }
 
