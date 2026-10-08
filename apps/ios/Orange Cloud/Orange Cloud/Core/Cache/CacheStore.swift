@@ -22,6 +22,10 @@ final class CacheStore {
     var allWorkers: [CachedWorkerScript] { workers }
     var allRecords: [CachedDNSRecord] { records }
 
+    /// 数据版本号：任何写操作后自增，供 Query 缓存失效判断。
+    private(set) var revision = 0
+    func bumpRevision() { revision &+= 1 }
+
     private let queue = DispatchQueue(label: "oc.cache.store")
     private var loaded = false
 
@@ -80,34 +84,41 @@ final class CacheStore {
 
     func upsertZone(_ z: CachedZone) {
         if let i = zones.firstIndex(where: { $0.id == z.id }) { zones[i] = z } else { zones.append(z) }
+        bumpRevision()
     }
-    func removeZone(id: String) { zones.removeAll { $0.id == id } }
+    func removeZone(id: String) { zones.removeAll { $0.id == id }; bumpRevision() }
 
     func upsertWorker(_ w: CachedWorkerScript) {
         if let i = workers.firstIndex(where: { $0.accountId == w.accountId && $0.id == w.id }) { workers[i] = w } else { workers.append(w) }
+        bumpRevision()
     }
-    func removeWorker(accountId: String, id: String) { workers.removeAll { $0.accountId == accountId && $0.id == id } }
+    func removeWorker(accountId: String, id: String) { workers.removeAll { $0.accountId == accountId && $0.id == id }; bumpRevision() }
 
     func upsertRecord(_ r: CachedDNSRecord) {
         if let i = records.firstIndex(where: { $0.id == r.id }) { records[i] = r } else { records.append(r) }
+        bumpRevision()
     }
-    func removeRecord(id: String) { records.removeAll { $0.id == id } }
+    func removeRecord(id: String) { records.removeAll { $0.id == id }; bumpRevision() }
 
     func replaceZones(accountId: String, with new: [CachedZone]) {
         zones.removeAll { $0.accountId == accountId }
         zones.append(contentsOf: new)
+        bumpRevision()
     }
     func replaceWorkers(accountId: String, with new: [CachedWorkerScript]) {
         workers.removeAll { $0.accountId == accountId }
         workers.append(contentsOf: new)
+        bumpRevision()
     }
     func replaceRecords(zoneId: String, with new: [CachedDNSRecord]) {
         records.removeAll { $0.zoneId == zoneId }
         records.append(contentsOf: new)
+        bumpRevision()
     }
 
     func removeAll(accountId: String) {
         zones.removeAll { $0.accountId == accountId }
         workers.removeAll { $0.accountId == accountId }
+        bumpRevision()
     }
 }

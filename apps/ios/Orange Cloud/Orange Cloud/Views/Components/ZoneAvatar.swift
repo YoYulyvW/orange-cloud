@@ -23,11 +23,6 @@ struct ZoneAvatar: View {
     private var base: Color { AvatarPalette.color(for: domain) }
 
     var body: some View {
-        WithPerceptionTracking { ocBodyContent }
-    }
-
-    @ViewBuilder
-    private var ocBodyContent: some View {
         Text(initial)
             .font(.system(size: size * 0.44, weight: .bold, design: .rounded))
             .foregroundStyle(.white)
@@ -48,7 +43,7 @@ struct ZoneAvatar: View {
             // 首字母头像是装饰，域名文字总在旁边，对读屏隐藏
             .accessibilityHidden(true)
     }
-    
+
 }
 
 #Preview {

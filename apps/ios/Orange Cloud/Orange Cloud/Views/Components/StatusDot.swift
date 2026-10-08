@@ -42,11 +42,6 @@ struct StatusDot: View {
     }
 
     var body: some View {
-        WithPerceptionTracking { ocBodyContent }
-    }
-
-    @ViewBuilder
-    private var ocBodyContent: some View {
         Group {
             if differentiateWithoutColor {
                 Image(systemName: glyph)
@@ -65,7 +60,7 @@ struct StatusDot: View {
         }
         .accessibilityLabel(label)
     }
-    
+
 }
 
 #Preview {
