@@ -36,7 +36,7 @@ struct BulkRedirectListsView: View {
         }
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if viewModel.isLoading && !viewModel.loaded {
                 SkeletonList(rows: 5, trailing: true)
@@ -118,7 +118,7 @@ struct BulkRedirectListsView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 
     private func listRow(_ list: RedirectList) -> some View {
         HStack(spacing: 12) {
@@ -151,7 +151,7 @@ private struct CreateRedirectListSheet: View {
         !name.trimmingCharacters(in: .whitespaces).isEmpty && !viewModel.isMutating
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section {
@@ -189,5 +189,5 @@ private struct CreateRedirectListSheet: View {
             .interactiveDismissDisabled(viewModel.isMutating)
             .onDisappear { viewModel.error = nil }
         }
-    }
+    }}
 }

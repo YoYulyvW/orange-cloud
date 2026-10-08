@@ -16,7 +16,7 @@ struct RuleValidateSection: View {
     let disabled: Bool
     let action: () -> Void
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Section {
             Button(action: action) {
                 HStack(spacing: 8) {
@@ -36,5 +36,5 @@ struct RuleValidateSection: View {
             }
             .disabled(disabled)
         }
-    }
+    }}
 }

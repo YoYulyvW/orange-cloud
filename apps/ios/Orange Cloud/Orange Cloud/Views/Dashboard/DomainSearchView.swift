@@ -25,7 +25,7 @@ struct DomainSearchView: View {
         ))
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             List {
                 Section {
@@ -84,7 +84,7 @@ struct DomainSearchView: View {
             }
             .onAppear { fieldFocused = true }
         }
-    }
+    }}
 
     private func row(_ domain: DomainAvailability) -> some View {
         let checked = viewModel.checkedNames.contains(domain.name)

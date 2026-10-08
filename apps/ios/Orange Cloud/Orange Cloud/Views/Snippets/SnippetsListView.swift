@@ -31,7 +31,7 @@ struct SnippetsListView: View {
         return viewModel.snippets.filter { $0.snippetName.localizedCaseInsensitiveContains(searchText) }
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if viewModel.isLoading && !viewModel.loaded {
                 SkeletonList(rows: 5, icon: .none, trailing: true)
@@ -105,7 +105,7 @@ struct SnippetsListView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 }
 
 // MARK: - 列表行
@@ -115,7 +115,7 @@ private struct SnippetRow: View {
     let snippet: Snippet
     let ruleCount: Int
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         HStack(spacing: 12) {
             TintIcon(systemImage: "curlybraces", color: .ocOrange)
             VStack(alignment: .leading, spacing: 2) {
@@ -131,5 +131,5 @@ private struct SnippetRow: View {
             Spacer()
         }
         .padding(.vertical, 2)
-    }
+    }}
 }

@@ -50,11 +50,11 @@ struct SkeletonBlock: View {
     var height: CGFloat = 12
     var cornerRadius: CGFloat = 5
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         RoundedRectangle(cornerRadius: cornerRadius)
             .fill(.quaternary)
             .frame(width: width, height: height)
-    }
+    }}
 }
 
 /// 行首图标占位的形状
@@ -75,7 +75,7 @@ struct SkeletonRow: View {
     var subtitleWidth: CGFloat? = 210
     var trailingWidth: CGFloat? = nil
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         HStack(spacing: 12) {
             switch icon {
             case .none:
@@ -101,7 +101,7 @@ struct SkeletonRow: View {
             }
         }
         .padding(.vertical, 4)
-    }
+    }}
 }
 
 // MARK: - List 形态整页骨架
@@ -114,7 +114,7 @@ struct SkeletonList: View {
     var showsSubtitle = true
     var trailing = false
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         List(0..<rows, id: \.self) { index in
             SkeletonRow(
                 icon: icon,
@@ -127,7 +127,7 @@ struct SkeletonList: View {
         .scrollContentBackground(.hidden)
         .scrollDisabled(true)
         .skeletonPulse()
-    }
+    }}
 }
 
 // MARK: - 玻璃岛内多行骨架
@@ -139,7 +139,7 @@ struct SkeletonIslandRows: View {
     var icon: SkeletonIcon = .rounded(width: 32, height: 32)
     var showsSubtitle = true
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         VStack(spacing: 0) {
             ForEach(0..<rows, id: \.self) { index in
                 SkeletonRow(
@@ -157,7 +157,7 @@ struct SkeletonIslandRows: View {
         }
         .glassIsland(cornerRadius: OCLayout.chipRadius)
         .skeletonPulse()
-    }
+    }}
 }
 
 // MARK: - 卡片列表骨架（域名列表）
@@ -167,7 +167,7 @@ struct SkeletonCardList: View {
 
     var cards: Int = 6
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: OCLayout.islandGap) {
                 SkeletonBlock(width: 150, height: 11)
@@ -194,7 +194,7 @@ struct SkeletonCardList: View {
         }
         .scrollDisabled(true)
         .skeletonPulse()
-    }
+    }}
 }
 
 #Preview("骨架") {

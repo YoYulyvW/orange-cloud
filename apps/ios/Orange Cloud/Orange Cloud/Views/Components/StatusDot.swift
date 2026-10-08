@@ -40,7 +40,7 @@ struct StatusDot: View {
         }
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if differentiateWithoutColor {
                 Image(systemName: glyph)
@@ -58,7 +58,7 @@ struct StatusDot: View {
             }
         }
         .accessibilityLabel(label)
-    }
+    }}
 }
 
 #Preview {

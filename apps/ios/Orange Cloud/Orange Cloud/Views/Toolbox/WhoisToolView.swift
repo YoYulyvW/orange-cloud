@@ -11,7 +11,7 @@ struct WhoisToolView: View {
 
     @State private var vm = WhoisViewModel()
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         ScrollView {
             VStack(spacing: OCLayout.islandGap) {
                 VStack(spacing: 12) {
@@ -62,7 +62,7 @@ struct WhoisToolView: View {
         .background { SkyBackground() }
         .navigationTitle("WHOIS")
         .navigationBarTitleDisplayMode(.inline)
-    }
+    }}
 
     private func rows(_ info: WhoisInfo) -> [ToolKVRow] {
         var rows: [ToolKVRow] = [ToolKVRow("域名", info.domain)]

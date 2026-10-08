@@ -57,7 +57,7 @@ struct DNSRecordFormView: View {
         !name.isEmpty && !content.isEmpty && !viewModel.isSaving
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 if DNSAssistant.isReady && !isEditing {
@@ -157,7 +157,7 @@ struct DNSRecordFormView: View {
                 PaywallView(feature: .aiDNS)
             }
         }
-    }
+    }}
 
     // MARK: - 设备端 AI 生成
 

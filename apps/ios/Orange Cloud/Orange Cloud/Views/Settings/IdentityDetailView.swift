@@ -52,7 +52,7 @@ struct IdentityDetailView: View {
         return Array(set)
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         List {
             // ── 身份信息 ──
             Section {
@@ -182,7 +182,7 @@ struct IdentityDetailView: View {
                  ? String(localized: "这是最后一个账号，退出后将返回登录页。")
                  : String(localized: "此账号的 Token 将被撤销并从 App 移除。"))
         }
-    }
+    }}
 
     private func signOut() async {
         isSigningOut = true

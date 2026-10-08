@@ -57,7 +57,7 @@ struct R2BucketSettingsView: View {
         ))
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 bandwidthSection
@@ -125,7 +125,7 @@ struct R2BucketSettingsView: View {
             }
             .ocSensoryFeedback(.success, trigger: viewModel.didChange)
         }
-    }
+    }}
 
     // MARK: - 带宽（近 30 天）
 
@@ -422,7 +422,7 @@ private struct R2CorsRuleEditor: View {
             .filter { !$0.isEmpty }
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section {
@@ -465,5 +465,5 @@ private struct R2CorsRuleEditor: View {
                 }
             }
         }
-    }
+    }}
 }

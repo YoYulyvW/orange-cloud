@@ -25,7 +25,7 @@ struct OCContentUnavailableView<Label: View, Description: View, Actions: View>: 
         self._actions = actions()
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         if #available(iOS 17.0, *) {
             ContentUnavailableView {
                 _label
@@ -48,7 +48,7 @@ struct OCContentUnavailableView<Label: View, Description: View, Actions: View>: 
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(24)
         }
-    }
+    }}
 }
 
 extension OCContentUnavailableView

@@ -35,7 +35,7 @@ struct TurnstileDetailView: View {
 
     private var canWrite: Bool { auth.hasScope("challenge-widgets.write") }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         List {
             keysSection
             configSection
@@ -111,7 +111,7 @@ struct TurnstileDetailView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 
     // MARK: - 密钥
 

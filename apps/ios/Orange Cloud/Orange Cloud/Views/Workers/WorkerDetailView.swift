@@ -45,7 +45,7 @@ struct WorkerDetailView: View {
     /// 问题入口与历史日志同一 Pro 门槛（workerTail）与读权限
     private var canViewIssues: Bool { entitlements.isPro && auth.hasScope("workers-observability.read") }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         List {
             Section("信息") {
                 if let usageModel = script.usageModel {
@@ -220,7 +220,7 @@ struct WorkerDetailView: View {
             guard canViewMetrics else { return }
             await metricsViewModel.refresh()
         }
-    }
+    }}
 
     /// 预览（beta，只读，免费）：失败静默隐藏
     private func loadPreviews() async {

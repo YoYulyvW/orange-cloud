@@ -34,7 +34,7 @@ struct TunnelConnectView: View {
         "cloudflared service install \(viewModel.token ?? "")"
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         List {
             Section {
                 Text("在目标机器上安装 cloudflared，并以管理员身份运行下面的命令，隧道即可连接。")
@@ -98,7 +98,7 @@ struct TunnelConnectView: View {
                 }
             }
         }
-    }
+    }}
 
     /// 未揭示时只显示令牌前缀，避免凭据完整暴露在屏幕上。
     private func maskedCommand(token: String) -> String {

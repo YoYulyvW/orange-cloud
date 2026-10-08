@@ -42,7 +42,7 @@ nonisolated enum ResourceSort: String, CaseIterable {
 struct ResourceSortMenu: View {
     @Binding var sort: ResourceSort
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Menu {
             Picker("排序", selection: $sort) {
                 ForEach(ResourceSort.allCases, id: \.self) { option in
@@ -52,5 +52,5 @@ struct ResourceSortMenu: View {
         } label: {
             Label("排序", systemImage: "arrow.up.arrow.down")
         }
-    }
+    }}
 }

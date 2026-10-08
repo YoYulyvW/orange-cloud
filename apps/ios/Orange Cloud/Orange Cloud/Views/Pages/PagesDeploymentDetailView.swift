@@ -18,7 +18,7 @@ struct PagesDeploymentDetailView: View {
 
     private var trigger: PagesTriggerMetadata? { deployment.deploymentTrigger?.metadata }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         List {
             overviewSection
             stagesSection
@@ -48,7 +48,7 @@ struct PagesDeploymentDetailView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 
     private var overviewSection: some View {
         Section {

@@ -22,7 +22,7 @@ struct QueuesView: View {
 
     private var canWrite: Bool { auth.hasScope("queues.write") }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if let vm { content(vm) } else { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
         }
@@ -67,7 +67,7 @@ struct QueuesView: View {
             vm = model
             await model.load()
         }
-    }
+    }}
 
     @ViewBuilder
     private func content(_ vm: QueuesViewModel) -> some View {
@@ -115,7 +115,7 @@ struct QueuesView: View {
 private struct QueueRow: View {
     let queue: CFQueue
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         HStack {
             VStack(alignment: .leading, spacing: 3) {
                 Text(queue.name).font(.callout.weight(.semibold)).lineLimit(1).foregroundStyle(.primary)
@@ -133,7 +133,7 @@ private struct QueueRow: View {
         }
         .padding(.vertical, 2)
         .contentShape(Rectangle())
-    }
+    }}
 }
 
 // MARK: - 详情管理 sheet
@@ -162,7 +162,7 @@ private struct QueueDetailSheet: View {
         Button("删除队列", systemImage: "trash", role: .destructive) { showDelete = true }
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Group {
                 if let queue { detail(queue) } else { ProgressView() }
@@ -221,7 +221,7 @@ private struct QueueDetailSheet: View {
                 if !stillThere { dismiss() }
             }
         }
-    }
+    }}
 
     @ViewBuilder
     private func detail(_ queue: CFQueue) -> some View {
@@ -305,7 +305,7 @@ private struct QueueDetailSheet: View {
 private struct ConsumerRow: View {
     let consumer: CFQueueEndpoint
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         VStack(alignment: .leading, spacing: 3) {
             Text(consumer.script ?? consumer.type ?? String(localized: "未知"))
                 .font(.callout.monospaced()).lineLimit(1)
@@ -324,7 +324,7 @@ private struct ConsumerRow: View {
             }
         }
         .padding(.vertical, 2)
-    }
+    }}
 }
 
 // MARK: - 重命名
@@ -347,7 +347,7 @@ private struct QueueRenameSheet: View {
     private var trimmed: String { name.trimmingCharacters(in: .whitespacesAndNewlines) }
     private var canSave: Bool { !trimmed.isEmpty && trimmed != currentName && !viewModel.isSaving }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section {
@@ -377,7 +377,7 @@ private struct QueueRenameSheet: View {
             .interactiveDismissDisabled(viewModel.isSaving)
             .onAppear { viewModel.error = nil }
         }
-    }
+    }}
 }
 
 // MARK: - 编辑设置（保留期 / 投递延迟）
@@ -405,7 +405,7 @@ private struct QueueSettingsSheet: View {
         return !viewModel.isSaving
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section {
@@ -445,7 +445,7 @@ private struct QueueSettingsSheet: View {
             .interactiveDismissDisabled(viewModel.isSaving)
             .onAppear { viewModel.error = nil }
         }
-    }
+    }}
 }
 
 private struct QueueCreateView: View {
@@ -456,7 +456,7 @@ private struct QueueCreateView: View {
     private var trimmed: String { name.trimmingCharacters(in: .whitespacesAndNewlines) }
     private var canSave: Bool { !trimmed.isEmpty && !viewModel.isSaving }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section {
@@ -486,5 +486,5 @@ private struct QueueCreateView: View {
             .interactiveDismissDisabled(viewModel.isSaving)
             .onAppear { viewModel.error = nil }
         }
-    }
+    }}
 }

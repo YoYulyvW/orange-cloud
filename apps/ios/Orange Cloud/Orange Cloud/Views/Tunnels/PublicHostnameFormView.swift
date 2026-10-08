@@ -31,7 +31,7 @@ struct PublicHostnameFormView: View {
         return hostOK && svcOK && !viewModel.isSaving
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section {
@@ -113,7 +113,7 @@ struct PublicHostnameFormView: View {
             .onAppear(perform: populate)
             .interactiveDismissDisabled(viewModel.isSaving)
         }
-    }
+    }}
 
     private func populate() {
         guard let rule = initialRule else { return }

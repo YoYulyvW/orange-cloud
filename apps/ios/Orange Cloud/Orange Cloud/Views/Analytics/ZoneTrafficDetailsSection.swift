@@ -16,13 +16,13 @@ struct ZoneTrafficDetailsSection: View {
     @Perception.Bindable var viewModel: ZoneTrafficDetailsViewModel
     let range: AnalyticsTimeRange
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         VStack(spacing: 14) {
             trafficCard
             securityCard
         }
         .task(id: range) { await viewModel.load(range: range) }
-    }
+    }}
 
     // MARK: - 访问明细
 

@@ -37,7 +37,7 @@ struct WAFRuleListView: View {
         }
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if viewModel.isLoading && !viewModel.loaded {
                 SkeletonList(rows: 6, icon: .none, trailing: true)
@@ -161,7 +161,7 @@ struct WAFRuleListView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 }
 
 // MARK: - 新建 / 编辑规则表单
@@ -237,7 +237,7 @@ private struct WAFRuleFormView: View {
             && !viewModel.isSaving
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 if WAFAssistant.isReady {
@@ -321,7 +321,7 @@ private struct WAFRuleFormView: View {
                 viewModel.validationPassed = false
             }
         }
-    }
+    }}
 
     // MARK: - 书写规则（可视化构建器）
 
@@ -543,7 +543,7 @@ private struct WAFRuleRow: View {
         }
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
                 Text(rule.description ?? String(localized: "未命名规则"))
@@ -592,7 +592,7 @@ private struct WAFRuleRow: View {
         }
         .padding(.vertical, 4)
         .opacity((rule.enabled ?? true) ? 1 : 0.5)
-    }
+    }}
 
     /// 反向能力：按需把表达式翻译成大白话（设备端、只读）。
     @ViewBuilder

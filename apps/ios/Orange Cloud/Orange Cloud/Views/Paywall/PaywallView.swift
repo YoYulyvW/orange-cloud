@@ -23,7 +23,7 @@ struct PaywallView: View {
     @State private var selectedID = EntitlementStore.ProductID.yearly
     @State private var isPurchasing = false
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 16) {
@@ -69,7 +69,7 @@ struct PaywallView: View {
             Text(entitlements.purchaseError ?? "")
         }
         .ocSensoryFeedback(.success, trigger: entitlements.isPro)
-    }
+    }}
 
     // MARK: - 头部
 

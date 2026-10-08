@@ -36,7 +36,7 @@ struct ZonePerformanceView: View {
         ]
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
                 if !viewModel.loaded {
@@ -79,7 +79,7 @@ struct ZonePerformanceView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 
     // MARK: - 网络优化
 

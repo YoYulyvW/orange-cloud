@@ -38,7 +38,7 @@ struct PagesProjectListView: View {
         )
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if viewModel.isLoading && !viewModel.loaded {
                 SkeletonList(rows: 6, trailing: true)
@@ -110,7 +110,7 @@ struct PagesProjectListView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 
     private func load() async {
         await session.ensureAccounts()
@@ -121,7 +121,7 @@ struct PagesProjectListView: View {
 
 private struct PagesProjectRow: View {
     let project: PagesProject
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         HStack(spacing: 12) {
             TintIcon(systemImage: "doc.richtext", color: .ocOrange)
             VStack(alignment: .leading, spacing: 2) {
@@ -142,20 +142,20 @@ private struct PagesProjectRow: View {
             }
         }
         .padding(.vertical, 2)
-    }
+    }}
 }
 
 /// 部署状态徽章（列表 / 详情 / 阶段共用）
 struct PagesStatusBadge: View {
     let status: PagesDeployStatus
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Text(status.label)
             .font(.caption2.weight(.semibold))
             .foregroundStyle(color)
             .padding(.horizontal, 7)
             .padding(.vertical, 3)
             .background(color.opacity(0.14), in: Capsule())
-    }
+    }}
     private var color: Color {
         switch status {
         case .success:            .green

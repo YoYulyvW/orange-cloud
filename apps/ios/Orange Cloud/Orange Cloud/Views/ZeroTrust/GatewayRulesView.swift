@@ -21,7 +21,7 @@ struct GatewayRulesView: View {
 
     private var canWrite: Bool { auth.hasScope("teams.write") }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if let vm {
                 content(vm)
@@ -70,7 +70,7 @@ struct GatewayRulesView: View {
             vm = model
             await model.load()
         }
-    }
+    }}
 
     @ViewBuilder
     private func content(_ vm: GatewayRulesViewModel) -> some View {

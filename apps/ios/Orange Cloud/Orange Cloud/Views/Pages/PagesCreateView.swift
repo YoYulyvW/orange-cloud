@@ -32,7 +32,7 @@ struct PagesCreateView: View {
         !trimmedName.isEmpty && !trimmedBranch.isEmpty && !accountId.isEmpty && !viewModel.isCreating
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section {
@@ -95,7 +95,7 @@ struct PagesCreateView: View {
             .onAppear { nameFocused = true }
             .interactiveDismissDisabled(viewModel.isCreating)
         }
-    }
+    }}
 
     private func create() async {
         guard canCreate else { return }

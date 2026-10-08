@@ -19,7 +19,7 @@ struct AboutView: View {
         return "\(version) (\(build))"
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         List {
             // ── App 头部 ──
             Section {
@@ -92,7 +92,7 @@ struct AboutView: View {
         .daybreakList()
         .navigationTitle("关于")
         .navigationBarTitleDisplayMode(.inline)
-    }
+    }}
 
     private func aboutLink(_ title: String, icon: String, url: String) -> some View {
         Link(destination: URL(string: url)!) {

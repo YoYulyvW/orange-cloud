@@ -15,7 +15,7 @@ struct LoginView: View {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             ZStack {
                 SkyBackground()
@@ -115,7 +115,7 @@ struct LoginView: View {
             }
         }
         .tint(.ocOrange)
-    }
+    }}
 }
 
 #Preview {

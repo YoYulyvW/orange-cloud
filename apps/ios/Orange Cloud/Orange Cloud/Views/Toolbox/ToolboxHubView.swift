@@ -13,7 +13,7 @@ struct ToolboxHubView: View {
 
     @Environment(\.dismiss) private var dismiss
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             List {
                 Section {
@@ -79,7 +79,7 @@ struct ToolboxHubView: View {
             }
         }
         .tint(.ocOrange)
-    }
+    }}
 
     @ViewBuilder
     private func toolRow<Destination: View>(

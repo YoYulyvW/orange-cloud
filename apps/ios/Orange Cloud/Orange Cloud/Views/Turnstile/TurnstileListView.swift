@@ -31,7 +31,7 @@ struct TurnstileListView: View {
 
     private var canWrite: Bool { auth.hasScope("challenge-widgets.write") }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if viewModel.widgets.isEmpty && viewModel.isLoading {
                 SkeletonList(rows: 4)
@@ -119,7 +119,7 @@ struct TurnstileListView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 }
 
 // MARK: - 列表行
@@ -128,7 +128,7 @@ private struct TurnstileRow: View {
 
     let widget: TurnstileWidget
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         HStack(spacing: 12) {
             TintIcon(systemImage: "checkmark.shield", color: .ocOrange)
             VStack(alignment: .leading, spacing: 3) {
@@ -155,5 +155,5 @@ private struct TurnstileRow: View {
                     .foregroundStyle(.secondary)
             }
         }
-    }
+    }}
 }

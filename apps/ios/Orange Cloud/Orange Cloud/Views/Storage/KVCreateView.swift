@@ -26,7 +26,7 @@ struct KVCreateView: View {
         !trimmedTitle.isEmpty && !accountId.isEmpty && !viewModel.isCreating
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section {
@@ -78,7 +78,7 @@ struct KVCreateView: View {
             .onAppear { titleFocused = true }
             .interactiveDismissDisabled(viewModel.isCreating)
         }
-    }
+    }}
 
     private func create() async {
         guard canCreate else { return }

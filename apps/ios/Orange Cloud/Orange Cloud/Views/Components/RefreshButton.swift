@@ -14,7 +14,7 @@ struct RefreshButton: View {
     let failed: Bool
     let action: () -> Void
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Button(action: action) {
             if failed && !isLoading {
                 // 失败态：红色「刷新失败」+ 红色刷新箭头，整体可点重试
@@ -34,7 +34,7 @@ struct RefreshButton: View {
         }
         .animation(.snappy, value: failed)
         .accessibilityLabel(failed && !isLoading ? "刷新失败，点按重试" : "刷新")
-    }
+    }}
 }
 
 /// 内联刷新失败提示条：用于没有工具栏刷新按钮、靠下拉刷新的页面（Dashboard、流量分析）。
@@ -43,7 +43,7 @@ struct RefreshFailedBanner: View {
 
     let retry: () -> Void
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Button(action: retry) {
             Label("刷新失败，点按重试", systemImage: "arrow.clockwise")
                 .font(.footnote.weight(.semibold))
@@ -53,7 +53,7 @@ struct RefreshFailedBanner: View {
                 .background(Color.red.opacity(0.08), in: RoundedRectangle(cornerRadius: 10))
         }
         .buttonStyle(.plain)
-    }
+    }}
 }
 
 #Preview {

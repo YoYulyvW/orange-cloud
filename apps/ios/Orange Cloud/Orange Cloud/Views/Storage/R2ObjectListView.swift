@@ -42,7 +42,7 @@ struct R2ObjectListView: View {
 
     private var canWrite: Bool { auth.hasScope("workers-r2.write") }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if viewModel.isContentEmpty && viewModel.isLoading {
                 SkeletonList(rows: 9, trailing: true)
@@ -184,7 +184,7 @@ struct R2ObjectListView: View {
                 )
             }
         }
-    }
+    }}
 
     /// 发起复制 / 移动：先过写权限与 300MB 体积守卫，再弹目标 Key 编辑表单
     private func startTransfer(_ object: R2Object, _ mode: TransferRequest.Mode) {
@@ -344,7 +344,7 @@ private struct R2FolderRow: View {
     let subtitle: String?
     var systemImage: String = "folder"
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         HStack(spacing: 12) {
             TintIcon(systemImage: systemImage, color: .ocOrange, size: 28)
             VStack(alignment: .leading, spacing: 2) {
@@ -366,7 +366,7 @@ private struct R2FolderRow: View {
                 .foregroundStyle(.tertiary)
         }
         .contentShape(Rectangle())
-    }
+    }}
 }
 
 private struct R2ObjectRow: View {
@@ -384,7 +384,7 @@ private struct R2ObjectRow: View {
         return "doc"
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         HStack(spacing: 12) {
             TintIcon(systemImage: icon, color: .ocOrange, size: 28)
             VStack(alignment: .leading, spacing: 2) {
@@ -406,7 +406,7 @@ private struct R2ObjectRow: View {
             Spacer()
         }
         .contentShape(Rectangle())
-    }
+    }}
 }
 
 // MARK: - 对象详情（元数据 + QuickLook 预览 + 删除）
@@ -426,7 +426,7 @@ private struct R2ObjectDetailView: View {
         (object.size ?? 0) <= 50_000_000
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             List {
                 Section("对象") {
@@ -510,7 +510,7 @@ private struct R2ObjectDetailView: View {
                 Text("此操作不可撤销。")
             }
         }
-    }
+    }}
 }
 
 // MARK: - 复制 / 移动
@@ -545,7 +545,7 @@ private struct R2TransferSheet: View {
     private var trimmed: String { destinationKey.trimmingCharacters(in: .whitespacesAndNewlines) }
     private var isValid: Bool { !trimmed.isEmpty && trimmed != object.key }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section("源对象") {
@@ -580,7 +580,7 @@ private struct R2TransferSheet: View {
                 }
             }
         }
-    }
+    }}
 
     /// 复制默认名：在扩展名前插入「-副本」（无扩展名则末尾追加）
     private static func copyName(of key: String) -> String {
@@ -597,7 +597,7 @@ private struct TransferProgressOverlay: View {
     let label: String
     let progress: Double
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         ZStack {
             Color.black.opacity(0.15).ignoresSafeArea()
             VStack(spacing: 12) {
@@ -614,5 +614,5 @@ private struct TransferProgressOverlay: View {
             .padding(22)
             .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
         }
-    }
+    }}
 }

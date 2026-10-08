@@ -23,7 +23,7 @@ struct RateLimitRulesView: View {
 
     private var canEdit: Bool { auth.hasScope("zone-waf.write") }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if let vm {
                 content(vm)
@@ -40,7 +40,7 @@ struct RateLimitRulesView: View {
             vm = model
             await model.load()
         }
-    }
+    }}
 
     @ViewBuilder
     private func content(_ vm: RateLimitViewModel) -> some View {
@@ -168,7 +168,7 @@ private struct RateLimitEditorSheet: View {
         (requests ?? 0) >= 1
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section {
@@ -254,7 +254,7 @@ private struct RateLimitEditorSheet: View {
             }
             .onAppear { prefill() }
         }
-    }
+    }}
 
     private func prefill() {
         guard let rule else { return }

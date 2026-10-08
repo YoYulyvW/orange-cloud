@@ -72,7 +72,7 @@ struct AccessAppEditorView: View {
         return canEditRules ? rulesValid : true
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 if loadingDetail {
@@ -103,7 +103,7 @@ struct AccessAppEditorView: View {
             .interactiveDismissDisabled(viewModel.isSaving)
             .task { await prefillIfNeeded() }
         }
-    }
+    }}
 
     // MARK: - 应用字段
 

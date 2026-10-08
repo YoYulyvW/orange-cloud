@@ -25,7 +25,7 @@ struct RegistrarView: View {
 
     private var canAdmin: Bool { auth.hasScope("registrar-domains.admin") }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         List {
             // 搜索新域名：sheet 内自带导航栈（本页被 push 在概览栈里，不再往下 push）
             Section {
@@ -81,7 +81,7 @@ struct RegistrarView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 
     private func registrationRow(_ registration: DomainRegistration) -> some View {
         VStack(alignment: .leading, spacing: 6) {

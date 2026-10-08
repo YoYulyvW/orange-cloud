@@ -24,7 +24,7 @@ struct WorkerLogsView: View {
         ))
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         VStack(spacing: 0) {
             header
             Divider()
@@ -49,7 +49,7 @@ struct WorkerLogsView: View {
         // 时间窗与级别都下推给服务端，改了就重查
         .task(id: viewModel.range) { await viewModel.load() }
         .task(id: viewModel.levelFilter) { await viewModel.load() }
-    }
+    }}
 
     // MARK: - 顶部筛选
 
@@ -216,7 +216,7 @@ private struct LogEventRow: View {
     let onCopy: () -> Void
     let onOpen: () -> Void
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Button(action: onOpen) {
             HStack(alignment: .firstTextBaseline, spacing: 8) {
                 Text(event.date, format: .dateTime.month(.twoDigits).day(.twoDigits)
@@ -244,7 +244,7 @@ private struct LogEventRow: View {
             Button("复制此行", systemImage: "doc.on.doc", action: onCopy)
         }
         .accessibilityHint(Text("轻点查看详情，长按复制整行"))
-    }
+    }}
 }
 
 private enum LogEventStyle {
@@ -275,7 +275,7 @@ private struct LogEventDetailSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 12) {
@@ -298,7 +298,7 @@ private struct LogEventDetailSheet: View {
                 }
             }
         }
-    }
+    }}
 
     private var metaSection: some View {
         island {

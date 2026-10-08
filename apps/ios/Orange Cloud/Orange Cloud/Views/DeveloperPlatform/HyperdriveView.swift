@@ -23,7 +23,7 @@ struct HyperdriveView: View {
 
     private var canWrite: Bool { auth.hasScope("query-cache.write") }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if let vm { content(vm) } else { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
         }
@@ -68,7 +68,7 @@ struct HyperdriveView: View {
             vm = model
             await model.load()
         }
-    }
+    }}
 
     @ViewBuilder
     private func content(_ vm: HyperdriveViewModel) -> some View {
@@ -152,7 +152,7 @@ private struct HyperdriveDetailSheet: View {
         Button("删除配置", systemImage: "trash", role: .destructive) { showDelete = true }
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Group {
                 if let config { detail(config) } else { ProgressView() }
@@ -201,7 +201,7 @@ private struct HyperdriveDetailSheet: View {
                 if !stillThere { dismiss() }
             }
         }
-    }
+    }}
 
     @ViewBuilder
     private func detail(_ config: HyperdriveConfig) -> some View {
@@ -266,7 +266,7 @@ private struct HyperdriveRenameSheet: View {
     private var trimmed: String { name.trimmingCharacters(in: .whitespacesAndNewlines) }
     private var canSave: Bool { !trimmed.isEmpty && trimmed != currentName && !viewModel.isSaving }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section {
@@ -293,7 +293,7 @@ private struct HyperdriveRenameSheet: View {
             .interactiveDismissDisabled(viewModel.isSaving)
             .onAppear { viewModel.error = nil }
         }
-    }
+    }}
 }
 
 // MARK: - 编辑缓存
@@ -323,7 +323,7 @@ private struct HyperdriveCachingSheet: View {
         return (maxAge ?? -1) >= 0 && (swr ?? -1) >= 0
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section {
@@ -366,7 +366,7 @@ private struct HyperdriveCachingSheet: View {
             .interactiveDismissDisabled(viewModel.isSaving)
             .onAppear { viewModel.error = nil }
         }
-    }
+    }}
 }
 
 // MARK: - 编辑源连接（需重新输入密码）
@@ -402,7 +402,7 @@ private struct HyperdriveConnectionSheet: View {
             && !viewModel.isSaving
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section("源数据库连接") {
@@ -453,7 +453,7 @@ private struct HyperdriveConnectionSheet: View {
             .interactiveDismissDisabled(viewModel.isSaving)
             .onAppear { viewModel.error = nil }
         }
-    }
+    }}
 }
 
 // MARK: - 新建
@@ -481,7 +481,7 @@ private struct HyperdriveCreateView: View {
             && !viewModel.isSaving
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section("配置") {
@@ -526,7 +526,7 @@ private struct HyperdriveCreateView: View {
             .interactiveDismissDisabled(viewModel.isSaving)
             .onAppear { viewModel.error = nil }
         }
-    }
+    }}
 
     private func save() async {
         let body = HyperdriveCreate(

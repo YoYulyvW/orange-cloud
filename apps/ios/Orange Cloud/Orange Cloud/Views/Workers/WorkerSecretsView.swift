@@ -32,7 +32,7 @@ struct WorkerSecretsView: View {
     /// 能读到至少一类资源才提供快速绑定入口
     private var canBind:    Bool { canWrite && (canReadD1 || canReadKV || canReadR2) }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         coreContent
             .background { SkyBackground() }
             .navigationTitle("变量与密钥")
@@ -57,7 +57,7 @@ struct WorkerSecretsView: View {
             } message: {
                 Text(viewModel.error ?? "")
             }
-    }
+    }}
 
     private var alertBinding: Binding<Bool> {
         Binding(
@@ -321,7 +321,7 @@ private struct WorkerValueEditorSheet: View {
         return lockedName == nil ? String(localized: "添加变量") : String(localized: "编辑变量")
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section {
@@ -384,7 +384,7 @@ private struct WorkerValueEditorSheet: View {
                 }
             }
         }
-    }
+    }}
 
     private func save() async {
         viewModel.error = nil
@@ -441,7 +441,7 @@ private struct WorkerBulkImportSheet: View {
 
     private var canImport: Bool { !pairs.isEmpty && !viewModel.isSaving }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section {
@@ -494,7 +494,7 @@ private struct WorkerBulkImportSheet: View {
             }
             .interactiveDismissDisabled(viewModel.isSaving)
         }
-    }
+    }}
 
     private func performImport() async {
         viewModel.error = nil
@@ -627,7 +627,7 @@ private struct WorkerBindResourceSheet: View {
         !selectedId.isEmpty && nameValid && !nameDuplicate && !viewModel.isSaving
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 if availableKinds.count > 1 {
@@ -708,7 +708,7 @@ private struct WorkerBindResourceSheet: View {
                 nameEditedManually = false
             }
         }
-    }
+    }}
 
     private func save() async {
         viewModel.error = nil

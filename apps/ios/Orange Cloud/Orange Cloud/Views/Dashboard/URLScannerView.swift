@@ -20,7 +20,7 @@ struct URLScannerView: View {
         ))
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         List {
             inputSection
             if let result = viewModel.result {
@@ -40,7 +40,7 @@ struct URLScannerView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 
     private var inputSection: some View {
         Section {

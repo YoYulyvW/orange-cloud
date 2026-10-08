@@ -52,7 +52,7 @@ struct TransformRuleEditorView: View {
         }
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section("规则") {
@@ -106,7 +106,7 @@ struct TransformRuleEditorView: View {
             .interactiveDismissDisabled(viewModel.isSaving)
             .onDisappear { viewModel.error = nil }
         }
-    }
+    }}
 
     private var urlSection: some View {
         Section {

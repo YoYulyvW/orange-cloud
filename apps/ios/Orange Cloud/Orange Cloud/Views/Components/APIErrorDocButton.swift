@@ -26,12 +26,12 @@ func apiErrorDocButton(for message: String?) -> some View {
 struct APIErrorDocLink: View {
     let message: String?
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         if let url = APIErrorDocLinks.url(for: message) {
             Link(destination: url) {
                 Label(String(localized: "查看所需权限"), systemImage: "doc.text.magnifyingglass")
             }
             .font(.footnote)
         }
-    }
+    }}
 }

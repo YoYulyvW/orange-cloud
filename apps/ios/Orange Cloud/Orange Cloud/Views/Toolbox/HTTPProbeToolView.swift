@@ -11,7 +11,7 @@ struct HTTPProbeToolView: View {
 
     @State private var vm = HTTPProbeViewModel()
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         ScrollView {
             VStack(spacing: OCLayout.islandGap) {
                 VStack(spacing: 12) {
@@ -76,7 +76,7 @@ struct HTTPProbeToolView: View {
         .background { SkyBackground() }
         .navigationTitle("HTTP 请求")
         .navigationBarTitleDisplayMode(.inline)
-    }
+    }}
 
     private func summaryRows(_ r: HTTPProbeResult) -> [ToolKVRow] {
         [

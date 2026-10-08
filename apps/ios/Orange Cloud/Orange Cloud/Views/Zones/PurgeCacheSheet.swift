@@ -73,7 +73,7 @@ struct PurgeCacheSheet: View {
         }
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 12) {
@@ -155,5 +155,5 @@ struct PurgeCacheSheet: View {
                 }
             }
         }
-    }
+    }}
 }

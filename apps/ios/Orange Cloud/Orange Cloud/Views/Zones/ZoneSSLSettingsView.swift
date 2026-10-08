@@ -24,7 +24,7 @@ struct ZoneSSLSettingsView: View {
 
     private var canEdit: Bool { auth.hasScope("zone-settings.write") }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
                 if !viewModel.loaded {
@@ -68,7 +68,7 @@ struct ZoneSSLSettingsView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 
     // MARK: - 加密模式
 

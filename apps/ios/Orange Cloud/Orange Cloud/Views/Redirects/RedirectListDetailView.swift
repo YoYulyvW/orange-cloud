@@ -27,7 +27,7 @@ struct RedirectListDetailView: View {
     private var canWriteItems: Bool { auth.hasScope("account-rule-lists.write") }
     private var canEnable: Bool { auth.hasScope("mass-url-redirects.write") }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         List {
             enableSection
             itemsSection
@@ -71,7 +71,7 @@ struct RedirectListDetailView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 
     private var enableSection: some View {
         Section {
@@ -186,7 +186,7 @@ private struct RedirectItemEditorView: View {
             && !viewModel.isMutating
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section {
@@ -234,7 +234,7 @@ private struct RedirectItemEditorView: View {
             .interactiveDismissDisabled(viewModel.isMutating)
             .onDisappear { viewModel.error = nil }
         }
-    }
+    }}
 
     private func save() async {
         viewModel.error = nil

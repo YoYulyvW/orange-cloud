@@ -34,7 +34,7 @@ struct CacheRulesListView: View {
         }
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if viewModel.isLoading && !viewModel.loaded {
                 SkeletonList(rows: 5, icon: .none, trailing: true)
@@ -137,7 +137,7 @@ struct CacheRulesListView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 
     private func row(_ rule: CacheRule) -> some View {
         Button {

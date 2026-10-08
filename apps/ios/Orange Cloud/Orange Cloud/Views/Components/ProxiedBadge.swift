@@ -9,10 +9,10 @@ import SwiftUI
 struct ProxiedBadge: View {
     let proxied: Bool
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Image(systemName: proxied ? "cloud.fill" : "cloud")
             .foregroundStyle(proxied ? Color.ocOrange : Color.secondary)
             .ocSymbolReplaceTransition()
             .accessibilityLabel(proxied ? String(localized: "已代理") : String(localized: "仅 DNS"))
-    }
+    }}
 }

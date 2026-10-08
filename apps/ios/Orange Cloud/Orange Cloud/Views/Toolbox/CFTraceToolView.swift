@@ -11,7 +11,7 @@ struct CFTraceToolView: View {
 
     @State private var vm = CFTraceViewModel()
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         ScrollView {
             VStack(spacing: OCLayout.islandGap) {
                 VStack(spacing: 12) {
@@ -60,7 +60,7 @@ struct CFTraceToolView: View {
         .task {
             if vm.result == nil && vm.error == nil { await vm.run() }
         }
-    }
+    }}
 
     private func summaryRows(_ r: CFTraceResult) -> [ToolKVRow] {
         var rows: [ToolKVRow] = []

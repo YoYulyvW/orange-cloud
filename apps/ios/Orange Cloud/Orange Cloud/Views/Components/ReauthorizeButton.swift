@@ -21,7 +21,7 @@ struct ReauthorizeButton: View {
     @State private var isWorking = false
     @State private var errorText: String?
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Button {
             isWorking = true
             Task {
@@ -52,5 +52,5 @@ struct ReauthorizeButton: View {
         } message: {
             Text(errorText ?? "")
         }
-    }
+    }}
 }

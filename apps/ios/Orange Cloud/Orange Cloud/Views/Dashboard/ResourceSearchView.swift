@@ -43,7 +43,7 @@ struct ResourceSearchView: View {
         return Array(items.filter { $0.matches(trimmed) }.prefix(50))
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             VStack(spacing: 12) {
                 searchField
@@ -63,7 +63,7 @@ struct ResourceSearchView: View {
                 queryFocused = true
             }
         }
-    }
+    }}
 
     // MARK: - 输入框（普通 TextField，见文件头注释）
 

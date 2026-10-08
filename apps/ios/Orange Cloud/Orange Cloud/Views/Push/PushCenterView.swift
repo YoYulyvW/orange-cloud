@@ -15,7 +15,7 @@ struct PushCenterView: View {
     @State private var copied = false
     @Environment(AuthManager.self) private var auth
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         ScrollView {
             VStack(spacing: OCLayout.islandGap) {
                 statusIsland
@@ -35,7 +35,7 @@ struct PushCenterView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task { vm.refresh() }
         .refreshable { vm.refresh() }
-    }
+    }}
 
     // MARK: - 状态 / 启用
 

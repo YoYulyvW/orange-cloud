@@ -31,7 +31,7 @@ struct SettingsView: View {
     @AppStorage(AppLanguage.storageKey)   private var languageRaw   = AppLanguage.system.rawValue
     @AppStorage(AppMotion.storageKey)     private var reduceAnimations = false
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             List {
                 // ── Cloudflare 账号（登录身份）──
@@ -363,7 +363,7 @@ struct SettingsView: View {
                 }
             }
         }
-    }
+    }}
 
     /// 导出诊断日志：写到临时文件并拉起系统分享
     private func exportLogs() {
@@ -426,7 +426,7 @@ private struct AddAccountSheet: View {
     @Environment(AuthManager.self) private var auth
     @Environment(\.dismiss) private var dismiss
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             PermissionSelectionView(freshLogin: true)
                 .toolbar {
@@ -440,7 +440,7 @@ private struct AddAccountSheet: View {
             dismiss()
         }
         .interactiveDismissDisabled(auth.isLoading)
-    }
+    }}
 }
 
 // MARK: - 通知（主开关授权后再展开子开关）
@@ -454,7 +454,7 @@ private struct NotificationSettingsSection: View {
     @State private var systemDenied = false
     @State private var isRequesting = false
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Section {
             Toggle(isOn: $notificationsEnabled) {
                 HStack(spacing: 12) {
@@ -526,5 +526,5 @@ private struct NotificationSettingsSection: View {
             }
         }
         .glassRow()
-    }
+    }}
 }

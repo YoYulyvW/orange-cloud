@@ -49,7 +49,7 @@ struct TurnstileEditorSheet: View {
             && !viewModel.isSaving
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section("名称") {
@@ -118,7 +118,7 @@ struct TurnstileEditorSheet: View {
             }
             .interactiveDismissDisabled(viewModel.isSaving)
         }
-    }
+    }}
 
     private func save() async {
         viewModel.error = nil

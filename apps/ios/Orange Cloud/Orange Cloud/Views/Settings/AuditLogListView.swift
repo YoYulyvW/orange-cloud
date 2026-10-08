@@ -15,7 +15,7 @@ struct AuditLogListView: View {
 
     @State private var vm: AuditLogViewModel?
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if let vm {
                 content(vm)
@@ -34,7 +34,7 @@ struct AuditLogListView: View {
             vm = model
             await model.load()
         }
-    }
+    }}
 
     @ViewBuilder
     private func content(_ vm: AuditLogViewModel) -> some View {
@@ -116,7 +116,7 @@ private struct AuditLogRow: View {
         return date.formatted(.relative(presentation: .named))
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         HStack(spacing: 12) {
             statusIcon
             VStack(alignment: .leading, spacing: 3) {
@@ -134,7 +134,7 @@ private struct AuditLogRow: View {
                 .foregroundStyle(.tertiary)
         }
         .padding(.vertical, 2)
-    }
+    }}
 
     @ViewBuilder
     private var statusIcon: some View {
@@ -165,7 +165,7 @@ private struct AuditHistoryView: View {
     let vm: AuditLogViewModel
     @Environment(\.dismiss) private var dismiss
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         List {
             Section {
                 if vm.isLoadingHistory {
@@ -200,6 +200,6 @@ private struct AuditHistoryView: View {
                 Button("完成") { dismiss() }
             }
         }
-    }
+    }}
 }
 

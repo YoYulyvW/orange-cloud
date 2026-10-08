@@ -14,12 +14,12 @@ struct AlertCenterCard: View {
     /// 点击一条告警：由概览页栈根的 navdest 承接（值式路由，勿改 eager NavigationLink）
     let onSelect: (DashboardResourceRoute) -> Void
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         VStack(alignment: .leading, spacing: 10) {
             header
             content
         }
-    }
+    }}
 
     @ViewBuilder
     private var header: some View {
@@ -86,7 +86,7 @@ private struct AlertRow: View {
     let alert: DashboardAlert
     let showsChevron: Bool
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         HStack(spacing: 10) {
             SeverityDot(severity: alert.severity)
             VStack(alignment: .leading, spacing: 2) {
@@ -109,7 +109,7 @@ private struct AlertRow: View {
         .padding(.horizontal, OCLayout.islandPadding)
         .padding(.vertical, 10)
         .contentShape(Rectangle())
-    }
+    }}
 }
 
 /// 严重度圆点：critical 红 / warn 橙 / info 蓝 / ok 绿；
@@ -147,7 +147,7 @@ private struct SeverityDot: View {
         }
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if differentiateWithoutColor {
                 Image(systemName: glyph)
@@ -166,5 +166,5 @@ private struct SeverityDot: View {
         }
         .frame(width: 16)
         .accessibilityLabel(label)
-    }
+    }}
 }

@@ -93,7 +93,7 @@ struct ZoneDetailView: View {
         }
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
                 heroCard
@@ -696,7 +696,7 @@ struct ZoneDetailView: View {
         } message: {
             Text(actionsViewModel.error ?? "")
         }
-    }
+    }}
 
     // MARK: - 暂停态与缓存同步
 

@@ -11,7 +11,7 @@ struct DNSLookupToolView: View {
 
     @State private var vm = DNSLookupViewModel()
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         ScrollView {
             VStack(spacing: OCLayout.islandGap) {
                 VStack(spacing: 12) {
@@ -83,5 +83,5 @@ struct DNSLookupToolView: View {
         .background { SkyBackground() }
         .navigationTitle("DNS 查询")
         .navigationBarTitleDisplayMode(.inline)
-    }
+    }}
 }

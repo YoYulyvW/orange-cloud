@@ -25,7 +25,7 @@ struct ZoneSSLCertsView: View {
 
     private var canWrite: Bool { auth.hasScope("ssl-and-certificates.write") }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
                 if viewModel.universalLoaded {
@@ -84,7 +84,7 @@ struct ZoneSSLCertsView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 
     private var universalCard: some View {
         HStack(spacing: 12) {

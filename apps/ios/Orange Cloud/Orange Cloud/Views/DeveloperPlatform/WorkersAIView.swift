@@ -20,7 +20,7 @@ struct WorkersAIView: View {
     @State private var searchText = ""
     @State private var detailTarget: AIModel?
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if let vm { content(vm) } else { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
         }
@@ -38,7 +38,7 @@ struct WorkersAIView: View {
             vm = model
             await model.load()
         }
-    }
+    }}
 
     @ViewBuilder
     private func content(_ vm: WorkersAIViewModel) -> some View {
@@ -134,7 +134,7 @@ private struct AIModelDetailSheet: View {
 
     private var hasAIWrite: Bool { auth.hasScope("ai.write") }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         @Perception.Bindable var playVM = playVM
         @Perception.Bindable var imageVM = imageVM
         NavigationStack {
@@ -178,7 +178,7 @@ private struct AIModelDetailSheet: View {
                 ToolbarItem(placement: .confirmationAction) { Button("完成") { dismiss() } }
             }
         }
-    }
+    }}
 
     @ViewBuilder
     private var reauthorizeSection: some View {

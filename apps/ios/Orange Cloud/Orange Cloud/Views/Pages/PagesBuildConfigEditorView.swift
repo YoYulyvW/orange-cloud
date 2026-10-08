@@ -27,7 +27,7 @@ struct PagesBuildConfigEditorView: View {
         _productionBranch = State(initialValue: viewModel.project.productionBranch ?? "")
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Form {
             Section {
                 TextField("如 npm run build", text: $buildCommand)
@@ -89,7 +89,7 @@ struct PagesBuildConfigEditorView: View {
         }
         .interactiveDismissDisabled(viewModel.isMutating)
         .onDisappear { viewModel.error = nil }
-    }
+    }}
 
     private func save() async {
         let build = PagesBuildConfig(

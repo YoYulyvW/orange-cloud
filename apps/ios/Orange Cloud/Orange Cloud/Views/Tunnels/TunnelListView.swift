@@ -26,7 +26,7 @@ struct TunnelListView: View {
     private var canWriteDNS: Bool { auth.hasScope("dns.write") }
     private var accountId: String? { session.selectedAccount?.id }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if viewModel.tunnels.isEmpty && viewModel.isLoading {
                 SkeletonList(rows: 5)
@@ -120,7 +120,7 @@ struct TunnelListView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 
     private func load() async {
         await session.ensureAccounts()
@@ -134,7 +134,7 @@ struct TunnelListView: View {
 private struct TunnelRow: View {
     let tunnel: Tunnel
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         HStack(spacing: 12) {
             TintIcon(systemImage: "arrow.triangle.2.circlepath", color: statusColor)
             VStack(alignment: .leading, spacing: 2) {
@@ -159,7 +159,7 @@ private struct TunnelRow: View {
             }
         }
         .padding(.vertical, 2)
-    }
+    }}
 
     private var statusColor: Color {
         switch tunnel.status {
@@ -215,7 +215,7 @@ struct TunnelDetailView: View {
     private var tunnel: Tunnel { viewModel.tunnel }
     private var isRemote: Bool { tunnel.remoteConfig == true }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         List {
             infoSection
             if canWrite { connectSection }
@@ -272,7 +272,7 @@ struct TunnelDetailView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 
     // MARK: 信息
 
@@ -435,7 +435,7 @@ struct TunnelDetailView: View {
 private struct PublicHostnameRow: View {
     let rule: IngressRule
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         VStack(alignment: .leading, spacing: 3) {
             Text(rule.hostname ?? "—")
                 .font(.callout.weight(.semibold))
@@ -459,5 +459,5 @@ private struct PublicHostnameRow: View {
         }
         .padding(.vertical, 2)
         .frame(maxWidth: .infinity, alignment: .leading)
-    }
+    }}
 }

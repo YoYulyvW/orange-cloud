@@ -28,7 +28,7 @@ struct WorkerRoutesView: View {
     // Zone 路由（zone 级，独立权限组）
     private var canWriteRoute:  Bool { auth.hasScope("workers-routes.write") }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if !viewModel.loaded && viewModel.isLoading {
                 SkeletonList(rows: 5, icon: .none, trailing: true)
@@ -58,7 +58,7 @@ struct WorkerRoutesView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 
     // MARK: - workers.dev 子域
 
@@ -214,7 +214,7 @@ private struct RouteEditorSheet: View {
         !text.trimmingCharacters(in: .whitespaces).isEmpty && !zoneId.isEmpty && !viewModel.isSaving
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section("域名") {
@@ -261,7 +261,7 @@ private struct RouteEditorSheet: View {
             }
             .interactiveDismissDisabled(viewModel.isSaving)
         }
-    }
+    }}
 
     private func save() async {
         viewModel.error = nil

@@ -20,7 +20,7 @@ struct AIGatewayView: View {
 
     private var canWrite: Bool { auth.hasScope("aig.write") }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if let vm { content(vm) } else { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
         }
@@ -62,7 +62,7 @@ struct AIGatewayView: View {
             vm = model
             await model.load()
         }
-    }
+    }}
 
     @ViewBuilder
     private func content(_ vm: AIGatewayViewModel) -> some View {
@@ -129,7 +129,7 @@ private struct AIGatewayCreateView: View {
     private var trimmedId: String { gatewayId.trimmingCharacters(in: .whitespacesAndNewlines) }
     private var canSave: Bool { !trimmedId.isEmpty && !viewModel.isSaving }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section {
@@ -174,7 +174,7 @@ private struct AIGatewayCreateView: View {
             .interactiveDismissDisabled(viewModel.isSaving)
             .onAppear { viewModel.error = nil }
         }
-    }
+    }}
 
     private func save() async {
         let body = AIGatewayCreate(

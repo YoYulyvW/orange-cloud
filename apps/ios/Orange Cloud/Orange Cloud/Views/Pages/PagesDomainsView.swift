@@ -33,7 +33,7 @@ struct PagesDomainsView: View {
     private var canReadDNS: Bool { auth.hasScope("dns.read") }
     private var canWriteDNS: Bool { auth.hasScope("dns.write") }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if viewModel.isLoading && !viewModel.loaded {
                 SkeletonList(rows: 4, trailing: true)
@@ -91,7 +91,7 @@ struct PagesDomainsView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 
     @ViewBuilder
     private var addAlertActions: some View {
@@ -207,7 +207,7 @@ private struct PagesDomainDetailSheet: View {
     private var current: PagesDomain { viewModel.domains.first { $0.id == domain.id } ?? domain }
     private var dnsState: PagesDomainsViewModel.DNSState? { viewModel.dnsStates[current.name] }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             List {
                 statusSection
@@ -238,7 +238,7 @@ private struct PagesDomainDetailSheet: View {
             }
         }
         .presentationDetents([.medium, .large])
-    }
+    }}
 
     // MARK: 状态
 
@@ -421,14 +421,14 @@ private struct PagesDomainDetailSheet: View {
 
 struct PagesDomainStatusBadge: View {
     let status: PagesDomainStatus
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Text(status.label)
             .font(.caption2.weight(.semibold))
             .foregroundStyle(color)
             .padding(.horizontal, 7)
             .padding(.vertical, 3)
             .background(color.opacity(0.14), in: Capsule())
-    }
+    }}
     private var color: Color {
         switch status {
         case .active:                .green

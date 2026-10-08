@@ -33,7 +33,7 @@ struct WorkerIssuesView: View {
         ))
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         List {
             Section {
                 // 从 Worker 详情进来时只看该 Worker：标出名字，行内不再重复
@@ -101,7 +101,7 @@ struct WorkerIssuesView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 
     @ViewBuilder
     private var content: some View {
@@ -170,7 +170,7 @@ private struct WorkerIssueRow: View {
     let issue: WorkerIssue
     let showsService: Bool
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         HStack(alignment: .top, spacing: 12) {
             TintIcon(systemImage: "exclamationmark.bubble", color: tint)
             VStack(alignment: .leading, spacing: 4) {
@@ -205,7 +205,7 @@ private struct WorkerIssueRow: View {
         }
         .padding(.vertical, 2)
         .contentShape(Rectangle())
-    }
+    }}
 
     private var tint: Color {
         switch issue.knownStatus {
@@ -236,7 +236,7 @@ struct WorkerIssueDetailSheet: View {
     private var canWrite: Bool { auth.hasScope("workers-observability.write") }
     private var issue: WorkerIssue { viewModel.issue }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             List {
                 Section {
@@ -324,7 +324,7 @@ struct WorkerIssueDetailSheet: View {
                 Text(viewModel.actionError ?? "")
             }
         }
-    }
+    }}
 
     // MARK: - 改状态
 
@@ -375,7 +375,7 @@ struct WorkerIssueDetailSheet: View {
 private struct OccurrenceRow: View {
     let occurrence: WorkerIssueOccurrence
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         VStack(alignment: .leading, spacing: 6) {
             Text(occurrence.headline)
                 .font(.caption.monospaced())
@@ -422,5 +422,5 @@ private struct OccurrenceRow: View {
         .padding(.vertical, 2)
         // 错误正文恒定 LTR，避免 RTL 语言下路径 / 堆栈被镜像
         .environment(\.layoutDirection, .leftToRight)
-    }
+    }}
 }

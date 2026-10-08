@@ -13,7 +13,7 @@ struct TintIcon: View {
     let color: Color
     var size: CGFloat = 30
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Image(systemName: systemImage)
             .font(.system(size: size * 0.5, weight: .medium))
             .foregroundStyle(color)
@@ -21,7 +21,7 @@ struct TintIcon: View {
             .background(color.opacity(0.12), in: Circle())
             // 始终作为行内装饰图标出现（旁边有文字标签），对读屏隐藏避免冗余
             .accessibilityHidden(true)
-    }
+    }}
 }
 
 #Preview {

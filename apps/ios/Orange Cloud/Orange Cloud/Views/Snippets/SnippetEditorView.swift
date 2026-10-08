@@ -36,7 +36,7 @@ struct SnippetEditorView: View {
             && !loadingCode
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 if let existing {
@@ -116,7 +116,7 @@ struct SnippetEditorView: View {
                 }
             }
         }
-    }
+    }}
 
     private func loadCode() async {
         guard let existing else { return }

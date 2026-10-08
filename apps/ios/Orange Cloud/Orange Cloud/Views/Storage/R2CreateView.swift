@@ -27,7 +27,7 @@ struct R2CreateView: View {
         !trimmedName.isEmpty && !accountId.isEmpty && !viewModel.isCreating
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section {
@@ -94,7 +94,7 @@ struct R2CreateView: View {
             .onAppear { nameFocused = true }
             .interactiveDismissDisabled(viewModel.isCreating)
         }
-    }
+    }}
 
     private func create() async {
         guard canCreate else { return }

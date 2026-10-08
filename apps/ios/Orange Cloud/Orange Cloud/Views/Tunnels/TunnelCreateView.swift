@@ -21,7 +21,7 @@ struct TunnelCreateView: View {
         !name.trimmingCharacters(in: .whitespaces).isEmpty && !viewModel.isSaving
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section {
@@ -73,5 +73,5 @@ struct TunnelCreateView: View {
             }
             .interactiveDismissDisabled(viewModel.isSaving)
         }
-    }
+    }}
 }

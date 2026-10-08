@@ -27,7 +27,7 @@ struct KVNamespaceDeleteConfirmView: View {
         nameMatches && !accountId.isEmpty && !viewModel.isDeleting
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section {
@@ -97,7 +97,7 @@ struct KVNamespaceDeleteConfirmView: View {
             .onAppear { fieldFocused = true }
             .interactiveDismissDisabled(viewModel.isDeleting)
         }
-    }
+    }}
 
     private func performDelete() async {
         guard canDelete else { return }

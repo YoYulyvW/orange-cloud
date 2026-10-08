@@ -22,7 +22,7 @@ struct WorkerTriggersView: View {
 
     private var canWrite: Bool { auth.hasScope("workers-scripts.write") }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if !viewModel.loaded && viewModel.isLoading {
                 SkeletonList(rows: 4, icon: .none, trailing: true)
@@ -75,7 +75,7 @@ struct WorkerTriggersView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 
     private func row(_ schedule: WorkerSchedule) -> some View {
         HStack(spacing: 12) {
@@ -130,7 +130,7 @@ private struct CronEditorSheet: View {
         ("0 0 * * 1",   String(localized: "每周一 0 点（UTC）")),
     ]
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 Section {
@@ -185,7 +185,7 @@ private struct CronEditorSheet: View {
             }
             .interactiveDismissDisabled(viewModel.isSaving)
         }
-    }
+    }}
 }
 
 // MARK: - Cron 人类可读释义（覆盖常见样式，其余回退原表达式）

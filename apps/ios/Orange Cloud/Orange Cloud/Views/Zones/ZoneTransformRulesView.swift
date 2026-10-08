@@ -25,7 +25,7 @@ struct ZoneTransformRulesView: View {
 
     private var canWrite: Bool { auth.hasScope("zone-transform-rules.write") }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         Group {
             if viewModel.isLoading && !viewModel.loaded {
                 ProgressView()
@@ -79,7 +79,7 @@ struct ZoneTransformRulesView: View {
         } message: {
             Text(viewModel.error ?? "")
         }
-    }
+    }}
 
     @ViewBuilder
     private func section(_ phase: TransformPhase) -> some View {

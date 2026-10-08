@@ -24,7 +24,7 @@ struct ZoneTrafficMapCard: View {
         span: MKCoordinateSpan(latitudeDelta: 120, longitudeDelta: 200)
     )
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         VStack(alignment: .leading, spacing: 12) {
             header
 
@@ -47,7 +47,7 @@ struct ZoneTrafficMapCard: View {
         .ocOnChange(of: viewModel.selectedRange) {
             if entitlements.isPro { Task { await viewModel.loadCountries() } }
         }
-    }
+    }}
 
     // MARK: - 头部
 

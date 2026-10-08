@@ -48,7 +48,7 @@ struct WorkerListView: View {
         return sort.sorted(scripts, created: \.createdOn, modified: \.modifiedOn)
     }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         // 复用宿主（开发者平台 / 旧 Tab）的单一 NavigationStack，本视图不自带 stack：
         //  · 自带 stack → 嵌套栈，点击行进详情会回弹到上级（开发者 Tab）；
         //  · 在「被 push 的子视图」上挂 .navigationDestination 又会失灵（导航栏切了、内容不切）。
@@ -125,7 +125,7 @@ struct WorkerListView: View {
                 Text("当前授权未包含 Workers 写权限（workers-scripts.write）。\n请在设置中退出登录后重新授权以启用此功能。")
             }
         }
-    }
+    }}
 
     private var scriptList: some View {
         List {
@@ -208,7 +208,7 @@ struct WorkerListView: View {
 struct WorkerRow: View {
     let script: CachedWorkerScript
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         HStack(spacing: 12) {
             TintIcon(systemImage: "bolt.fill", color: .ocOrange, size: 32)
 
@@ -232,5 +232,5 @@ struct WorkerRow: View {
             }
         }
         .padding(.vertical, 2)
-    }
+    }}
 }

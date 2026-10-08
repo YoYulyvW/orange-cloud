@@ -123,7 +123,7 @@ struct ZoneRuleEditorView: View {
 
     private var isEditing: Bool { existing != nil }
 
-    var body: some View {
+    var body: some View { WithPerceptionTracking {
         NavigationStack {
             Form {
                 if isReadOnly {
@@ -194,7 +194,7 @@ struct ZoneRuleEditorView: View {
             .interactiveDismissDisabled(viewModel.isSaving)
             .onDisappear { viewModel.error = nil }
         }
-    }
+    }}
 
     // MARK: - 校验
 
